@@ -1,7 +1,7 @@
 ﻿
 namespace SkylineUploaderService
 {
-    partial class Service1
+    partial class SkylineUploaderService
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,10 +29,18 @@ namespace SkylineUploaderService
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.ServiceName = "Service1";
+            this.eventLog = new System.Diagnostics.EventLog();
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog)).BeginInit();
+            // 
+            // SkylineUploaderService
+            // 
+            this.ServiceName = "SkylineUploaderService";
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog)).EndInit();
+
         }
 
         #endregion
+
+        private System.Diagnostics.EventLog eventLog;
     }
 }
