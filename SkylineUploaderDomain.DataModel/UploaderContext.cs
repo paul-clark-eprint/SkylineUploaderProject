@@ -6,13 +6,11 @@ namespace SkylineUploaderDomain.DataModel
 {
     public class UploaderDbContext : DbContext
     {
-        //Test of source control
-
-        public UploaderDbContext(): base("SkylineUploader") 
+        public UploaderDbContext() : base("SkylineUploader")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<UploaderDbContext, Migrations.Configuration>());
         }
-        
+
         public DbSet<Folder> Folders { get; set; }
         public DbSet<Login> Login { get; set; }
         public DbSet<Proxy> Proxy { get; set; }
