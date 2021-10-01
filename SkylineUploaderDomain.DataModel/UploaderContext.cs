@@ -6,6 +6,8 @@ namespace SkylineUploaderDomain.DataModel
 {
     public class UploaderDbContext : DbContext
     {
+        //Test of source control
+
         public UploaderDbContext(): base("SkylineUploader") 
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<UploaderDbContext, Migrations.Configuration>());

@@ -25,6 +25,8 @@ namespace SkylineUploader
         private bool sqlFound = false;
         private bool dataSourceSet = false;
 
+        //Test of source control
+
         public FrmUploader()
         {
             InitializeComponent();
@@ -93,7 +95,6 @@ namespace SkylineUploader
                     }
                 }
             }
-
 
             if (SqlInstances.Count > 0)
             {
