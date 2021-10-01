@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SkylineUploader.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="SkylineUploader_PricingService_PricingService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://localhost/WebServices/PricingService.asmx</Value>
+    </Setting>
+    <Setting Name="SkylineUploader_SkylineWebService_SkylineWebService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://localhost/WebServices/SkylineWebService.asmx</Value>
+    </Setting>
+    <Setting Name="SkylineUploader_SkylineService_Printstation" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://localhost/Printstation/Printstation.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,3713 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://skyline.eprint.net/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s2="http://Eprint.Skyline/xml/serialization" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://skyline.eprint.net/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://skyline.eprint.net/">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:import namespace="http://Eprint.Skyline/xml/serialization" />
+      <s:element name="GetXpaths">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetXpathsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetXpathsResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrderDetail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderDetailId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrderDetailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOrderDetailResult" type="s2:OrderDetailEntity" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetVersionNumber">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetVersionNumberResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetVersionNumberResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteTempThumbnails">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteTempThumbnailsResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteTempThumbnail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="documentId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteTempThumbnailResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetOrdersByPrintstation">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="psid" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="assigned" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="unassigned" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="currentUserGuid" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrdersByPrintstationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOrdersByPrintstationResult" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrders">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="unassigned" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="currentUserGuid" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="printStationId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrdersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOrdersResult" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrderDetails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="OrderDetailId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrderDetailsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOrderDetailsResult" type="s2:OrderDetailEntity" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDocument">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderDetailID" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDocumentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDocumentResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPrintLocations">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPrintLocationsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPrintLocationsResult" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPrintLocation">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPrintLocationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPrintLocationResult" type="s2:PrintLocationEntity" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddPrintLocation">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ent" type="s2:PrintLocationEntity" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddPrintLocationResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="UpdatePrintLocation">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ent" type="s2:PrintLocationEntity" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdatePrintLocationResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeletePrintLocation">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeletePrintLocationResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="LogUnhandledException">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="serialisedException" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LogUnhandledExceptionResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ValidateUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ValidateUserResult" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="flag" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPrintStationId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="servername" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPrintStationIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetPrintStationIdResult" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DoesPSExist">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="servername" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DoesPSExistResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DoesPSExistResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNumberOfPrintStations">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetNumberOfPrintStationsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetNumberOfPrintStationsResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNumberOfPrintStationLicences">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetNumberOfPrintStationLicencesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetNumberOfPrintStationLicencesResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPrintStationsLeft">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetPrintStationsLeftResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetPrintStationsLeftResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPrintStationName">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="printStationId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPrintStationNameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPrintStationNameResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MovePrintstation">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderdetailid" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="newprintstationid" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MovePrintstationResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetPrintStations">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="printstationid" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="CurrentUserGuid" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPrintStationsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPrintStationsResult" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllPortalJobs">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="printstationid" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="CurrentUserGuid" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllPortalJobsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllPortalJobsResult" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPortalsView">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="printstationid" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="CurrentUserGuid" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPortalsViewResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPortalsViewResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPrintStationsView">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="printstationid" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="CurrentUserGuid" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPrintStationsViewResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPrintStationsViewResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStatusView">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="printstationid" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="CurrentUserGuid" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStatusViewResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStatusViewResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStatae">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetStataeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStataeResult" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStatuses">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PortalID" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStatusesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStatusesResult" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateOrderStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderdetailid" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="statusid" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateOrderStatusResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="UpdateJdf">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderDetailId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="jdfxml" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ProductID" nillable="true" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateJdfResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetOrderStatusEntity">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="statusid" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrderStatusEntityResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOrderStatusEntityResult" type="s2:OrderDetailStatusEntity" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPortalIDByOrderDetailID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderDetailID" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPortalIDByOrderDetailIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetPortalIDByOrderDetailIDResult" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPortalIDByOrderDetailStatusID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderDetailStatusID" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPortalIDByOrderDetailStatusIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetPortalIDByOrderDetailStatusIDResult" nillable="true" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TranslateValue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="pageName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="culture" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="subculture" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="defaultvalue" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TranslateValueResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TranslateValueResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ApplyEmailTemplateAndSendEmail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="toEmail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="subject" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="body" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ApplyEmailTemplateAndSendEmailResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="sendAnEmail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="toEmail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="subject" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="body" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="isHTML" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="sendAnEmailResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="TranslateStatusEmailMessage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="culture" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="subculture" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TranslateStatusEmailMessageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TranslateStatusEmailMessageResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TranslateStatusEmailSubject">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="culture" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="subculture" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TranslateStatusEmailSubjectResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TranslateStatusEmailSubjectResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="OrderExists">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderDetailId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="OrderExistsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="OrderExistsResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUsersEmail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderDetailId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUsersEmailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUsersEmailResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUsersEmailFromId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUsersEmailFromIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUsersEmailFromIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StorePrintStationPreferences">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PrintStationId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="Preferences" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StorePrintStationPreferencesResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetPrintStationPreferences">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PrintStationId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPrintStationPreferencesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPrintStationPreferencesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPrintStationCulture">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PrintStationId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPrintStationCultureResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPrintStationCultureResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SavePrintStationCulture">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PrintStationId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="culture" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SavePrintStationCultureResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetJDFPropertyTranslations">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="culture" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="subCulture" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetJDFPropertyTranslationsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetJDFPropertyTranslationsResult" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLatestOrderDetailTrackingInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderDetailId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLatestOrderDetailTrackingInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLatestOrderDetailTrackingInfoResult" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLatestOrderDetailTrackingInfoMultipleSelection">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="orderDetailId" type="tns:ArrayOfGuid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfGuid">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="guid" type="s1:guid" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetLatestOrderDetailTrackingInfoMultipleSelectionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLatestOrderDetailTrackingInfoMultipleSelectionResult" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLatestPriceTrackingInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderDetailId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLatestPriceTrackingInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLatestPriceTrackingInfoResult" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrderStatusChanges">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderDetailId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrderStatusChangesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOrderStatusChangesResult" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckPrintedTracking">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderDetailId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckPrintedTrackingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CheckPrintedTrackingResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllProductElements">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetAllProductElementsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllProductElementsResult" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllProductElementsByPortalCollection">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="printstationid" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="CurrentUserGuid" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllProductElementsByPortalCollectionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllProductElementsByPortalCollectionResult" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProductSetting">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetProductSettingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetProductSettingResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllProducts">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetAllProductsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllProductsResult" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllProductsPortalCollection">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="printstationid" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="CurrentUserGuid" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllProductsPortalCollectionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllProductsPortalCollectionResult" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllProductsPortalCollection1">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="printstationid" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="CurrentUserGuid" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllProductsPortalCollection1Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllProductsPortalCollection1Result" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllMediaControls">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetAllMediaControlsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllMediaControlsResult" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllMediaControlsByPortalCollection">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="printstationid" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="CurrentUserGuid" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllMediaControlsByPortalCollectionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllMediaControlsByPortalCollectionResult" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SavePricing">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="deliveryCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="priorityCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="deliveryTaxAmount" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="fullOrderCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="userId" nillable="true" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="AdditionalPrices" type="tns:ArrayOfAnyType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfAnyType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SavePricingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SavePricingResult" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveOrderItemPricing">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderPriceId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="orderDetailId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="bodyMediaCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="bodyPrintingCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="bodyLaminatingCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="bodyLabourCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="bodyAdditionalCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="bodyTotalCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="fCMediaCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="fCPrintingCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="fCLaminatingCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="fCLabourCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="fCAdditionalCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="fCTotalCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="bCMediaCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="bCPrintingCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="bCLaminatingCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="bCLabourCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="bCAdditionalCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="bCTotalCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="bindingCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="additionalEach" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="additional" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="productMarkUp" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="taxAmount" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="totalItemCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="productPrice" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="scalingCost" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveOrderItemPricingResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetCurrentJobsByStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="toDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCurrentJobsByStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCurrentJobsByStatusResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllPrintedOrderDetails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="toDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllPrintedOrderDetailsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllPrintedOrderDetailsResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetJobTicketReport">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderDetailId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetJobTicketReportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetJobTicketReportResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCompletedOrders">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="toDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCompletedOrdersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCompletedOrdersResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCompletedOrderPrices">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="toDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCompletedOrderPricesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCompletedOrderPricesResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCompletedOrdersSummary">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="toDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCompletedOrdersSummaryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCompletedOrdersSummaryResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCompletedJobsWithoutPrice">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="toDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCompletedJobsWithoutPriceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCompletedJobsWithoutPriceResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProductImage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderDetailId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProductImageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetProductImageResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrderDetailsToPrint">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrderDetailsToPrintResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOrderDetailsToPrintResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSelectedProductElementWithPortalid">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="Portalid" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSelectedProductElementWithPortalidResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSelectedProductElementWithPortalidResult" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrderToPrintPrice">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrderToPrintPriceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOrderToPrintPriceResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AllowTransferToPrintStations">
+        <s:complexType />
+      </s:element>
+      <s:element name="AllowTransferToPrintStationsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AllowTransferToPrintStationsResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDocumentThumbnail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="host" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDocumentThumbnailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetDocumentThumbnailResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStatusesWithOrm">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PortalID" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="OrderDetailStatus">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="SystemStatus" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="StatusName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="StatusDeleted" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="ShowUser" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="ShowPrintStation" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="QueryOutstanding" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Printed" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="PortalId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="PaperOriginalsRecieved" nillable="true" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="OrderDetailStatusId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="InProduction" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="InitialStatus" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="EndUserDisplay" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="EmailUser" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="EmailSubject" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EmailContent" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Downloaded" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Deleted" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Complete" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="AwaitingPaperOriginals" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Archived" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="AllowDelete" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="DisplayOrder" nillable="true" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfOrderDetailStatus">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="OrderDetailStatus" nillable="true" type="tns:OrderDetailStatus" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetStatusesWithOrmResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStatusesWithOrmResult" type="tns:ArrayOfOrderDetailStatus" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrderStatusEntityWithOrm">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="statusid" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrderStatusEntityWithOrmResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOrderStatusEntityWithOrmResult" type="tns:ArrayOfOrderDetailStatus" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPortalIDByOrderDetailStatusIDWithOrm">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="orderDetailStatusID" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPortalIDByOrderDetailStatusIDWithOrmResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetPortalIDByOrderDetailStatusIDWithOrmResult" nillable="true" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStataesWithOrm">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetStataesWithOrmResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStataesWithOrmResult" type="tns:ArrayOfOrderDetailStatus" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeOrderDetailStatuswithOrm">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="OrderDetailId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="PortalId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeOrderDetailStatuswithOrmResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ChangeOrderDetailStatuswithOrmResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllPortalJobsWithOrm">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="printstationId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="currentUserGuid" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="OrderFields">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="StatusColour" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DocumentName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="OrderId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="OrderDetailId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="TrackingId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="InitialStatus" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="AwaitingPaperOriginals" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Product" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Pages" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Copies" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomerRegion" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalPages" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SubmittedDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="RequiredDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="DocumentPrice" nillable="true" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="PrintStation" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Priority" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NamePrefix" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SurName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Street" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PostCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AccountCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AccountDescription" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeliveryMethod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Binding" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Folding" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Stapling" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="HolePunching" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Scaling" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PrinterType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DocType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BodyPaperName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BodyMediaType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BodyPaperSize" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BodyPaperWeight" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BodyPaperColour" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BodyPaperHoles" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BodyPrintedSides" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BodyNumUp" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BodyLaminating" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BodyPrePunchedHoles" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BodyPrinterColour" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BodyPrinterType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BodyProductionType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FrontCoverPaperName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FrontCoverMediaType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FrontCoverPaperSize" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FrontCoverPaperWeight" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FrontCoverPaperColour" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FrontCoverPaperHoles" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FrontCoverPrintedSides" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FrontCoverNumUp" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FrontCoverLaminating" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FrontCoverPrePunchedHoles" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FrontCoverPrinterColour" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FrontCoverPrinterType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FrontCoverProductionType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BackCoverPaperName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BackCoverMediaType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BackCoverPaperSize" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BackCoverPaperWeight" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BackCoverPaperColour" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BackCoverPaperHoles" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BackCoverPrintedSides" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BackCoverNumUp" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BackCoverLaminating" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BackCoverPrePunchedHoles" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BackCoverPrinterColour" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BackCoverPrinterType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BackCoverProductionType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomDocumentOption1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomDocumentOption2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomDocumentOption3" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomDocumentOption4" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomDocumentOption5" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomDocumentOption6" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Notes" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PrintStationId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="PortalId" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DocumentId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="OrderStatusId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="ShortOrderId" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ShortOrderDetailId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="DisplayOrder" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ChangeNotes" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Printed" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ApproverId" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PrintedCount" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="LockUserId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="LockDateTime" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="DatePrinted" nillable="true" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfOrderFields">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="OrderFields" nillable="true" type="tns:OrderFields" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAllPortalJobsWithOrmResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllPortalJobsWithOrmResult" type="tns:ArrayOfOrderFields" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="guid">
+        <s:restriction base="s:string">
+          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+    <xs:schema xmlns="http://Eprint.Skyline/xml/serialization" xmlns:mstns="http://Eprint.Skyline/xml/serialization" elementFormDefault="qualified" targetNamespace="http://Eprint.Skyline/xml/serialization" id="EntityCollectionSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="EntityCollection" />
+      <xs:complexType name="OrderDetailStatusEntity">
+        <xs:sequence>
+          <xs:any minOccurs="0" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PrintLocationEntity">
+        <xs:sequence>
+          <xs:any minOccurs="0" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="OrderDetailEntity">
+        <xs:sequence>
+          <xs:any minOccurs="0" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="GetXpathsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetXpaths" />
+  </wsdl:message>
+  <wsdl:message name="GetXpathsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetXpathsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderDetailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOrderDetail" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderDetailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOrderDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetVersionNumberSoapIn">
+    <wsdl:part name="parameters" element="tns:GetVersionNumber" />
+  </wsdl:message>
+  <wsdl:message name="GetVersionNumberSoapOut">
+    <wsdl:part name="parameters" element="tns:GetVersionNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteTempThumbnailsSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteTempThumbnails" />
+  </wsdl:message>
+  <wsdl:message name="DeleteTempThumbnailsSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteTempThumbnailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteTempThumbnailSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteTempThumbnail" />
+  </wsdl:message>
+  <wsdl:message name="DeleteTempThumbnailSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteTempThumbnailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOrdersByPrintstationSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOrdersByPrintstation" />
+  </wsdl:message>
+  <wsdl:message name="GetOrdersByPrintstationSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOrdersByPrintstationResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOrdersSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOrders" />
+  </wsdl:message>
+  <wsdl:message name="GetOrdersSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOrdersResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOrderDetails" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOrderDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDocumentSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDocument" />
+  </wsdl:message>
+  <wsdl:message name="GetDocumentSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDocumentResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPrintLocationsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPrintLocations" />
+  </wsdl:message>
+  <wsdl:message name="GetPrintLocationsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPrintLocationsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPrintLocationSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPrintLocation" />
+  </wsdl:message>
+  <wsdl:message name="GetPrintLocationSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPrintLocationResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddPrintLocationSoapIn">
+    <wsdl:part name="parameters" element="tns:AddPrintLocation" />
+  </wsdl:message>
+  <wsdl:message name="AddPrintLocationSoapOut">
+    <wsdl:part name="parameters" element="tns:AddPrintLocationResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePrintLocationSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdatePrintLocation" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePrintLocationSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdatePrintLocationResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeletePrintLocationSoapIn">
+    <wsdl:part name="parameters" element="tns:DeletePrintLocation" />
+  </wsdl:message>
+  <wsdl:message name="DeletePrintLocationSoapOut">
+    <wsdl:part name="parameters" element="tns:DeletePrintLocationResponse" />
+  </wsdl:message>
+  <wsdl:message name="LogUnhandledExceptionSoapIn">
+    <wsdl:part name="parameters" element="tns:LogUnhandledException" />
+  </wsdl:message>
+  <wsdl:message name="LogUnhandledExceptionSoapOut">
+    <wsdl:part name="parameters" element="tns:LogUnhandledExceptionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidateUserSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateUser" />
+  </wsdl:message>
+  <wsdl:message name="ValidateUserSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPrintStationIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPrintStationId" />
+  </wsdl:message>
+  <wsdl:message name="GetPrintStationIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPrintStationIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="DoesPSExistSoapIn">
+    <wsdl:part name="parameters" element="tns:DoesPSExist" />
+  </wsdl:message>
+  <wsdl:message name="DoesPSExistSoapOut">
+    <wsdl:part name="parameters" element="tns:DoesPSExistResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetNumberOfPrintStationsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetNumberOfPrintStations" />
+  </wsdl:message>
+  <wsdl:message name="GetNumberOfPrintStationsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetNumberOfPrintStationsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetNumberOfPrintStationLicencesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetNumberOfPrintStationLicences" />
+  </wsdl:message>
+  <wsdl:message name="GetNumberOfPrintStationLicencesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetNumberOfPrintStationLicencesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPrintStationsLeftSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPrintStationsLeft" />
+  </wsdl:message>
+  <wsdl:message name="GetPrintStationsLeftSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPrintStationsLeftResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPrintStationNameSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPrintStationName" />
+  </wsdl:message>
+  <wsdl:message name="GetPrintStationNameSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPrintStationNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="MovePrintstationSoapIn">
+    <wsdl:part name="parameters" element="tns:MovePrintstation" />
+  </wsdl:message>
+  <wsdl:message name="MovePrintstationSoapOut">
+    <wsdl:part name="parameters" element="tns:MovePrintstationResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPrintStationsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPrintStations" />
+  </wsdl:message>
+  <wsdl:message name="GetPrintStationsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPrintStationsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllPortalJobsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllPortalJobs" />
+  </wsdl:message>
+  <wsdl:message name="GetAllPortalJobsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllPortalJobsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPortalsViewSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPortalsView" />
+  </wsdl:message>
+  <wsdl:message name="GetPortalsViewSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPortalsViewResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPrintStationsViewSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPrintStationsView" />
+  </wsdl:message>
+  <wsdl:message name="GetPrintStationsViewSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPrintStationsViewResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStatusViewSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStatusView" />
+  </wsdl:message>
+  <wsdl:message name="GetStatusViewSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStatusViewResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStataeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStatae" />
+  </wsdl:message>
+  <wsdl:message name="GetStataeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStataeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStatusesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStatuses" />
+  </wsdl:message>
+  <wsdl:message name="GetStatusesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStatusesResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateOrderStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateOrderStatus" />
+  </wsdl:message>
+  <wsdl:message name="UpdateOrderStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateOrderStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateJdfSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateJdf" />
+  </wsdl:message>
+  <wsdl:message name="UpdateJdfSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateJdfResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderStatusEntitySoapIn">
+    <wsdl:part name="parameters" element="tns:GetOrderStatusEntity" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderStatusEntitySoapOut">
+    <wsdl:part name="parameters" element="tns:GetOrderStatusEntityResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPortalIDByOrderDetailIDSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPortalIDByOrderDetailID" />
+  </wsdl:message>
+  <wsdl:message name="GetPortalIDByOrderDetailIDSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPortalIDByOrderDetailIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPortalIDByOrderDetailStatusIDSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPortalIDByOrderDetailStatusID" />
+  </wsdl:message>
+  <wsdl:message name="GetPortalIDByOrderDetailStatusIDSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPortalIDByOrderDetailStatusIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="TranslateValueSoapIn">
+    <wsdl:part name="parameters" element="tns:TranslateValue" />
+  </wsdl:message>
+  <wsdl:message name="TranslateValueSoapOut">
+    <wsdl:part name="parameters" element="tns:TranslateValueResponse" />
+  </wsdl:message>
+  <wsdl:message name="ApplyEmailTemplateAndSendEmailSoapIn">
+    <wsdl:part name="parameters" element="tns:ApplyEmailTemplateAndSendEmail" />
+  </wsdl:message>
+  <wsdl:message name="ApplyEmailTemplateAndSendEmailSoapOut">
+    <wsdl:part name="parameters" element="tns:ApplyEmailTemplateAndSendEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="sendAnEmailSoapIn">
+    <wsdl:part name="parameters" element="tns:sendAnEmail" />
+  </wsdl:message>
+  <wsdl:message name="sendAnEmailSoapOut">
+    <wsdl:part name="parameters" element="tns:sendAnEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="TranslateStatusEmailMessageSoapIn">
+    <wsdl:part name="parameters" element="tns:TranslateStatusEmailMessage" />
+  </wsdl:message>
+  <wsdl:message name="TranslateStatusEmailMessageSoapOut">
+    <wsdl:part name="parameters" element="tns:TranslateStatusEmailMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="TranslateStatusEmailSubjectSoapIn">
+    <wsdl:part name="parameters" element="tns:TranslateStatusEmailSubject" />
+  </wsdl:message>
+  <wsdl:message name="TranslateStatusEmailSubjectSoapOut">
+    <wsdl:part name="parameters" element="tns:TranslateStatusEmailSubjectResponse" />
+  </wsdl:message>
+  <wsdl:message name="OrderExistsSoapIn">
+    <wsdl:part name="parameters" element="tns:OrderExists" />
+  </wsdl:message>
+  <wsdl:message name="OrderExistsSoapOut">
+    <wsdl:part name="parameters" element="tns:OrderExistsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUsersEmailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUsersEmail" />
+  </wsdl:message>
+  <wsdl:message name="GetUsersEmailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUsersEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUsersEmailFromIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUsersEmailFromId" />
+  </wsdl:message>
+  <wsdl:message name="GetUsersEmailFromIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUsersEmailFromIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="StorePrintStationPreferencesSoapIn">
+    <wsdl:part name="parameters" element="tns:StorePrintStationPreferences" />
+  </wsdl:message>
+  <wsdl:message name="StorePrintStationPreferencesSoapOut">
+    <wsdl:part name="parameters" element="tns:StorePrintStationPreferencesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPrintStationPreferencesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPrintStationPreferences" />
+  </wsdl:message>
+  <wsdl:message name="GetPrintStationPreferencesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPrintStationPreferencesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPrintStationCultureSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPrintStationCulture" />
+  </wsdl:message>
+  <wsdl:message name="GetPrintStationCultureSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPrintStationCultureResponse" />
+  </wsdl:message>
+  <wsdl:message name="SavePrintStationCultureSoapIn">
+    <wsdl:part name="parameters" element="tns:SavePrintStationCulture" />
+  </wsdl:message>
+  <wsdl:message name="SavePrintStationCultureSoapOut">
+    <wsdl:part name="parameters" element="tns:SavePrintStationCultureResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetJDFPropertyTranslationsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetJDFPropertyTranslations" />
+  </wsdl:message>
+  <wsdl:message name="GetJDFPropertyTranslationsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetJDFPropertyTranslationsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLatestOrderDetailTrackingInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLatestOrderDetailTrackingInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetLatestOrderDetailTrackingInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLatestOrderDetailTrackingInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLatestOrderDetailTrackingInfoMultipleSelectionSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLatestOrderDetailTrackingInfoMultipleSelection" />
+  </wsdl:message>
+  <wsdl:message name="GetLatestOrderDetailTrackingInfoMultipleSelectionSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLatestOrderDetailTrackingInfoMultipleSelectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLatestPriceTrackingInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLatestPriceTrackingInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetLatestPriceTrackingInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLatestPriceTrackingInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderStatusChangesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOrderStatusChanges" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderStatusChangesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOrderStatusChangesResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckPrintedTrackingSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckPrintedTracking" />
+  </wsdl:message>
+  <wsdl:message name="CheckPrintedTrackingSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckPrintedTrackingResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllProductElementsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllProductElements" />
+  </wsdl:message>
+  <wsdl:message name="GetAllProductElementsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllProductElementsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllProductElementsByPortalCollectionSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllProductElementsByPortalCollection" />
+  </wsdl:message>
+  <wsdl:message name="GetAllProductElementsByPortalCollectionSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllProductElementsByPortalCollectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetProductSettingSoapIn">
+    <wsdl:part name="parameters" element="tns:GetProductSetting" />
+  </wsdl:message>
+  <wsdl:message name="GetProductSettingSoapOut">
+    <wsdl:part name="parameters" element="tns:GetProductSettingResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllProductsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllProducts" />
+  </wsdl:message>
+  <wsdl:message name="GetAllProductsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllProductsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllProductsPortalCollectionSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllProductsPortalCollection" />
+  </wsdl:message>
+  <wsdl:message name="GetAllProductsPortalCollectionSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllProductsPortalCollectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllProductsPortalCollection1SoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllProductsPortalCollection1" />
+  </wsdl:message>
+  <wsdl:message name="GetAllProductsPortalCollection1SoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllProductsPortalCollection1Response" />
+  </wsdl:message>
+  <wsdl:message name="GetAllMediaControlsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllMediaControls" />
+  </wsdl:message>
+  <wsdl:message name="GetAllMediaControlsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllMediaControlsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllMediaControlsByPortalCollectionSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllMediaControlsByPortalCollection" />
+  </wsdl:message>
+  <wsdl:message name="GetAllMediaControlsByPortalCollectionSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllMediaControlsByPortalCollectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="SavePricingSoapIn">
+    <wsdl:part name="parameters" element="tns:SavePricing" />
+  </wsdl:message>
+  <wsdl:message name="SavePricingSoapOut">
+    <wsdl:part name="parameters" element="tns:SavePricingResponse" />
+  </wsdl:message>
+  <wsdl:message name="SaveOrderItemPricingSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveOrderItemPricing" />
+  </wsdl:message>
+  <wsdl:message name="SaveOrderItemPricingSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveOrderItemPricingResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCurrentJobsByStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCurrentJobsByStatus" />
+  </wsdl:message>
+  <wsdl:message name="GetCurrentJobsByStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCurrentJobsByStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllPrintedOrderDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllPrintedOrderDetails" />
+  </wsdl:message>
+  <wsdl:message name="GetAllPrintedOrderDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllPrintedOrderDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetJobTicketReportSoapIn">
+    <wsdl:part name="parameters" element="tns:GetJobTicketReport" />
+  </wsdl:message>
+  <wsdl:message name="GetJobTicketReportSoapOut">
+    <wsdl:part name="parameters" element="tns:GetJobTicketReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCompletedOrdersSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCompletedOrders" />
+  </wsdl:message>
+  <wsdl:message name="GetCompletedOrdersSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCompletedOrdersResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCompletedOrderPricesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCompletedOrderPrices" />
+  </wsdl:message>
+  <wsdl:message name="GetCompletedOrderPricesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCompletedOrderPricesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCompletedOrdersSummarySoapIn">
+    <wsdl:part name="parameters" element="tns:GetCompletedOrdersSummary" />
+  </wsdl:message>
+  <wsdl:message name="GetCompletedOrdersSummarySoapOut">
+    <wsdl:part name="parameters" element="tns:GetCompletedOrdersSummaryResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCompletedJobsWithoutPriceSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCompletedJobsWithoutPrice" />
+  </wsdl:message>
+  <wsdl:message name="GetCompletedJobsWithoutPriceSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCompletedJobsWithoutPriceResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetProductImageSoapIn">
+    <wsdl:part name="parameters" element="tns:GetProductImage" />
+  </wsdl:message>
+  <wsdl:message name="GetProductImageSoapOut">
+    <wsdl:part name="parameters" element="tns:GetProductImageResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderDetailsToPrintSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOrderDetailsToPrint" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderDetailsToPrintSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOrderDetailsToPrintResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSelectedProductElementWithPortalidSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSelectedProductElementWithPortalid" />
+  </wsdl:message>
+  <wsdl:message name="GetSelectedProductElementWithPortalidSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSelectedProductElementWithPortalidResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderToPrintPriceSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOrderToPrintPrice" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderToPrintPriceSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOrderToPrintPriceResponse" />
+  </wsdl:message>
+  <wsdl:message name="AllowTransferToPrintStationsSoapIn">
+    <wsdl:part name="parameters" element="tns:AllowTransferToPrintStations" />
+  </wsdl:message>
+  <wsdl:message name="AllowTransferToPrintStationsSoapOut">
+    <wsdl:part name="parameters" element="tns:AllowTransferToPrintStationsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDocumentThumbnailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDocumentThumbnail" />
+  </wsdl:message>
+  <wsdl:message name="GetDocumentThumbnailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDocumentThumbnailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStatusesWithOrmSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStatusesWithOrm" />
+  </wsdl:message>
+  <wsdl:message name="GetStatusesWithOrmSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStatusesWithOrmResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderStatusEntityWithOrmSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOrderStatusEntityWithOrm" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderStatusEntityWithOrmSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOrderStatusEntityWithOrmResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPortalIDByOrderDetailStatusIDWithOrmSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPortalIDByOrderDetailStatusIDWithOrm" />
+  </wsdl:message>
+  <wsdl:message name="GetPortalIDByOrderDetailStatusIDWithOrmSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPortalIDByOrderDetailStatusIDWithOrmResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStataesWithOrmSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStataesWithOrm" />
+  </wsdl:message>
+  <wsdl:message name="GetStataesWithOrmSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStataesWithOrmResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangeOrderDetailStatuswithOrmSoapIn">
+    <wsdl:part name="parameters" element="tns:ChangeOrderDetailStatuswithOrm" />
+  </wsdl:message>
+  <wsdl:message name="ChangeOrderDetailStatuswithOrmSoapOut">
+    <wsdl:part name="parameters" element="tns:ChangeOrderDetailStatuswithOrmResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllPortalJobsWithOrmSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllPortalJobsWithOrm" />
+  </wsdl:message>
+  <wsdl:message name="GetAllPortalJobsWithOrmSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllPortalJobsWithOrmResponse" />
+  </wsdl:message>
+  <wsdl:portType name="PrintstationSoap">
+    <wsdl:operation name="GetXpaths">
+      <wsdl:input message="tns:GetXpathsSoapIn" />
+      <wsdl:output message="tns:GetXpathsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetail">
+      <wsdl:input message="tns:GetOrderDetailSoapIn" />
+      <wsdl:output message="tns:GetOrderDetailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetVersionNumber">
+      <wsdl:input message="tns:GetVersionNumberSoapIn" />
+      <wsdl:output message="tns:GetVersionNumberSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTempThumbnails">
+      <wsdl:input message="tns:DeleteTempThumbnailsSoapIn" />
+      <wsdl:output message="tns:DeleteTempThumbnailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTempThumbnail">
+      <wsdl:input message="tns:DeleteTempThumbnailSoapIn" />
+      <wsdl:output message="tns:DeleteTempThumbnailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrdersByPrintstation">
+      <wsdl:input message="tns:GetOrdersByPrintstationSoapIn" />
+      <wsdl:output message="tns:GetOrdersByPrintstationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrders">
+      <wsdl:input message="tns:GetOrdersSoapIn" />
+      <wsdl:output message="tns:GetOrdersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetails">
+      <wsdl:input message="tns:GetOrderDetailsSoapIn" />
+      <wsdl:output message="tns:GetOrderDetailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocument">
+      <wsdl:input message="tns:GetDocumentSoapIn" />
+      <wsdl:output message="tns:GetDocumentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintLocations">
+      <wsdl:input message="tns:GetPrintLocationsSoapIn" />
+      <wsdl:output message="tns:GetPrintLocationsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintLocation">
+      <wsdl:input message="tns:GetPrintLocationSoapIn" />
+      <wsdl:output message="tns:GetPrintLocationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddPrintLocation">
+      <wsdl:input message="tns:AddPrintLocationSoapIn" />
+      <wsdl:output message="tns:AddPrintLocationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePrintLocation">
+      <wsdl:input message="tns:UpdatePrintLocationSoapIn" />
+      <wsdl:output message="tns:UpdatePrintLocationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeletePrintLocation">
+      <wsdl:input message="tns:DeletePrintLocationSoapIn" />
+      <wsdl:output message="tns:DeletePrintLocationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="LogUnhandledException">
+      <wsdl:input message="tns:LogUnhandledExceptionSoapIn" />
+      <wsdl:output message="tns:LogUnhandledExceptionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUser">
+      <wsdl:input message="tns:ValidateUserSoapIn" />
+      <wsdl:output message="tns:ValidateUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStationId">
+      <wsdl:input message="tns:GetPrintStationIdSoapIn" />
+      <wsdl:output message="tns:GetPrintStationIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DoesPSExist">
+      <wsdl:input message="tns:DoesPSExistSoapIn" />
+      <wsdl:output message="tns:DoesPSExistSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNumberOfPrintStations">
+      <wsdl:input message="tns:GetNumberOfPrintStationsSoapIn" />
+      <wsdl:output message="tns:GetNumberOfPrintStationsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNumberOfPrintStationLicences">
+      <wsdl:input message="tns:GetNumberOfPrintStationLicencesSoapIn" />
+      <wsdl:output message="tns:GetNumberOfPrintStationLicencesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStationsLeft">
+      <wsdl:input message="tns:GetPrintStationsLeftSoapIn" />
+      <wsdl:output message="tns:GetPrintStationsLeftSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStationName">
+      <wsdl:input message="tns:GetPrintStationNameSoapIn" />
+      <wsdl:output message="tns:GetPrintStationNameSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MovePrintstation">
+      <wsdl:input message="tns:MovePrintstationSoapIn" />
+      <wsdl:output message="tns:MovePrintstationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStations">
+      <wsdl:input message="tns:GetPrintStationsSoapIn" />
+      <wsdl:output message="tns:GetPrintStationsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPortalJobs">
+      <wsdl:input message="tns:GetAllPortalJobsSoapIn" />
+      <wsdl:output message="tns:GetAllPortalJobsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalsView">
+      <wsdl:input message="tns:GetPortalsViewSoapIn" />
+      <wsdl:output message="tns:GetPortalsViewSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStationsView">
+      <wsdl:input message="tns:GetPrintStationsViewSoapIn" />
+      <wsdl:output message="tns:GetPrintStationsViewSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStatusView">
+      <wsdl:input message="tns:GetStatusViewSoapIn" />
+      <wsdl:output message="tns:GetStatusViewSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStatae">
+      <wsdl:input message="tns:GetStataeSoapIn" />
+      <wsdl:output message="tns:GetStataeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStatuses">
+      <wsdl:input message="tns:GetStatusesSoapIn" />
+      <wsdl:output message="tns:GetStatusesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrderStatus">
+      <wsdl:input message="tns:UpdateOrderStatusSoapIn" />
+      <wsdl:output message="tns:UpdateOrderStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateJdf">
+      <wsdl:input message="tns:UpdateJdfSoapIn" />
+      <wsdl:output message="tns:UpdateJdfSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderStatusEntity">
+      <wsdl:input message="tns:GetOrderStatusEntitySoapIn" />
+      <wsdl:output message="tns:GetOrderStatusEntitySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalIDByOrderDetailID">
+      <wsdl:input message="tns:GetPortalIDByOrderDetailIDSoapIn" />
+      <wsdl:output message="tns:GetPortalIDByOrderDetailIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalIDByOrderDetailStatusID">
+      <wsdl:input message="tns:GetPortalIDByOrderDetailStatusIDSoapIn" />
+      <wsdl:output message="tns:GetPortalIDByOrderDetailStatusIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TranslateValue">
+      <wsdl:input message="tns:TranslateValueSoapIn" />
+      <wsdl:output message="tns:TranslateValueSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ApplyEmailTemplateAndSendEmail">
+      <wsdl:input message="tns:ApplyEmailTemplateAndSendEmailSoapIn" />
+      <wsdl:output message="tns:ApplyEmailTemplateAndSendEmailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="sendAnEmail">
+      <wsdl:input message="tns:sendAnEmailSoapIn" />
+      <wsdl:output message="tns:sendAnEmailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TranslateStatusEmailMessage">
+      <wsdl:input message="tns:TranslateStatusEmailMessageSoapIn" />
+      <wsdl:output message="tns:TranslateStatusEmailMessageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TranslateStatusEmailSubject">
+      <wsdl:input message="tns:TranslateStatusEmailSubjectSoapIn" />
+      <wsdl:output message="tns:TranslateStatusEmailSubjectSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="OrderExists">
+      <wsdl:input message="tns:OrderExistsSoapIn" />
+      <wsdl:output message="tns:OrderExistsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersEmail">
+      <wsdl:input message="tns:GetUsersEmailSoapIn" />
+      <wsdl:output message="tns:GetUsersEmailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersEmailFromId">
+      <wsdl:input message="tns:GetUsersEmailFromIdSoapIn" />
+      <wsdl:output message="tns:GetUsersEmailFromIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="StorePrintStationPreferences">
+      <wsdl:input message="tns:StorePrintStationPreferencesSoapIn" />
+      <wsdl:output message="tns:StorePrintStationPreferencesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStationPreferences">
+      <wsdl:input message="tns:GetPrintStationPreferencesSoapIn" />
+      <wsdl:output message="tns:GetPrintStationPreferencesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStationCulture">
+      <wsdl:input message="tns:GetPrintStationCultureSoapIn" />
+      <wsdl:output message="tns:GetPrintStationCultureSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SavePrintStationCulture">
+      <wsdl:input message="tns:SavePrintStationCultureSoapIn" />
+      <wsdl:output message="tns:SavePrintStationCultureSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetJDFPropertyTranslations">
+      <wsdl:input message="tns:GetJDFPropertyTranslationsSoapIn" />
+      <wsdl:output message="tns:GetJDFPropertyTranslationsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLatestOrderDetailTrackingInfo">
+      <wsdl:input message="tns:GetLatestOrderDetailTrackingInfoSoapIn" />
+      <wsdl:output message="tns:GetLatestOrderDetailTrackingInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLatestOrderDetailTrackingInfoMultipleSelection">
+      <wsdl:input message="tns:GetLatestOrderDetailTrackingInfoMultipleSelectionSoapIn" />
+      <wsdl:output message="tns:GetLatestOrderDetailTrackingInfoMultipleSelectionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLatestPriceTrackingInfo">
+      <wsdl:input message="tns:GetLatestPriceTrackingInfoSoapIn" />
+      <wsdl:output message="tns:GetLatestPriceTrackingInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderStatusChanges">
+      <wsdl:input message="tns:GetOrderStatusChangesSoapIn" />
+      <wsdl:output message="tns:GetOrderStatusChangesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckPrintedTracking">
+      <wsdl:input message="tns:CheckPrintedTrackingSoapIn" />
+      <wsdl:output message="tns:CheckPrintedTrackingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllProductElements">
+      <wsdl:input message="tns:GetAllProductElementsSoapIn" />
+      <wsdl:output message="tns:GetAllProductElementsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllProductElementsByPortalCollection">
+      <wsdl:input message="tns:GetAllProductElementsByPortalCollectionSoapIn" />
+      <wsdl:output message="tns:GetAllProductElementsByPortalCollectionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductSetting">
+      <wsdl:input message="tns:GetProductSettingSoapIn" />
+      <wsdl:output message="tns:GetProductSettingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllProducts">
+      <wsdl:input message="tns:GetAllProductsSoapIn" />
+      <wsdl:output message="tns:GetAllProductsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllProductsPortalCollection">
+      <wsdl:input message="tns:GetAllProductsPortalCollectionSoapIn" />
+      <wsdl:output message="tns:GetAllProductsPortalCollectionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllProductsPortalCollection1">
+      <wsdl:input message="tns:GetAllProductsPortalCollection1SoapIn" />
+      <wsdl:output message="tns:GetAllProductsPortalCollection1SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllMediaControls">
+      <wsdl:input message="tns:GetAllMediaControlsSoapIn" />
+      <wsdl:output message="tns:GetAllMediaControlsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllMediaControlsByPortalCollection">
+      <wsdl:input message="tns:GetAllMediaControlsByPortalCollectionSoapIn" />
+      <wsdl:output message="tns:GetAllMediaControlsByPortalCollectionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SavePricing">
+      <wsdl:input message="tns:SavePricingSoapIn" />
+      <wsdl:output message="tns:SavePricingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveOrderItemPricing">
+      <wsdl:input message="tns:SaveOrderItemPricingSoapIn" />
+      <wsdl:output message="tns:SaveOrderItemPricingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentJobsByStatus">
+      <wsdl:input message="tns:GetCurrentJobsByStatusSoapIn" />
+      <wsdl:output message="tns:GetCurrentJobsByStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPrintedOrderDetails">
+      <wsdl:input message="tns:GetAllPrintedOrderDetailsSoapIn" />
+      <wsdl:output message="tns:GetAllPrintedOrderDetailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetJobTicketReport">
+      <wsdl:input message="tns:GetJobTicketReportSoapIn" />
+      <wsdl:output message="tns:GetJobTicketReportSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCompletedOrders">
+      <wsdl:input message="tns:GetCompletedOrdersSoapIn" />
+      <wsdl:output message="tns:GetCompletedOrdersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCompletedOrderPrices">
+      <wsdl:input message="tns:GetCompletedOrderPricesSoapIn" />
+      <wsdl:output message="tns:GetCompletedOrderPricesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCompletedOrdersSummary">
+      <wsdl:input message="tns:GetCompletedOrdersSummarySoapIn" />
+      <wsdl:output message="tns:GetCompletedOrdersSummarySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCompletedJobsWithoutPrice">
+      <wsdl:input message="tns:GetCompletedJobsWithoutPriceSoapIn" />
+      <wsdl:output message="tns:GetCompletedJobsWithoutPriceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductImage">
+      <wsdl:input message="tns:GetProductImageSoapIn" />
+      <wsdl:output message="tns:GetProductImageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetailsToPrint">
+      <wsdl:input message="tns:GetOrderDetailsToPrintSoapIn" />
+      <wsdl:output message="tns:GetOrderDetailsToPrintSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSelectedProductElementWithPortalid">
+      <wsdl:input message="tns:GetSelectedProductElementWithPortalidSoapIn" />
+      <wsdl:output message="tns:GetSelectedProductElementWithPortalidSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderToPrintPrice">
+      <wsdl:input message="tns:GetOrderToPrintPriceSoapIn" />
+      <wsdl:output message="tns:GetOrderToPrintPriceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AllowTransferToPrintStations">
+      <wsdl:input message="tns:AllowTransferToPrintStationsSoapIn" />
+      <wsdl:output message="tns:AllowTransferToPrintStationsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentThumbnail">
+      <wsdl:input message="tns:GetDocumentThumbnailSoapIn" />
+      <wsdl:output message="tns:GetDocumentThumbnailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStatusesWithOrm">
+      <wsdl:input message="tns:GetStatusesWithOrmSoapIn" />
+      <wsdl:output message="tns:GetStatusesWithOrmSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderStatusEntityWithOrm">
+      <wsdl:input message="tns:GetOrderStatusEntityWithOrmSoapIn" />
+      <wsdl:output message="tns:GetOrderStatusEntityWithOrmSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalIDByOrderDetailStatusIDWithOrm">
+      <wsdl:input message="tns:GetPortalIDByOrderDetailStatusIDWithOrmSoapIn" />
+      <wsdl:output message="tns:GetPortalIDByOrderDetailStatusIDWithOrmSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStataesWithOrm">
+      <wsdl:input message="tns:GetStataesWithOrmSoapIn" />
+      <wsdl:output message="tns:GetStataesWithOrmSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeOrderDetailStatuswithOrm">
+      <wsdl:input message="tns:ChangeOrderDetailStatuswithOrmSoapIn" />
+      <wsdl:output message="tns:ChangeOrderDetailStatuswithOrmSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPortalJobsWithOrm">
+      <wsdl:input message="tns:GetAllPortalJobsWithOrmSoapIn" />
+      <wsdl:output message="tns:GetAllPortalJobsWithOrmSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PrintstationSoap" type="tns:PrintstationSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetXpaths">
+      <soap:operation soapAction="http://skyline.eprint.net/GetXpaths" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetail">
+      <soap:operation soapAction="http://skyline.eprint.net/GetOrderDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVersionNumber">
+      <soap:operation soapAction="http://skyline.eprint.net/GetVersionNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTempThumbnails">
+      <soap:operation soapAction="http://skyline.eprint.net/DeleteTempThumbnails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTempThumbnail">
+      <soap:operation soapAction="http://skyline.eprint.net/DeleteTempThumbnail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrdersByPrintstation">
+      <soap:operation soapAction="http://skyline.eprint.net/GetOrdersByPrintstation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrders">
+      <soap:operation soapAction="http://skyline.eprint.net/GetOrders" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetails">
+      <soap:operation soapAction="http://skyline.eprint.net/GetOrderDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocument">
+      <soap:operation soapAction="http://skyline.eprint.net/GetDocument" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintLocations">
+      <soap:operation soapAction="http://skyline.eprint.net/GetPrintLocations" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintLocation">
+      <soap:operation soapAction="http://skyline.eprint.net/GetPrintLocation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddPrintLocation">
+      <soap:operation soapAction="http://skyline.eprint.net/AddPrintLocation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePrintLocation">
+      <soap:operation soapAction="http://skyline.eprint.net/UpdatePrintLocation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeletePrintLocation">
+      <soap:operation soapAction="http://skyline.eprint.net/DeletePrintLocation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LogUnhandledException">
+      <soap:operation soapAction="http://skyline.eprint.net/LogUnhandledException" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUser">
+      <soap:operation soapAction="http://skyline.eprint.net/ValidateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStationId">
+      <soap:operation soapAction="http://skyline.eprint.net/GetPrintStationId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DoesPSExist">
+      <soap:operation soapAction="http://skyline.eprint.net/DoesPSExist" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNumberOfPrintStations">
+      <soap:operation soapAction="http://skyline.eprint.net/GetNumberOfPrintStations" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNumberOfPrintStationLicences">
+      <soap:operation soapAction="http://skyline.eprint.net/GetNumberOfPrintStationLicences" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStationsLeft">
+      <soap:operation soapAction="http://skyline.eprint.net/GetPrintStationsLeft" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStationName">
+      <soap:operation soapAction="http://skyline.eprint.net/GetPrintStationName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MovePrintstation">
+      <soap:operation soapAction="http://skyline.eprint.net/MovePrintstation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStations">
+      <soap:operation soapAction="http://skyline.eprint.net/GetPrintStations" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPortalJobs">
+      <soap:operation soapAction="http://skyline.eprint.net/GetAllPortalJobs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalsView">
+      <soap:operation soapAction="http://skyline.eprint.net/GetPortalsView" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStationsView">
+      <soap:operation soapAction="http://skyline.eprint.net/GetPrintStationsView" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStatusView">
+      <soap:operation soapAction="http://skyline.eprint.net/GetStatusView" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStatae">
+      <soap:operation soapAction="http://skyline.eprint.net/GetStatae" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStatuses">
+      <soap:operation soapAction="http://skyline.eprint.net/GetStatuses" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrderStatus">
+      <soap:operation soapAction="http://skyline.eprint.net/UpdateOrderStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateJdf">
+      <soap:operation soapAction="http://skyline.eprint.net/UpdateJdf" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderStatusEntity">
+      <soap:operation soapAction="http://skyline.eprint.net/GetOrderStatusEntity" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalIDByOrderDetailID">
+      <soap:operation soapAction="http://skyline.eprint.net/GetPortalIDByOrderDetailID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalIDByOrderDetailStatusID">
+      <soap:operation soapAction="http://skyline.eprint.net/GetPortalIDByOrderDetailStatusID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TranslateValue">
+      <soap:operation soapAction="http://skyline.eprint.net/TranslateValue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApplyEmailTemplateAndSendEmail">
+      <soap:operation soapAction="http://skyline.eprint.net/ApplyEmailTemplateAndSendEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendAnEmail">
+      <soap:operation soapAction="http://skyline.eprint.net/sendAnEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TranslateStatusEmailMessage">
+      <soap:operation soapAction="http://skyline.eprint.net/TranslateStatusEmailMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TranslateStatusEmailSubject">
+      <soap:operation soapAction="http://skyline.eprint.net/TranslateStatusEmailSubject" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OrderExists">
+      <soap:operation soapAction="http://skyline.eprint.net/OrderExists" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersEmail">
+      <soap:operation soapAction="http://skyline.eprint.net/GetUsersEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersEmailFromId">
+      <soap:operation soapAction="http://skyline.eprint.net/GetUsersEmailFromId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StorePrintStationPreferences">
+      <soap:operation soapAction="http://skyline.eprint.net/StorePrintStationPreferences" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStationPreferences">
+      <soap:operation soapAction="http://skyline.eprint.net/GetPrintStationPreferences" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStationCulture">
+      <soap:operation soapAction="http://skyline.eprint.net/GetPrintStationCulture" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SavePrintStationCulture">
+      <soap:operation soapAction="http://skyline.eprint.net/SavePrintStationCulture" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetJDFPropertyTranslations">
+      <soap:operation soapAction="http://skyline.eprint.net/GetJDFPropertyTranslations" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLatestOrderDetailTrackingInfo">
+      <soap:operation soapAction="http://skyline.eprint.net/GetLatestOrderDetailTrackingInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLatestOrderDetailTrackingInfoMultipleSelection">
+      <soap:operation soapAction="http://skyline.eprint.net/GetLatestOrderDetailTrackingInfoMultipleSelection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLatestPriceTrackingInfo">
+      <soap:operation soapAction="http://skyline.eprint.net/GetLatestPriceTrackingInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderStatusChanges">
+      <soap:operation soapAction="http://skyline.eprint.net/GetOrderStatusChanges" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckPrintedTracking">
+      <soap:operation soapAction="http://skyline.eprint.net/CheckPrintedTracking" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllProductElements">
+      <soap:operation soapAction="http://skyline.eprint.net/GetAllProductElements" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllProductElementsByPortalCollection">
+      <soap:operation soapAction="http://skyline.eprint.net/GetAllProductElementsByPortalCollection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductSetting">
+      <soap:operation soapAction="http://skyline.eprint.net/GetProductSetting" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllProducts">
+      <soap:operation soapAction="http://skyline.eprint.net/GetAllProducts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllProductsPortalCollection">
+      <soap:operation soapAction="http://skyline.eprint.net/GetAllProductsPortalCollection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllProductsPortalCollection1">
+      <soap:operation soapAction="http://skyline.eprint.net/GetAllProductsPortalCollection1" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllMediaControls">
+      <soap:operation soapAction="http://skyline.eprint.net/GetAllMediaControls" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllMediaControlsByPortalCollection">
+      <soap:operation soapAction="http://skyline.eprint.net/GetAllMediaControlsByPortalCollection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SavePricing">
+      <soap:operation soapAction="http://skyline.eprint.net/SavePricing" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveOrderItemPricing">
+      <soap:operation soapAction="http://skyline.eprint.net/SaveOrderItemPricing" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentJobsByStatus">
+      <soap:operation soapAction="http://skyline.eprint.net/GetCurrentJobsByStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPrintedOrderDetails">
+      <soap:operation soapAction="http://skyline.eprint.net/GetAllPrintedOrderDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetJobTicketReport">
+      <soap:operation soapAction="http://skyline.eprint.net/GetJobTicketReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCompletedOrders">
+      <soap:operation soapAction="http://skyline.eprint.net/GetCompletedOrders" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCompletedOrderPrices">
+      <soap:operation soapAction="http://skyline.eprint.net/GetCompletedOrderPrices" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCompletedOrdersSummary">
+      <soap:operation soapAction="http://skyline.eprint.net/GetCompletedOrdersSummary" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCompletedJobsWithoutPrice">
+      <soap:operation soapAction="http://skyline.eprint.net/GetCompletedJobsWithoutPrice" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductImage">
+      <soap:operation soapAction="http://skyline.eprint.net/GetProductImage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetailsToPrint">
+      <soap:operation soapAction="http://skyline.eprint.net/GetOrderDetailsToPrint" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSelectedProductElementWithPortalid">
+      <soap:operation soapAction="http://skyline.eprint.net/GetSelectedProductElementWithPortalid" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderToPrintPrice">
+      <soap:operation soapAction="http://skyline.eprint.net/GetOrderToPrintPrice" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AllowTransferToPrintStations">
+      <soap:operation soapAction="http://skyline.eprint.net/AllowTransferToPrintStations" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentThumbnail">
+      <soap:operation soapAction="http://skyline.eprint.net/GetDocumentThumbnail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStatusesWithOrm">
+      <soap:operation soapAction="http://skyline.eprint.net/GetStatusesWithOrm" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderStatusEntityWithOrm">
+      <soap:operation soapAction="http://skyline.eprint.net/GetOrderStatusEntityWithOrm" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalIDByOrderDetailStatusIDWithOrm">
+      <soap:operation soapAction="http://skyline.eprint.net/GetPortalIDByOrderDetailStatusIDWithOrm" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStataesWithOrm">
+      <soap:operation soapAction="http://skyline.eprint.net/GetStataesWithOrm" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeOrderDetailStatuswithOrm">
+      <soap:operation soapAction="http://skyline.eprint.net/ChangeOrderDetailStatuswithOrm" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPortalJobsWithOrm">
+      <soap:operation soapAction="http://skyline.eprint.net/GetAllPortalJobsWithOrm" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PrintstationSoap12" type="tns:PrintstationSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetXpaths">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetXpaths" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetail">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetOrderDetail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVersionNumber">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetVersionNumber" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTempThumbnails">
+      <soap12:operation soapAction="http://skyline.eprint.net/DeleteTempThumbnails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTempThumbnail">
+      <soap12:operation soapAction="http://skyline.eprint.net/DeleteTempThumbnail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrdersByPrintstation">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetOrdersByPrintstation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrders">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetOrders" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetails">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetOrderDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocument">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetDocument" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintLocations">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetPrintLocations" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintLocation">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetPrintLocation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddPrintLocation">
+      <soap12:operation soapAction="http://skyline.eprint.net/AddPrintLocation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePrintLocation">
+      <soap12:operation soapAction="http://skyline.eprint.net/UpdatePrintLocation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeletePrintLocation">
+      <soap12:operation soapAction="http://skyline.eprint.net/DeletePrintLocation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LogUnhandledException">
+      <soap12:operation soapAction="http://skyline.eprint.net/LogUnhandledException" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUser">
+      <soap12:operation soapAction="http://skyline.eprint.net/ValidateUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStationId">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetPrintStationId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DoesPSExist">
+      <soap12:operation soapAction="http://skyline.eprint.net/DoesPSExist" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNumberOfPrintStations">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetNumberOfPrintStations" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNumberOfPrintStationLicences">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetNumberOfPrintStationLicences" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStationsLeft">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetPrintStationsLeft" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStationName">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetPrintStationName" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MovePrintstation">
+      <soap12:operation soapAction="http://skyline.eprint.net/MovePrintstation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStations">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetPrintStations" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPortalJobs">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetAllPortalJobs" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalsView">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetPortalsView" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStationsView">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetPrintStationsView" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStatusView">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetStatusView" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStatae">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetStatae" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStatuses">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetStatuses" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrderStatus">
+      <soap12:operation soapAction="http://skyline.eprint.net/UpdateOrderStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateJdf">
+      <soap12:operation soapAction="http://skyline.eprint.net/UpdateJdf" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderStatusEntity">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetOrderStatusEntity" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalIDByOrderDetailID">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetPortalIDByOrderDetailID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalIDByOrderDetailStatusID">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetPortalIDByOrderDetailStatusID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TranslateValue">
+      <soap12:operation soapAction="http://skyline.eprint.net/TranslateValue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApplyEmailTemplateAndSendEmail">
+      <soap12:operation soapAction="http://skyline.eprint.net/ApplyEmailTemplateAndSendEmail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendAnEmail">
+      <soap12:operation soapAction="http://skyline.eprint.net/sendAnEmail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TranslateStatusEmailMessage">
+      <soap12:operation soapAction="http://skyline.eprint.net/TranslateStatusEmailMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TranslateStatusEmailSubject">
+      <soap12:operation soapAction="http://skyline.eprint.net/TranslateStatusEmailSubject" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OrderExists">
+      <soap12:operation soapAction="http://skyline.eprint.net/OrderExists" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersEmail">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetUsersEmail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersEmailFromId">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetUsersEmailFromId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StorePrintStationPreferences">
+      <soap12:operation soapAction="http://skyline.eprint.net/StorePrintStationPreferences" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStationPreferences">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetPrintStationPreferences" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPrintStationCulture">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetPrintStationCulture" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SavePrintStationCulture">
+      <soap12:operation soapAction="http://skyline.eprint.net/SavePrintStationCulture" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetJDFPropertyTranslations">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetJDFPropertyTranslations" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLatestOrderDetailTrackingInfo">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetLatestOrderDetailTrackingInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLatestOrderDetailTrackingInfoMultipleSelection">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetLatestOrderDetailTrackingInfoMultipleSelection" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLatestPriceTrackingInfo">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetLatestPriceTrackingInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderStatusChanges">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetOrderStatusChanges" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckPrintedTracking">
+      <soap12:operation soapAction="http://skyline.eprint.net/CheckPrintedTracking" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllProductElements">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetAllProductElements" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllProductElementsByPortalCollection">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetAllProductElementsByPortalCollection" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductSetting">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetProductSetting" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllProducts">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetAllProducts" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllProductsPortalCollection">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetAllProductsPortalCollection" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllProductsPortalCollection1">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetAllProductsPortalCollection1" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllMediaControls">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetAllMediaControls" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllMediaControlsByPortalCollection">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetAllMediaControlsByPortalCollection" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SavePricing">
+      <soap12:operation soapAction="http://skyline.eprint.net/SavePricing" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveOrderItemPricing">
+      <soap12:operation soapAction="http://skyline.eprint.net/SaveOrderItemPricing" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentJobsByStatus">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetCurrentJobsByStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPrintedOrderDetails">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetAllPrintedOrderDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetJobTicketReport">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetJobTicketReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCompletedOrders">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetCompletedOrders" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCompletedOrderPrices">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetCompletedOrderPrices" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCompletedOrdersSummary">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetCompletedOrdersSummary" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCompletedJobsWithoutPrice">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetCompletedJobsWithoutPrice" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductImage">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetProductImage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetailsToPrint">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetOrderDetailsToPrint" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSelectedProductElementWithPortalid">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetSelectedProductElementWithPortalid" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderToPrintPrice">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetOrderToPrintPrice" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AllowTransferToPrintStations">
+      <soap12:operation soapAction="http://skyline.eprint.net/AllowTransferToPrintStations" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentThumbnail">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetDocumentThumbnail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStatusesWithOrm">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetStatusesWithOrm" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderStatusEntityWithOrm">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetOrderStatusEntityWithOrm" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalIDByOrderDetailStatusIDWithOrm">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetPortalIDByOrderDetailStatusIDWithOrm" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStataesWithOrm">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetStataesWithOrm" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeOrderDetailStatuswithOrm">
+      <soap12:operation soapAction="http://skyline.eprint.net/ChangeOrderDetailStatuswithOrm" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPortalJobsWithOrm">
+      <soap12:operation soapAction="http://skyline.eprint.net/GetAllPortalJobsWithOrm" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Printstation">
+    <wsdl:port name="PrintstationSoap" binding="tns:PrintstationSoap">
+      <soap:address location="http://localhost/Printstation/Printstation.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PrintstationSoap12" binding="tns:PrintstationSoap12">
+      <soap12:address location="http://localhost/Printstation/Printstation.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

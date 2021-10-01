@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.35
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkylineUploaderApp", "SkylineUploader\SkylineUploaderApp.csproj", "{05F7F42D-CB96-4062-BC23-DD23D1A1C336}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkylineUploaderDomain.DataModel", "SkylineUploaderDomain.DataModel\SkylineUploaderDomain.DataModel.csproj", "{B2A139FD-F737-4ACA-AD01-7EE79D008EED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkylineUploaderService", "SkylineUploaderService\SkylineUploaderService\SkylineUploaderService.csproj", "{261E1214-C6DE-4D01-8516-7FA268FD53A3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05F7F42D-CB96-4062-BC23-DD23D1A1C336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05F7F42D-CB96-4062-BC23-DD23D1A1C336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05F7F42D-CB96-4062-BC23-DD23D1A1C336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05F7F42D-CB96-4062-BC23-DD23D1A1C336}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2A139FD-F737-4ACA-AD01-7EE79D008EED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2A139FD-F737-4ACA-AD01-7EE79D008EED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2A139FD-F737-4ACA-AD01-7EE79D008EED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2A139FD-F737-4ACA-AD01-7EE79D008EED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{261E1214-C6DE-4D01-8516-7FA268FD53A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{261E1214-C6DE-4D01-8516-7FA268FD53A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{261E1214-C6DE-4D01-8516-7FA268FD53A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{261E1214-C6DE-4D01-8516-7FA268FD53A3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {025E1986-CE81-4CA8-85F4-75BEA0916B9F}
+	EndGlobalSection
+EndGlobal

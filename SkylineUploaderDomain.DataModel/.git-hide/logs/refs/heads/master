@@ -1,0 +1,7 @@
+0000000000000000000000000000000000000000 51ae79407e0315250c0fd0652bc1ae88a9ca1687 Paul Clark <paul.clark.home@outlook.com> 1632900812 +0100	commit (initial): Add .gitignore and .gitattributes.
+51ae79407e0315250c0fd0652bc1ae88a9ca1687 f577a28c57d24f3538da433ae9c51fe35c173013 Paul Clark <paul.clark.home@outlook.com> 1632900819 +0100	commit: Add project files.
+f577a28c57d24f3538da433ae9c51fe35c173013 4e3d242b1c39a628a24e490b12d29e1831585354 Paul Clark <paul.clark.home@outlook.com> 1632901992 +0100	commit: Test of Source Control
+4e3d242b1c39a628a24e490b12d29e1831585354 6ef63f29cb1ebcb9d16233b9070ee79e4d65e966 Paul Clark <paul.clark.home@outlook.com> 1632907674 +0100	commit: InEditMode added to Folder table
+6ef63f29cb1ebcb9d16233b9070ee79e4d65e966 3db14d812df4ff98ffb53427671b58e363b2eb03 Paul Clark <paul.clark.home@outlook.com> 1632927316 +0100	commit: Removed unused references
+3db14d812df4ff98ffb53427671b58e363b2eb03 f924ec510d8949aa3778b95c9fb23a0fbb31190c Paul Clark <paul.clark.home@outlook.com> 1633017201 +0100	commit: Added MigrateDatabaseToLatestVersion
+f924ec510d8949aa3778b95c9fb23a0fbb31190c 83870d0993c6fa748ab1983052d8e574d3e1673d Paul Clark <paul.clark.home@outlook.com> 1633077410 +0100	commit: Added AutomaticMigrationDataLossAllowed to Configuration()
