@@ -95,11 +95,8 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="SkylineUploaderDomain.DataModel">
-      <HintPath>..\SkylineUploaderDomain.DataModel\bin\Debug\SkylineUploaderDomain.DataModel.dll</HintPath>
-    </Reference>
     <Reference Include="System">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
     </Reference>
     <Reference Include="SkylineUploaderDomain.DataModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fc2b49869c92d58c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
