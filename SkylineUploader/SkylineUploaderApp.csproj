@@ -125,6 +125,7 @@
     <Compile Include="Classes\Global.cs" />
     <Compile Include="Classes\GridData.cs" />
     <Compile Include="Classes\SettingsHelper.cs" />
+    <Compile Include="Classes\SqlHelper.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="FrmFolderDetails.cs">
       <SubType>Form</SubType>

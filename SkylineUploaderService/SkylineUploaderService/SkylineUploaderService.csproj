@@ -72,5 +72,15 @@
       <DependentUpon>SkylineUploaderService.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\HelperClasses\HelperClasses\HelperClasses.csproj">
+      <Project>{1c225da3-0ffb-4d4c-b700-7a22e00bc433}</Project>
+      <Name>HelperClasses</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SkylineUploader\SkylineUploaderApp.csproj">
+      <Project>{05f7f42d-cb96-4062-bc23-dd23d1a1c336}</Project>
+      <Name>SkylineUploaderApp</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

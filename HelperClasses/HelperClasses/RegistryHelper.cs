@@ -13,10 +13,19 @@ namespace HelperClasses
         {
             try
             {
-                RegistryKey key = Registry.LocalMachine.OpenSubKey("SOFTWARE",true);
-                key.CreateSubKey("SkylineUploader");
-                key = key.OpenSubKey("SkylineUploader", true);
-                key.Close();
+                RegistryKey key = Registry.LocalMachine.OpenSubKey("SOFTWARE", true);
+                key = key.OpenSubKey("SkylineUploader,true");
+                if (key != null)
+                {
+                    key.Close();
+                    return string.Empty;
+                }
+
+                RegistryKey newKey = Registry.LocalMachine.OpenSubKey("SOFTWARE", true);
+
+                newKey.CreateSubKey("SkylineUploader");
+                newKey = newKey.OpenSubKey("SkylineUploader", true);
+                newKey.Close();
                 return string.Empty;
 
             }
@@ -30,9 +39,9 @@ namespace HelperClasses
         {
             try
             {
-                RegistryKey key = Registry.LocalMachine.OpenSubKey("Software",true);
+                RegistryKey key = Registry.LocalMachine.OpenSubKey("Software", true);
                 key = key.OpenSubKey("SkylineUploader", true);
-                key.SetValue(valueName, valueData,RegistryValueKind.String);
+                key.SetValue(valueName, valueData, RegistryValueKind.String);
                 key.Close();
                 return string.Empty;
             }
@@ -46,7 +55,7 @@ namespace HelperClasses
         {
             try
             {
-                RegistryKey key = Registry.LocalMachine.OpenSubKey("Software",true);
+                RegistryKey key = Registry.LocalMachine.OpenSubKey("Software", true);
                 key = key.OpenSubKey("SkylineUploader", true);
                 if (key == null)
                 {
@@ -57,8 +66,8 @@ namespace HelperClasses
             }
             catch (Exception e)
             {
-                return "*error* Unexpected error trying the read the Value Name " + valueName + " in the registry HKEY_LOCAL_MACHINE\\SOFTWARE\\SkylineUploader";
-                
+                return "*error* Unexpected error trying the read the Value Name " + valueName + " in the registry HKEY_LOCAL_MACHINE\\SOFTWARE\\SkylineUploader. Error = " + e.Message;
+
             }
         }
     }

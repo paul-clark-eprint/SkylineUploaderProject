@@ -18,7 +18,7 @@ namespace SkylineUploader
 {
     public partial class FrmSelectSqlInstance : Form
     {
-        public List<SqlServerInstance> sqlInstances;
+        public List<SqlHelper> sqlInstances;
         public string SelectedInstance = string.Empty;
         public bool WindowsAuthentication = true;
         public string SqlUsername = string.Empty;
@@ -195,7 +195,7 @@ namespace SkylineUploader
                 Debug.Error("Unexpected error connecting to the database.", ex);
             }
 
-            string errorMessage = SqlServerInstance.ModifyConnectionString("UploaderDbContext", sqlConBuilder.ConnectionString);
+            string errorMessage = SqlHelper.ModifyConnectionString("UploaderDbContext", sqlConBuilder.ConnectionString);
             if (!string.IsNullOrEmpty(errorMessage))
             {
                 Debug.Error(errorMessage);
@@ -205,29 +205,27 @@ namespace SkylineUploader
             }
             else
             {
-                //try
-                //{
-                //    Debug.Log("ConnectionString string saved to app.config");
-                //    RegistryHelper.SaveRegistryKey("ConnectionString", sqlConBuilder.ConnectionString);
-                //    Debug.Log("ConnectionString saved in the Registry");
+                try
+                {
+                    Debug.Log("ConnectionString string saved to app.config");
+                    RegistryHelper.SaveRegistryKey("ConnectionString", sqlConBuilder.ConnectionString);
+                    Debug.Log("ConnectionString saved in the Registry");
 
-                //    DataSourceSet = true;
-                //}
-                //catch (Exception ex)
-                //{
-                //    Debug.Error(ex.Message,ex);
-                //    MessageBox.Show("Unable to write setting to the registry. Please run as Administrator",
-                //        "Run as Administrator", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    DataSourceSet = true;
+                }
+                catch (Exception ex)
+                {
+                    Debug.Error(ex.Message, ex);
+                    MessageBox.Show("Unable to write setting to the registry. Please run as Administrator",
+                        "Run as Administrator", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                //    DataSourceSet = false;
-                //}
+                    DataSourceSet = false;
+                }
                 DataSourceSet = true;
             }
 
             Close();
         }
-
-
 
         private void radDropDownList1_SelectedIndexChanged(object sender, Telerik.WinControls.UI.Data.PositionChangedEventArgs e)
         {

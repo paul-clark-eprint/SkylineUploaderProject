@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.SqlClient;
@@ -22,8 +23,8 @@ namespace SkylineUploader
     public partial class FrmUploader : RadForm
     {
         private List<GridData> _folderData;
-        private BackgroundWorker bwCheckSQL;
-        private List<SqlServerInstance> SqlInstances;
+        private BackgroundWorker _bwCheckSql;
+        private List<SqlHelper> _sqlInstances;
         private bool sqlFound = false;
         private bool dataSourceSet = false;
 
@@ -34,31 +35,39 @@ namespace SkylineUploader
             InitializeBackgroundWorker();
             Database.SetInitializer<UploaderDbContext>(null);
 
-            //string errorMessage = RegistryHelper.CreateRegistryKeys();
-            //if(!string.IsNullOrEmpty(errorMessage))
-            //{
-            //    Debug.Error(errorMessage);
-            //    MessageBox.Show("Unable to create a Registry Key. Please run as an Administrator\n\n" + errorMessage,
-            //        "Run as Administrator", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    Application.Exit();
-            //    return;
-            //}
+            CreateRegistryKeys();
             CheckAppConfig();
+            
+        }
+
+        private void CreateRegistryKeys()
+        {
+            string errorMessage = RegistryHelper.CreateRegistryKeys();
+            if (!string.IsNullOrEmpty(errorMessage))
+            {
+                MessageBox.Show("Error creatating the registry key. Please run as Administrator\n\n" + errorMessage,
+                    "Run as Administrator", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
         }
 
         private void CheckAppConfig()
         {
-            string connectString = SqlServerInstance.GetConnectionString();
-            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connectString);
+            string connectionString = SqlHelper.GetConnectionString("UploaderDbContext");
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connectionString);
             var dataSource = builder["Data Source"].ToString();
             if (string.IsNullOrEmpty(dataSource))
             {
-                Debug.Log("ConnectionString = " + connectString);
+                Debug.Log("ConnectionString = " + connectionString);
                 Debug.Log("Datasource not found in ConnectionString. Calling CheckSqlInstance()");
+
+                RegistryHelper.SaveRegistryKey("ConnectionString", String.Empty);
+
                 CheckSqlInstance();
             }
             else
             {
+                RegistryHelper.SaveRegistryKey("ConnectionString", connectionString);
                 uxLabelStatus.Text = "Ready";
                 uxButtonNew.Enabled = true;
                 if (!InitialiseFoldersGrid())
@@ -71,22 +80,22 @@ namespace SkylineUploader
 
         private void InitializeBackgroundWorker()
         {
-            bwCheckSQL = new BackgroundWorker();
-            bwCheckSQL.WorkerReportsProgress = true;
-            bwCheckSQL.WorkerSupportsCancellation = true;
+            _bwCheckSql = new BackgroundWorker();
+            _bwCheckSql.WorkerReportsProgress = true;
+            _bwCheckSql.WorkerSupportsCancellation = true;
 
-            bwCheckSQL.DoWork += new DoWorkEventHandler(bwCheckSQL_DoWork);
-            bwCheckSQL.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwCheckSQL_RunWorkerCompleted);
-            bwCheckSQL.ProgressChanged += new ProgressChangedEventHandler(bwCheckSQL_ProgressChanged);
+            _bwCheckSql.DoWork += new DoWorkEventHandler(bwCheckSQL_DoWork);
+            _bwCheckSql.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwCheckSQL_RunWorkerCompleted);
+            _bwCheckSql.ProgressChanged += new ProgressChangedEventHandler(bwCheckSQL_ProgressChanged);
         }
 
 
 
         private void bwCheckSQL_DoWork(object sender, DoWorkEventArgs e)
         {
-            bwCheckSQL.ReportProgress(-1, "Looking for SQL instances. Please wait");
+            _bwCheckSql.ReportProgress(-1, "Looking for SQL instances. Please wait");
 
-            SqlInstances = new List<SqlServerInstance>();
+            _sqlInstances = new List<SqlHelper>();
 
             string ServerName = Environment.MachineName;
             RegistryView registryView = Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32;
@@ -99,7 +108,7 @@ namespace SkylineUploader
                     {
                         string serverInstance = ServerName + "\\" + instanceName;
                         Console.WriteLine(serverInstance);
-                        SqlInstances.Add(new SqlServerInstance()
+                        _sqlInstances.Add(new SqlHelper()
                         {
                             ServerInstance = serverInstance
                         });
@@ -107,7 +116,7 @@ namespace SkylineUploader
                 }
             }
 
-            if (SqlInstances.Count > 0)
+            if (_sqlInstances.Count > 0)
             {
                 sqlFound = true;
             }
@@ -132,12 +141,12 @@ namespace SkylineUploader
             Debug.Log("dataSourceSet = " + dataSourceSet);
             if (sqlFound && !dataSourceSet)
             {
-                Debug.Log("sqlInstances.Count = " + SqlInstances.Count);
-                if (SqlInstances.Count > 0)
+                Debug.Log("sqlInstances.Count = " + _sqlInstances.Count);
+                if (_sqlInstances.Count > 0)
                 {
                     using (var frmSelectSqlInstance = new FrmSelectSqlInstance())
                     {
-                        frmSelectSqlInstance.sqlInstances = SqlInstances;
+                        frmSelectSqlInstance.sqlInstances = _sqlInstances;
                         frmSelectSqlInstance.StartPosition = FormStartPosition.CenterParent;
                         frmSelectSqlInstance.ShowDialog(this);
 
@@ -178,7 +187,7 @@ namespace SkylineUploader
             uxLabelStatus.Visible = true;
             uxWaitingBar.Visible = true;
             uxWaitingBar.StartWaiting();
-            bwCheckSQL.RunWorkerAsync();
+            _bwCheckSql.RunWorkerAsync();
         }
 
         private bool InitialiseFoldersGrid()
@@ -279,7 +288,7 @@ namespace SkylineUploader
                     SqlConnectionStringBuilder sqlConBuilder = new SqlConnectionStringBuilder();
                     sqlConBuilder.ConnectionString = "Data Source=;Initial Catalog=SkylineUploader;Integrated Security=SSPI;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-                    string errorMessage= SqlServerInstance.ModifyConnectionString("UploaderDbContext", sqlConBuilder.ConnectionString);
+                    string errorMessage= SqlHelper.ModifyConnectionString("UploaderDbContext", sqlConBuilder.ConnectionString);
                     Debug.Error(errorMessage);
                     MessageBox.Show(errorMessage, "Run As Administrator", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -371,9 +380,9 @@ namespace SkylineUploader
 
         private void uxButtonClose_Click(object sender, EventArgs e)
         {
-            if (bwCheckSQL.IsBusy)
+            if (_bwCheckSql.IsBusy)
             {
-                bwCheckSQL.CancelAsync();
+                _bwCheckSql.CancelAsync();
             }
             Application.Exit();
         }
