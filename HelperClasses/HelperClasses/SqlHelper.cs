@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace SkylineUploader.Classes
+namespace HelperClasses
 {
     public class SqlServerInstance
     {
@@ -16,14 +11,15 @@ namespace SkylineUploader.Classes
 
         public static string GetConnectionString()
         {
-            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            var section = (ConnectionStringsSection)config.GetSection("connectionStrings");
-            var connectionString = section.ConnectionStrings[0].ConnectionString;
+            //var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            //var section = (ConnectionStringsSection)config.GetSection("connectionStrings");
+            //var connectionString = section.ConnectionStrings[0].ConnectionString;
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["UploaderDbContext"].ConnectionString;
 
             return connectionString;
         }
 
-        public static void ModifyConnectionString(string name, string connectionString)
+        public static string ModifyConnectionString(string name, string connectionString)
         {
             try
             {
@@ -36,11 +32,10 @@ namespace SkylineUploader.Classes
             }
             catch (Exception)
             {
-                MessageBox.Show("Unable to save the database configuration. Please run the appication as Administrator",
-                    "Run As Administrator required", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Application.Exit();
+                return "Unable to save the database configuration. Please run the application as Administrator";
             }
 
+            return string.Empty;
         }
     }
 

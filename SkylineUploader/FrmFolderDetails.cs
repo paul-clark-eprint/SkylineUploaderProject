@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Windows.Forms;
+using HelperClasses;
 using SkylineUploader.Classes;
 using Telerik.WinControls.UI;
 using SkylineUploader.SkylineWebService;

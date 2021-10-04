@@ -4,11 +4,13 @@ using System.ComponentModel;
 using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using HelperClasses;
 using Microsoft.Win32;
 using SkylineUploader.Classes;
 using SkylineUploaderDomain.DataModel;
@@ -31,12 +33,22 @@ namespace SkylineUploader
             InitializeComponent();
             InitializeBackgroundWorker();
             Database.SetInitializer<UploaderDbContext>(null);
+
+            //string errorMessage = RegistryHelper.CreateRegistryKeys();
+            //if(!string.IsNullOrEmpty(errorMessage))
+            //{
+            //    Debug.Error(errorMessage);
+            //    MessageBox.Show("Unable to create a Registry Key. Please run as an Administrator\n\n" + errorMessage,
+            //        "Run as Administrator", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    Application.Exit();
+            //    return;
+            //}
             CheckAppConfig();
         }
 
         private void CheckAppConfig()
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["UploaderDbContext"].ConnectionString;
+            string connectString = SqlServerInstance.GetConnectionString();
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connectString);
             var dataSource = builder["Data Source"].ToString();
             if (string.IsNullOrEmpty(dataSource))
@@ -263,10 +275,13 @@ namespace SkylineUploader
 
                 if (errorNumber == 262)
                 {
+                    //reset the app.config ConnectionString back to blank Data Source
                     SqlConnectionStringBuilder sqlConBuilder = new SqlConnectionStringBuilder();
                     sqlConBuilder.ConnectionString = "Data Source=;Initial Catalog=SkylineUploader;Integrated Security=SSPI;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-                    SqlServerInstance.ModifyConnectionString("UploaderDbContext", sqlConBuilder.ConnectionString);
+                    string errorMessage= SqlServerInstance.ModifyConnectionString("UploaderDbContext", sqlConBuilder.ConnectionString);
+                    Debug.Error(errorMessage);
+                    MessageBox.Show(errorMessage, "Run As Administrator", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 return false;

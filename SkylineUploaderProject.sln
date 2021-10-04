@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkylineUploaderDomain.DataM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkylineUploaderService", "SkylineUploaderService\SkylineUploaderService\SkylineUploaderService.csproj", "{261E1214-C6DE-4D01-8516-7FA268FD53A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelperClasses", "HelperClasses\HelperClasses\HelperClasses.csproj", "{1C225DA3-0FFB-4D4C-B700-7A22E00BC433}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{261E1214-C6DE-4D01-8516-7FA268FD53A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{261E1214-C6DE-4D01-8516-7FA268FD53A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{261E1214-C6DE-4D01-8516-7FA268FD53A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C225DA3-0FFB-4D4C-B700-7A22E00BC433}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C225DA3-0FFB-4D4C-B700-7A22E00BC433}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C225DA3-0FFB-4D4C-B700-7A22E00BC433}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C225DA3-0FFB-4D4C-B700-7A22E00BC433}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

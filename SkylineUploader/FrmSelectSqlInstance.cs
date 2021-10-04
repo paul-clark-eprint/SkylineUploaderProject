@@ -6,9 +6,11 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using HelperClasses;
 using SkylineUploader.Classes;
 using Telerik.WinControls.UI;
 
@@ -40,13 +42,13 @@ namespace SkylineUploader
 
             if (!string.IsNullOrEmpty(SelectedInstance))
             {
-                RadListDataItem row =  uxDropDownList.FindItemExact(SelectedInstance, false);
+                RadListDataItem row = uxDropDownList.FindItemExact(SelectedInstance, false);
                 if (row != null)
                 {
                     var index = row.Index;
                     uxDropDownList.SelectedItem = row;
                 }
-                
+
             }
         }
 
@@ -150,7 +152,7 @@ namespace SkylineUploader
                 };
             }
 
-            
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -172,7 +174,7 @@ namespace SkylineUploader
                     }
                 }
 
-                
+
             }
 
             catch (SqlException sqlExc)
@@ -181,26 +183,51 @@ namespace SkylineUploader
                 var inner = sqlExc.InnerException;
                 var errorNumber = sqlExc.Number;
 
-                MessageBox.Show("Error creating the database. \n\n" + sqlExc.Message, "Error creating database",
+                MessageBox.Show("Error connecting to the database. \n\n" + sqlExc.Message, "Connection Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                Debug.Error("Error creating the database.", sqlExc);
+                Debug.Error("Error connecting to the database.", sqlExc);
 
                 return;
             }
             catch (Exception ex)
             {
-
-                string message = ex.Message;
+                Debug.Error("Unexpected error connecting to the database.", ex);
             }
 
-            SqlServerInstance.ModifyConnectionString("UploaderDbContext", sqlConBuilder.ConnectionString);
-            DataSourceSet = true;
+            string errorMessage = SqlServerInstance.ModifyConnectionString("UploaderDbContext", sqlConBuilder.ConnectionString);
+            if (!string.IsNullOrEmpty(errorMessage))
+            {
+                Debug.Error(errorMessage);
+
+                MessageBox.Show(errorMessage, "Run As Administrator", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DataSourceSet = false;
+            }
+            else
+            {
+                //try
+                //{
+                //    Debug.Log("ConnectionString string saved to app.config");
+                //    RegistryHelper.SaveRegistryKey("ConnectionString", sqlConBuilder.ConnectionString);
+                //    Debug.Log("ConnectionString saved in the Registry");
+
+                //    DataSourceSet = true;
+                //}
+                //catch (Exception ex)
+                //{
+                //    Debug.Error(ex.Message,ex);
+                //    MessageBox.Show("Unable to write setting to the registry. Please run as Administrator",
+                //        "Run as Administrator", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                //    DataSourceSet = false;
+                //}
+                DataSourceSet = true;
+            }
 
             Close();
         }
 
-        
+
 
         private void radDropDownList1_SelectedIndexChanged(object sender, Telerik.WinControls.UI.Data.PositionChangedEventArgs e)
         {

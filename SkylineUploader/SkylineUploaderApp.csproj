@@ -125,8 +125,6 @@
     <Compile Include="Classes\Global.cs" />
     <Compile Include="Classes\GridData.cs" />
     <Compile Include="Classes\SettingsHelper.cs" />
-    <Compile Include="Classes\SqlHelper.cs" />
-    <Compile Include="Classes\webcalls.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="FrmFolderDetails.cs">
       <SubType>Form</SubType>
@@ -376,6 +374,10 @@
     <Content Include="SkylineLogo32.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HelperClasses\HelperClasses\HelperClasses.csproj">
+      <Project>{1c225da3-0ffb-4d4c-b700-7a22e00bc433}</Project>
+      <Name>HelperClasses</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SkylineUploaderDomain.DataModel\SkylineUploaderDomain.DataModel.csproj">
       <Project>{b2a139fd-f737-4aca-ad01-7ee79d008eed}</Project>
       <Name>SkylineUploaderDomain.DataModel</Name>

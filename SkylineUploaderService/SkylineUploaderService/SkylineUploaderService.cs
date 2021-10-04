@@ -67,6 +67,8 @@ namespace SkylineUploaderService
             // Update the service state to Running.
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+
+
         }
 
         protected override void OnStop()

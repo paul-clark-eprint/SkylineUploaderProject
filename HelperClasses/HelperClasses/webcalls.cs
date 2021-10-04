@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Net;
 
-namespace SkylineUploader.Classes
+namespace HelperClasses
 {
     public static class Webcalls
     {
