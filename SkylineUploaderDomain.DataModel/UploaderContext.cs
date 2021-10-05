@@ -8,7 +8,8 @@ namespace SkylineUploaderDomain.DataModel
     {
         public UploaderDbContext() : base("SkylineUploader")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<UploaderDbContext, Migrations.Configuration>());
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<UploaderDbContext, Migrations.Configuration>());
+            Database.SetInitializer<UploaderDbContext>(null);
         }
 
         public DbSet<Folder> Folders { get; set; }

@@ -25,6 +25,10 @@ namespace SkylineUploader
         public string SqlPassword = string.Empty;
         public bool DataSourceSet = false;
 
+        private string _currentUsername = string.Empty;
+        private string _sqlUsername = string.Empty;
+        private string _sqlPassword = string.Empty;
+
         public FrmSelectSqlInstance()
         {
             InitializeComponent();
@@ -50,6 +54,8 @@ namespace SkylineUploader
                 }
 
             }
+            _currentUsername = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            uxTextBoxUsername.Text = _currentUsername;
         }
 
         private void uxButtonClose_Click(object sender, EventArgs e)
@@ -208,7 +214,7 @@ namespace SkylineUploader
                 try
                 {
                     Debug.Log("ConnectionString string saved to app.config");
-                    RegistryHelper.SaveRegistryKey("ConnectionString", sqlConBuilder.ConnectionString);
+                    //RegistryHelper.SaveRegistryKey("ConnectionString", sqlConBuilder.ConnectionString);
                     Debug.Log("ConnectionString saved in the Registry");
 
                     DataSourceSet = true;
@@ -232,7 +238,7 @@ namespace SkylineUploader
             var sqlAuthentication = radDropDownList1.SelectedIndex == 1;
             uxLabelUsername.Enabled = sqlAuthentication;
             uxLabelPassword.Enabled = sqlAuthentication;
-            uxLabelInfo.Enabled = sqlAuthentication;
+            
             uxTextBoxUsername.Enabled = sqlAuthentication;
             uxTextBoxPassword.Enabled = sqlAuthentication;
 
@@ -240,8 +246,30 @@ namespace SkylineUploader
 
             if (radDropDownList1.SelectedIndex == 0)
             {
-                uxTextBoxUsername.Text = string.Empty;
+                uxTextBoxUsername.Text = _currentUsername;
                 uxTextBoxPassword.Text = string.Empty;
+            }
+            else
+            {
+                uxTextBoxUsername.Text = _sqlUsername;
+                uxTextBoxPassword.Text = _sqlPassword;
+            }
+        }
+
+        private void uxTextBoxUsername_Leave(object sender, EventArgs e)
+        {
+            if (!WindowsAuthentication)
+            {
+                _sqlUsername = uxTextBoxUsername.Text;
+            }
+            
+        }
+
+        private void uxTextBoxPassword_Leave(object sender, EventArgs e)
+        {
+            if (!WindowsAuthentication)
+            {
+                _sqlPassword = uxTextBoxPassword.Text;
             }
         }
     }

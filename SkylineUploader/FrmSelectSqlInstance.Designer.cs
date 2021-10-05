@@ -69,7 +69,7 @@ namespace SkylineUploader
             // uxButtonClose
             // 
             this.uxButtonClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.uxButtonClose.Location = new System.Drawing.Point(275, 194);
+            this.uxButtonClose.Location = new System.Drawing.Point(275, 210);
             this.uxButtonClose.Name = "uxButtonClose";
             this.uxButtonClose.Size = new System.Drawing.Size(100, 26);
             this.uxButtonClose.TabIndex = 1;
@@ -78,7 +78,7 @@ namespace SkylineUploader
             // 
             // uxButtonSelect
             // 
-            this.uxButtonSelect.Location = new System.Drawing.Point(169, 194);
+            this.uxButtonSelect.Location = new System.Drawing.Point(169, 212);
             this.uxButtonSelect.Name = "uxButtonSelect";
             this.uxButtonSelect.Size = new System.Drawing.Size(100, 26);
             this.uxButtonSelect.TabIndex = 2;
@@ -105,13 +105,13 @@ namespace SkylineUploader
             // 
             // uxLabelInfo
             // 
-            this.uxLabelInfo.Enabled = false;
+            this.uxLabelInfo.AutoSize = false;
             this.uxLabelInfo.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxLabelInfo.Location = new System.Drawing.Point(7, 166);
+            this.uxLabelInfo.Location = new System.Drawing.Point(12, 166);
             this.uxLabelInfo.Name = "uxLabelInfo";
-            this.uxLabelInfo.Size = new System.Drawing.Size(382, 18);
+            this.uxLabelInfo.Size = new System.Drawing.Size(370, 40);
             this.uxLabelInfo.TabIndex = 6;
-            this.uxLabelInfo.Text = "*The user must had rights to create a database in the selected Instance";
+            this.uxLabelInfo.Text = "* The Username must had rights to create a database in the selected Instance";
             // 
             // uxTextBoxUsername
             // 
@@ -120,6 +120,7 @@ namespace SkylineUploader
             this.uxTextBoxUsername.Name = "uxTextBoxUsername";
             this.uxTextBoxUsername.Size = new System.Drawing.Size(125, 22);
             this.uxTextBoxUsername.TabIndex = 7;
+            this.uxTextBoxUsername.Leave += new System.EventHandler(this.uxTextBoxUsername_Leave);
             // 
             // uxTextBoxPassword
             // 
@@ -129,6 +130,7 @@ namespace SkylineUploader
             this.uxTextBoxPassword.Size = new System.Drawing.Size(125, 22);
             this.uxTextBoxPassword.TabIndex = 8;
             this.uxTextBoxPassword.UseSystemPasswordChar = true;
+            this.uxTextBoxPassword.Leave += new System.EventHandler(this.uxTextBoxPassword_Leave);
             // 
             // uxLabelUsername
             // 
@@ -177,7 +179,7 @@ namespace SkylineUploader
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.uxButtonClose;
-            this.ClientSize = new System.Drawing.Size(395, 231);
+            this.ClientSize = new System.Drawing.Size(387, 250);
             this.Controls.Add(this.uxLabelPassword);
             this.Controls.Add(this.radLabel2);
             this.Controls.Add(this.radDropDownList1);

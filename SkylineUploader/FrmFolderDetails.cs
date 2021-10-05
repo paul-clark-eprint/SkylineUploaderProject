@@ -799,7 +799,7 @@ namespace SkylineUploader
             _userLibraryUserName = uxListControlUsers.SelectedItem.Text;
             _userLibraryUserId = userGuid;
 
-            List<LibraryDetails> userLibraries = Program.SkylineService.GetUserLibraries(_portalId, userGuid).ToList();
+            List<LibraryDetails> userLibraries = Program.SkylineService.GetAllUserLibraries(userGuid).ToList();
             uxListControlLibraries.DataSource = userLibraries;
             uxListControlLibraries.DisplayMember = "Name";
             uxListControlLibraries.ValueMember = "LibraryId";

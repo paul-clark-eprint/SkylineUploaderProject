@@ -30,6 +30,16 @@ namespace SkylineUploader.SkylineWebService {
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(object[]))]
     public partial class SkylineWebService : System.Web.Services.Protocols.SoapHttpClientProtocol {
         
+        private System.Threading.SendOrPostCallback AddElementControlOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GetAllAddressFormsOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GetAllDeliveryFormsOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GetDocumentsInUserLibraryOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback HideDocumentInLibraryOperationCompleted;
+        
         private System.Threading.SendOrPostCallback GetVersionNumberOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetFontListOperationCompleted;
@@ -65,6 +75,8 @@ namespace SkylineUploader.SkylineWebService {
         private System.Threading.SendOrPostCallback GetApplicationUsersOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetUserLibrariesOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GetAllUserLibrariesOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetUserIdOperationCompleted;
         
@@ -154,16 +166,6 @@ namespace SkylineUploader.SkylineWebService {
         
         private System.Threading.SendOrPostCallback AddElementToControlOperationCompleted;
         
-        private System.Threading.SendOrPostCallback AddElementControlOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback GetAllAddressFormsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback GetAllDeliveryFormsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback GetDocumentsInUserLibraryOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback HideDocumentInLibraryOperationCompleted;
-        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -201,6 +203,21 @@ namespace SkylineUploader.SkylineWebService {
                 this.useDefaultCredentialsSetExplicitly = true;
             }
         }
+        
+        /// <remarks/>
+        public event AddElementControlCompletedEventHandler AddElementControlCompleted;
+        
+        /// <remarks/>
+        public event GetAllAddressFormsCompletedEventHandler GetAllAddressFormsCompleted;
+        
+        /// <remarks/>
+        public event GetAllDeliveryFormsCompletedEventHandler GetAllDeliveryFormsCompleted;
+        
+        /// <remarks/>
+        public event GetDocumentsInUserLibraryCompletedEventHandler GetDocumentsInUserLibraryCompleted;
+        
+        /// <remarks/>
+        public event HideDocumentInLibraryCompletedEventHandler HideDocumentInLibraryCompleted;
         
         /// <remarks/>
         public event GetVersionNumberCompletedEventHandler GetVersionNumberCompleted;
@@ -255,6 +272,9 @@ namespace SkylineUploader.SkylineWebService {
         
         /// <remarks/>
         public event GetUserLibrariesCompletedEventHandler GetUserLibrariesCompleted;
+        
+        /// <remarks/>
+        public event GetAllUserLibrariesCompletedEventHandler GetAllUserLibrariesCompleted;
         
         /// <remarks/>
         public event GetUserIdCompletedEventHandler GetUserIdCompleted;
@@ -389,19 +409,159 @@ namespace SkylineUploader.SkylineWebService {
         public event AddElementToControlCompletedEventHandler AddElementToControlCompleted;
         
         /// <remarks/>
-        public event AddElementControlCompletedEventHandler AddElementControlCompleted;
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/AddElementControl", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public System.Guid AddElementControl(string name, string caption, string controlType, string elementType, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<System.Guid> portalId, string controlXML) {
+            object[] results = this.Invoke("AddElementControl", new object[] {
+                        name,
+                        caption,
+                        controlType,
+                        elementType,
+                        portalId,
+                        controlXML});
+            return ((System.Guid)(results[0]));
+        }
         
         /// <remarks/>
-        public event GetAllAddressFormsCompletedEventHandler GetAllAddressFormsCompleted;
+        public void AddElementControlAsync(string name, string caption, string controlType, string elementType, System.Nullable<System.Guid> portalId, string controlXML) {
+            this.AddElementControlAsync(name, caption, controlType, elementType, portalId, controlXML, null);
+        }
         
         /// <remarks/>
-        public event GetAllDeliveryFormsCompletedEventHandler GetAllDeliveryFormsCompleted;
+        public void AddElementControlAsync(string name, string caption, string controlType, string elementType, System.Nullable<System.Guid> portalId, string controlXML, object userState) {
+            if ((this.AddElementControlOperationCompleted == null)) {
+                this.AddElementControlOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAddElementControlOperationCompleted);
+            }
+            this.InvokeAsync("AddElementControl", new object[] {
+                        name,
+                        caption,
+                        controlType,
+                        elementType,
+                        portalId,
+                        controlXML}, this.AddElementControlOperationCompleted, userState);
+        }
+        
+        private void OnAddElementControlOperationCompleted(object arg) {
+            if ((this.AddElementControlCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.AddElementControlCompleted(this, new AddElementControlCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
         
         /// <remarks/>
-        public event GetDocumentsInUserLibraryCompletedEventHandler GetDocumentsInUserLibraryCompleted;
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetAllAddressForms", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public DeliveryTemplate[] GetAllAddressForms([System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<System.Guid> portalId) {
+            object[] results = this.Invoke("GetAllAddressForms", new object[] {
+                        portalId});
+            return ((DeliveryTemplate[])(results[0]));
+        }
         
         /// <remarks/>
-        public event HideDocumentInLibraryCompletedEventHandler HideDocumentInLibraryCompleted;
+        public void GetAllAddressFormsAsync(System.Nullable<System.Guid> portalId) {
+            this.GetAllAddressFormsAsync(portalId, null);
+        }
+        
+        /// <remarks/>
+        public void GetAllAddressFormsAsync(System.Nullable<System.Guid> portalId, object userState) {
+            if ((this.GetAllAddressFormsOperationCompleted == null)) {
+                this.GetAllAddressFormsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetAllAddressFormsOperationCompleted);
+            }
+            this.InvokeAsync("GetAllAddressForms", new object[] {
+                        portalId}, this.GetAllAddressFormsOperationCompleted, userState);
+        }
+        
+        private void OnGetAllAddressFormsOperationCompleted(object arg) {
+            if ((this.GetAllAddressFormsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetAllAddressFormsCompleted(this, new GetAllAddressFormsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetAllDeliveryForms", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public DeliveryType[] GetAllDeliveryForms([System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<System.Guid> portalId) {
+            object[] results = this.Invoke("GetAllDeliveryForms", new object[] {
+                        portalId});
+            return ((DeliveryType[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetAllDeliveryFormsAsync(System.Nullable<System.Guid> portalId) {
+            this.GetAllDeliveryFormsAsync(portalId, null);
+        }
+        
+        /// <remarks/>
+        public void GetAllDeliveryFormsAsync(System.Nullable<System.Guid> portalId, object userState) {
+            if ((this.GetAllDeliveryFormsOperationCompleted == null)) {
+                this.GetAllDeliveryFormsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetAllDeliveryFormsOperationCompleted);
+            }
+            this.InvokeAsync("GetAllDeliveryForms", new object[] {
+                        portalId}, this.GetAllDeliveryFormsOperationCompleted, userState);
+        }
+        
+        private void OnGetAllDeliveryFormsOperationCompleted(object arg) {
+            if ((this.GetAllDeliveryFormsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetAllDeliveryFormsCompleted(this, new GetAllDeliveryFormsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetDocumentsInUserLibrary", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Document[] GetDocumentsInUserLibrary(System.Guid libraryId) {
+            object[] results = this.Invoke("GetDocumentsInUserLibrary", new object[] {
+                        libraryId});
+            return ((Document[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetDocumentsInUserLibraryAsync(System.Guid libraryId) {
+            this.GetDocumentsInUserLibraryAsync(libraryId, null);
+        }
+        
+        /// <remarks/>
+        public void GetDocumentsInUserLibraryAsync(System.Guid libraryId, object userState) {
+            if ((this.GetDocumentsInUserLibraryOperationCompleted == null)) {
+                this.GetDocumentsInUserLibraryOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetDocumentsInUserLibraryOperationCompleted);
+            }
+            this.InvokeAsync("GetDocumentsInUserLibrary", new object[] {
+                        libraryId}, this.GetDocumentsInUserLibraryOperationCompleted, userState);
+        }
+        
+        private void OnGetDocumentsInUserLibraryOperationCompleted(object arg) {
+            if ((this.GetDocumentsInUserLibraryCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetDocumentsInUserLibraryCompleted(this, new GetDocumentsInUserLibraryCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/HideDocumentInLibrary", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool HideDocumentInLibrary(System.Guid documentId) {
+            object[] results = this.Invoke("HideDocumentInLibrary", new object[] {
+                        documentId});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void HideDocumentInLibraryAsync(System.Guid documentId) {
+            this.HideDocumentInLibraryAsync(documentId, null);
+        }
+        
+        /// <remarks/>
+        public void HideDocumentInLibraryAsync(System.Guid documentId, object userState) {
+            if ((this.HideDocumentInLibraryOperationCompleted == null)) {
+                this.HideDocumentInLibraryOperationCompleted = new System.Threading.SendOrPostCallback(this.OnHideDocumentInLibraryOperationCompleted);
+            }
+            this.InvokeAsync("HideDocumentInLibrary", new object[] {
+                        documentId}, this.HideDocumentInLibraryOperationCompleted, userState);
+        }
+        
+        private void OnHideDocumentInLibraryOperationCompleted(object arg) {
+            if ((this.HideDocumentInLibraryCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.HideDocumentInLibraryCompleted(this, new HideDocumentInLibraryCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetVersionNumber", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -944,6 +1104,35 @@ namespace SkylineUploader.SkylineWebService {
             if ((this.GetUserLibrariesCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.GetUserLibrariesCompleted(this, new GetUserLibrariesCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetAllUserLibraries", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public LibraryDetails[] GetAllUserLibraries(System.Guid userId) {
+            object[] results = this.Invoke("GetAllUserLibraries", new object[] {
+                        userId});
+            return ((LibraryDetails[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetAllUserLibrariesAsync(System.Guid userId) {
+            this.GetAllUserLibrariesAsync(userId, null);
+        }
+        
+        /// <remarks/>
+        public void GetAllUserLibrariesAsync(System.Guid userId, object userState) {
+            if ((this.GetAllUserLibrariesOperationCompleted == null)) {
+                this.GetAllUserLibrariesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetAllUserLibrariesOperationCompleted);
+            }
+            this.InvokeAsync("GetAllUserLibraries", new object[] {
+                        userId}, this.GetAllUserLibrariesOperationCompleted, userState);
+        }
+        
+        private void OnGetAllUserLibrariesOperationCompleted(object arg) {
+            if ((this.GetAllUserLibrariesCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetAllUserLibrariesCompleted(this, new GetAllUserLibrariesCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -2283,161 +2472,6 @@ namespace SkylineUploader.SkylineWebService {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/AddElementControl", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public System.Guid AddElementControl(string name, string caption, string controlType, string elementType, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<System.Guid> portalId, string controlXML) {
-            object[] results = this.Invoke("AddElementControl", new object[] {
-                        name,
-                        caption,
-                        controlType,
-                        elementType,
-                        portalId,
-                        controlXML});
-            return ((System.Guid)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void AddElementControlAsync(string name, string caption, string controlType, string elementType, System.Nullable<System.Guid> portalId, string controlXML) {
-            this.AddElementControlAsync(name, caption, controlType, elementType, portalId, controlXML, null);
-        }
-        
-        /// <remarks/>
-        public void AddElementControlAsync(string name, string caption, string controlType, string elementType, System.Nullable<System.Guid> portalId, string controlXML, object userState) {
-            if ((this.AddElementControlOperationCompleted == null)) {
-                this.AddElementControlOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAddElementControlOperationCompleted);
-            }
-            this.InvokeAsync("AddElementControl", new object[] {
-                        name,
-                        caption,
-                        controlType,
-                        elementType,
-                        portalId,
-                        controlXML}, this.AddElementControlOperationCompleted, userState);
-        }
-        
-        private void OnAddElementControlOperationCompleted(object arg) {
-            if ((this.AddElementControlCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.AddElementControlCompleted(this, new AddElementControlCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetAllAddressForms", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public DeliveryTemplate[] GetAllAddressForms([System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<System.Guid> portalId) {
-            object[] results = this.Invoke("GetAllAddressForms", new object[] {
-                        portalId});
-            return ((DeliveryTemplate[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void GetAllAddressFormsAsync(System.Nullable<System.Guid> portalId) {
-            this.GetAllAddressFormsAsync(portalId, null);
-        }
-        
-        /// <remarks/>
-        public void GetAllAddressFormsAsync(System.Nullable<System.Guid> portalId, object userState) {
-            if ((this.GetAllAddressFormsOperationCompleted == null)) {
-                this.GetAllAddressFormsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetAllAddressFormsOperationCompleted);
-            }
-            this.InvokeAsync("GetAllAddressForms", new object[] {
-                        portalId}, this.GetAllAddressFormsOperationCompleted, userState);
-        }
-        
-        private void OnGetAllAddressFormsOperationCompleted(object arg) {
-            if ((this.GetAllAddressFormsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetAllAddressFormsCompleted(this, new GetAllAddressFormsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetAllDeliveryForms", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public DeliveryType[] GetAllDeliveryForms([System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<System.Guid> portalId) {
-            object[] results = this.Invoke("GetAllDeliveryForms", new object[] {
-                        portalId});
-            return ((DeliveryType[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void GetAllDeliveryFormsAsync(System.Nullable<System.Guid> portalId) {
-            this.GetAllDeliveryFormsAsync(portalId, null);
-        }
-        
-        /// <remarks/>
-        public void GetAllDeliveryFormsAsync(System.Nullable<System.Guid> portalId, object userState) {
-            if ((this.GetAllDeliveryFormsOperationCompleted == null)) {
-                this.GetAllDeliveryFormsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetAllDeliveryFormsOperationCompleted);
-            }
-            this.InvokeAsync("GetAllDeliveryForms", new object[] {
-                        portalId}, this.GetAllDeliveryFormsOperationCompleted, userState);
-        }
-        
-        private void OnGetAllDeliveryFormsOperationCompleted(object arg) {
-            if ((this.GetAllDeliveryFormsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetAllDeliveryFormsCompleted(this, new GetAllDeliveryFormsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetDocumentsInUserLibrary", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public Document[] GetDocumentsInUserLibrary(System.Guid libraryId) {
-            object[] results = this.Invoke("GetDocumentsInUserLibrary", new object[] {
-                        libraryId});
-            return ((Document[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void GetDocumentsInUserLibraryAsync(System.Guid libraryId) {
-            this.GetDocumentsInUserLibraryAsync(libraryId, null);
-        }
-        
-        /// <remarks/>
-        public void GetDocumentsInUserLibraryAsync(System.Guid libraryId, object userState) {
-            if ((this.GetDocumentsInUserLibraryOperationCompleted == null)) {
-                this.GetDocumentsInUserLibraryOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetDocumentsInUserLibraryOperationCompleted);
-            }
-            this.InvokeAsync("GetDocumentsInUserLibrary", new object[] {
-                        libraryId}, this.GetDocumentsInUserLibraryOperationCompleted, userState);
-        }
-        
-        private void OnGetDocumentsInUserLibraryOperationCompleted(object arg) {
-            if ((this.GetDocumentsInUserLibraryCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetDocumentsInUserLibraryCompleted(this, new GetDocumentsInUserLibraryCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/HideDocumentInLibrary", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public bool HideDocumentInLibrary(System.Guid documentId) {
-            object[] results = this.Invoke("HideDocumentInLibrary", new object[] {
-                        documentId});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void HideDocumentInLibraryAsync(System.Guid documentId) {
-            this.HideDocumentInLibraryAsync(documentId, null);
-        }
-        
-        /// <remarks/>
-        public void HideDocumentInLibraryAsync(System.Guid documentId, object userState) {
-            if ((this.HideDocumentInLibraryOperationCompleted == null)) {
-                this.HideDocumentInLibraryOperationCompleted = new System.Threading.SendOrPostCallback(this.OnHideDocumentInLibraryOperationCompleted);
-            }
-            this.InvokeAsync("HideDocumentInLibrary", new object[] {
-                        documentId}, this.HideDocumentInLibraryOperationCompleted, userState);
-        }
-        
-        private void OnHideDocumentInLibraryOperationCompleted(object arg) {
-            if ((this.HideDocumentInLibraryCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.HideDocumentInLibraryCompleted(this, new HideDocumentInLibraryCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -2453,402 +2487,6 @@ namespace SkylineUploader.SkylineWebService {
                 return true;
             }
             return false;
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
-    public partial class UserSettings {
-        
-        private System.Guid userIdField;
-        
-        private string userNameField;
-        
-        private string applicationNameField;
-        
-        private string emailField;
-        
-        private bool inactiveField;
-        
-        private bool lockedField;
-        
-        private System.Nullable<System.DateTime> lastActivityField;
-        
-        private System.Nullable<int> approvalLevelField;
-        
-        private System.Nullable<int> ordersField;
-        
-        /// <remarks/>
-        public System.Guid UserId {
-            get {
-                return this.userIdField;
-            }
-            set {
-                this.userIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string UserName {
-            get {
-                return this.userNameField;
-            }
-            set {
-                this.userNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ApplicationName {
-            get {
-                return this.applicationNameField;
-            }
-            set {
-                this.applicationNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Email {
-            get {
-                return this.emailField;
-            }
-            set {
-                this.emailField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public bool Inactive {
-            get {
-                return this.inactiveField;
-            }
-            set {
-                this.inactiveField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public bool Locked {
-            get {
-                return this.lockedField;
-            }
-            set {
-                this.lockedField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<System.DateTime> LastActivity {
-            get {
-                return this.lastActivityField;
-            }
-            set {
-                this.lastActivityField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<int> ApprovalLevel {
-            get {
-                return this.approvalLevelField;
-            }
-            set {
-                this.approvalLevelField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<int> orders {
-            get {
-                return this.ordersField;
-            }
-            set {
-                this.ordersField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://Eprint.Skyline/xml/serialization")]
-    public partial class EntityCollection {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
-    public partial class DocumentStatus {
-        
-        private string statusNameField;
-        
-        private string statusIdField;
-        
-        /// <remarks/>
-        public string StatusName {
-            get {
-                return this.statusNameField;
-            }
-            set {
-                this.statusNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string StatusId {
-            get {
-                return this.statusIdField;
-            }
-            set {
-                this.statusIdField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
-    public partial class FileType {
-        
-        private int fileTypeIdField;
-        
-        private string extensionField;
-        
-        /// <remarks/>
-        public int FileTypeId {
-            get {
-                return this.fileTypeIdField;
-            }
-            set {
-                this.fileTypeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Extension {
-            get {
-                return this.extensionField;
-            }
-            set {
-                this.extensionField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
-    public partial class Library {
-        
-        private System.Guid ownerIdField;
-        
-        private int orderColumnField;
-        
-        private string nameField;
-        
-        private System.Guid libraryIdField;
-        
-        private bool allUsersHaveFullControlField;
-        
-        private System.Nullable<System.Guid> parentIdField;
-        
-        private User userField;
-        
-        /// <remarks/>
-        public System.Guid OwnerId {
-            get {
-                return this.ownerIdField;
-            }
-            set {
-                this.ownerIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int OrderColumn {
-            get {
-                return this.orderColumnField;
-            }
-            set {
-                this.orderColumnField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Name {
-            get {
-                return this.nameField;
-            }
-            set {
-                this.nameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public System.Guid LibraryId {
-            get {
-                return this.libraryIdField;
-            }
-            set {
-                this.libraryIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public bool AllUsersHaveFullControl {
-            get {
-                return this.allUsersHaveFullControlField;
-            }
-            set {
-                this.allUsersHaveFullControlField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<System.Guid> ParentId {
-            get {
-                return this.parentIdField;
-            }
-            set {
-                this.parentIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public User User {
-            get {
-                return this.userField;
-            }
-            set {
-                this.userField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
-    public partial class User {
-        
-        private string userNameField;
-        
-        private System.Guid userIdField;
-        
-        private bool inactiveField;
-        
-        private string deliveryXmlField;
-        
-        private System.Nullable<System.Guid> deliveryTemplateIdField;
-        
-        private string applicationNameField;
-        
-        private System.Nullable<int> approvalLevelField;
-        
-        private DeliveryTemplate deliveryTemplateField;
-        
-        /// <remarks/>
-        public string UserName {
-            get {
-                return this.userNameField;
-            }
-            set {
-                this.userNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public System.Guid UserId {
-            get {
-                return this.userIdField;
-            }
-            set {
-                this.userIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public bool Inactive {
-            get {
-                return this.inactiveField;
-            }
-            set {
-                this.inactiveField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string DeliveryXml {
-            get {
-                return this.deliveryXmlField;
-            }
-            set {
-                this.deliveryXmlField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<System.Guid> DeliveryTemplateId {
-            get {
-                return this.deliveryTemplateIdField;
-            }
-            set {
-                this.deliveryTemplateIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ApplicationName {
-            get {
-                return this.applicationNameField;
-            }
-            set {
-                this.applicationNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<int> ApprovalLevel {
-            get {
-                return this.approvalLevelField;
-            }
-            set {
-                this.approvalLevelField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public DeliveryTemplate DeliveryTemplate {
-            get {
-                return this.deliveryTemplateField;
-            }
-            set {
-                this.deliveryTemplateField = value;
-            }
         }
     }
     
@@ -3072,470 +2710,8 @@ namespace SkylineUploader.SkylineWebService {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
-    public partial class Document {
-        
-        private System.Guid uploadedByField;
-        
-        private System.DateTime updateDateField;
-        
-        private System.Nullable<int> thumbnailsCreatedField;
-        
-        private string statusIdField;
-        
-        private string productXmlField;
-        
-        private System.Nullable<System.Guid> productIdField;
-        
-        private string originalExtensionField;
-        
-        private System.Nullable<int> numberOfPagesField;
-        
-        private string missingFontsField;
-        
-        private System.Nullable<System.Guid> libraryIdField;
-        
-        private System.Nullable<System.DateTime> lastOrderedDateField;
-        
-        private string finalExtensionField;
-        
-        private int fileTypeIdField;
-        
-        private int fileSizeField;
-        
-        private string fileNameField;
-        
-        private string errorMessageField;
-        
-        private System.Guid documentIdField;
-        
-        private string descriptionField;
-        
-        private System.DateTime createdDateField;
-        
-        private System.Nullable<bool> previewedField;
-        
-        private System.Nullable<bool> hiddenField;
-        
-        private User userField;
-        
-        private Product productField;
-        
-        private Library libraryField;
-        
-        private FileType fileTypeField;
-        
-        private DocumentStatus documentStatusField;
-        
-        /// <remarks/>
-        public System.Guid UploadedBy {
-            get {
-                return this.uploadedByField;
-            }
-            set {
-                this.uploadedByField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public System.DateTime UpdateDate {
-            get {
-                return this.updateDateField;
-            }
-            set {
-                this.updateDateField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<int> ThumbnailsCreated {
-            get {
-                return this.thumbnailsCreatedField;
-            }
-            set {
-                this.thumbnailsCreatedField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string StatusId {
-            get {
-                return this.statusIdField;
-            }
-            set {
-                this.statusIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ProductXml {
-            get {
-                return this.productXmlField;
-            }
-            set {
-                this.productXmlField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<System.Guid> ProductId {
-            get {
-                return this.productIdField;
-            }
-            set {
-                this.productIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string OriginalExtension {
-            get {
-                return this.originalExtensionField;
-            }
-            set {
-                this.originalExtensionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<int> NumberOfPages {
-            get {
-                return this.numberOfPagesField;
-            }
-            set {
-                this.numberOfPagesField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string MissingFonts {
-            get {
-                return this.missingFontsField;
-            }
-            set {
-                this.missingFontsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<System.Guid> LibraryId {
-            get {
-                return this.libraryIdField;
-            }
-            set {
-                this.libraryIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<System.DateTime> LastOrderedDate {
-            get {
-                return this.lastOrderedDateField;
-            }
-            set {
-                this.lastOrderedDateField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string FinalExtension {
-            get {
-                return this.finalExtensionField;
-            }
-            set {
-                this.finalExtensionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int FileTypeId {
-            get {
-                return this.fileTypeIdField;
-            }
-            set {
-                this.fileTypeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int FileSize {
-            get {
-                return this.fileSizeField;
-            }
-            set {
-                this.fileSizeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string FileName {
-            get {
-                return this.fileNameField;
-            }
-            set {
-                this.fileNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ErrorMessage {
-            get {
-                return this.errorMessageField;
-            }
-            set {
-                this.errorMessageField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public System.Guid DocumentId {
-            get {
-                return this.documentIdField;
-            }
-            set {
-                this.documentIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public System.DateTime CreatedDate {
-            get {
-                return this.createdDateField;
-            }
-            set {
-                this.createdDateField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<bool> Previewed {
-            get {
-                return this.previewedField;
-            }
-            set {
-                this.previewedField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<bool> Hidden {
-            get {
-                return this.hiddenField;
-            }
-            set {
-                this.hiddenField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public User User {
-            get {
-                return this.userField;
-            }
-            set {
-                this.userField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public Product Product {
-            get {
-                return this.productField;
-            }
-            set {
-                this.productField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public Library Library {
-            get {
-                return this.libraryField;
-            }
-            set {
-                this.libraryField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public FileType FileType {
-            get {
-                return this.fileTypeField;
-            }
-            set {
-                this.fileTypeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public DocumentStatus DocumentStatus {
-            get {
-                return this.documentStatusField;
-            }
-            set {
-                this.documentStatusField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
-    public partial class Product {
-        
-        private bool templateProductField;
-        
-        private string productXmlField;
-        
-        private System.Guid productIdField;
-        
-        private System.Nullable<System.Guid> portalIdField;
-        
-        private string nameField;
-        
-        private string imageField;
-        
-        private bool equitracProductField;
-        
-        private string descriptionField;
-        
-        private bool deletedField;
-        
-        private System.Nullable<System.Guid> productCategoryIdField;
-        
-        private Portal portalField;
-        
-        /// <remarks/>
-        public bool TemplateProduct {
-            get {
-                return this.templateProductField;
-            }
-            set {
-                this.templateProductField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ProductXml {
-            get {
-                return this.productXmlField;
-            }
-            set {
-                this.productXmlField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public System.Guid ProductId {
-            get {
-                return this.productIdField;
-            }
-            set {
-                this.productIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<System.Guid> PortalId {
-            get {
-                return this.portalIdField;
-            }
-            set {
-                this.portalIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Name {
-            get {
-                return this.nameField;
-            }
-            set {
-                this.nameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Image {
-            get {
-                return this.imageField;
-            }
-            set {
-                this.imageField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public bool EquitracProduct {
-            get {
-                return this.equitracProductField;
-            }
-            set {
-                this.equitracProductField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public bool Deleted {
-            get {
-                return this.deletedField;
-            }
-            set {
-                this.deletedField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<System.Guid> ProductCategoryId {
-            get {
-                return this.productCategoryIdField;
-            }
-            set {
-                this.productCategoryIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public Portal Portal {
-            get {
-                return this.portalField;
-            }
-            set {
-                this.portalField = value;
-            }
-        }
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://Eprint.Skyline/xml/serialization")]
+    public partial class EntityCollection {
     }
     
     /// <remarks/>
@@ -3816,88 +2992,6 @@ namespace SkylineUploader.SkylineWebService {
             }
             set {
                 this.portalField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
-    public partial class DeliveryType {
-        
-        private string productXmlField;
-        
-        private System.Nullable<System.Guid> portalIdField;
-        
-        private string nameField;
-        
-        private string descriptionField;
-        
-        private System.Guid deliveryTypeIdField;
-        
-        private bool defaultField;
-        
-        /// <remarks/>
-        public string ProductXml {
-            get {
-                return this.productXmlField;
-            }
-            set {
-                this.productXmlField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<System.Guid> PortalId {
-            get {
-                return this.portalIdField;
-            }
-            set {
-                this.portalIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Name {
-            get {
-                return this.nameField;
-            }
-            set {
-                this.nameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public System.Guid DeliveryTypeId {
-            get {
-                return this.deliveryTypeIdField;
-            }
-            set {
-                this.deliveryTypeIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public bool Default {
-            get {
-                return this.defaultField;
-            }
-            set {
-                this.defaultField = value;
             }
         }
     }
@@ -4355,6 +3449,946 @@ namespace SkylineUploader.SkylineWebService {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class UserSettings {
+        
+        private System.Guid userIdField;
+        
+        private string userNameField;
+        
+        private string applicationNameField;
+        
+        private string emailField;
+        
+        private bool inactiveField;
+        
+        private bool lockedField;
+        
+        private System.Nullable<System.DateTime> lastActivityField;
+        
+        private System.Nullable<int> approvalLevelField;
+        
+        private System.Nullable<int> ordersField;
+        
+        /// <remarks/>
+        public System.Guid UserId {
+            get {
+                return this.userIdField;
+            }
+            set {
+                this.userIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string UserName {
+            get {
+                return this.userNameField;
+            }
+            set {
+                this.userNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ApplicationName {
+            get {
+                return this.applicationNameField;
+            }
+            set {
+                this.applicationNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Email {
+            get {
+                return this.emailField;
+            }
+            set {
+                this.emailField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool Inactive {
+            get {
+                return this.inactiveField;
+            }
+            set {
+                this.inactiveField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool Locked {
+            get {
+                return this.lockedField;
+            }
+            set {
+                this.lockedField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> LastActivity {
+            get {
+                return this.lastActivityField;
+            }
+            set {
+                this.lastActivityField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> ApprovalLevel {
+            get {
+                return this.approvalLevelField;
+            }
+            set {
+                this.approvalLevelField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> orders {
+            get {
+                return this.ordersField;
+            }
+            set {
+                this.ordersField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class DocumentStatus {
+        
+        private string statusNameField;
+        
+        private string statusIdField;
+        
+        /// <remarks/>
+        public string StatusName {
+            get {
+                return this.statusNameField;
+            }
+            set {
+                this.statusNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string StatusId {
+            get {
+                return this.statusIdField;
+            }
+            set {
+                this.statusIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class FileType {
+        
+        private int fileTypeIdField;
+        
+        private string extensionField;
+        
+        /// <remarks/>
+        public int FileTypeId {
+            get {
+                return this.fileTypeIdField;
+            }
+            set {
+                this.fileTypeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Extension {
+            get {
+                return this.extensionField;
+            }
+            set {
+                this.extensionField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class Library {
+        
+        private System.Guid ownerIdField;
+        
+        private int orderColumnField;
+        
+        private string nameField;
+        
+        private System.Guid libraryIdField;
+        
+        private bool allUsersHaveFullControlField;
+        
+        private System.Nullable<System.Guid> parentIdField;
+        
+        private User userField;
+        
+        /// <remarks/>
+        public System.Guid OwnerId {
+            get {
+                return this.ownerIdField;
+            }
+            set {
+                this.ownerIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int OrderColumn {
+            get {
+                return this.orderColumnField;
+            }
+            set {
+                this.orderColumnField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Name {
+            get {
+                return this.nameField;
+            }
+            set {
+                this.nameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public System.Guid LibraryId {
+            get {
+                return this.libraryIdField;
+            }
+            set {
+                this.libraryIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool AllUsersHaveFullControl {
+            get {
+                return this.allUsersHaveFullControlField;
+            }
+            set {
+                this.allUsersHaveFullControlField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.Guid> ParentId {
+            get {
+                return this.parentIdField;
+            }
+            set {
+                this.parentIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public User User {
+            get {
+                return this.userField;
+            }
+            set {
+                this.userField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class User {
+        
+        private string userNameField;
+        
+        private System.Guid userIdField;
+        
+        private bool inactiveField;
+        
+        private string deliveryXmlField;
+        
+        private System.Nullable<System.Guid> deliveryTemplateIdField;
+        
+        private string applicationNameField;
+        
+        private System.Nullable<int> approvalLevelField;
+        
+        private DeliveryTemplate deliveryTemplateField;
+        
+        /// <remarks/>
+        public string UserName {
+            get {
+                return this.userNameField;
+            }
+            set {
+                this.userNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public System.Guid UserId {
+            get {
+                return this.userIdField;
+            }
+            set {
+                this.userIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool Inactive {
+            get {
+                return this.inactiveField;
+            }
+            set {
+                this.inactiveField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string DeliveryXml {
+            get {
+                return this.deliveryXmlField;
+            }
+            set {
+                this.deliveryXmlField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.Guid> DeliveryTemplateId {
+            get {
+                return this.deliveryTemplateIdField;
+            }
+            set {
+                this.deliveryTemplateIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ApplicationName {
+            get {
+                return this.applicationNameField;
+            }
+            set {
+                this.applicationNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> ApprovalLevel {
+            get {
+                return this.approvalLevelField;
+            }
+            set {
+                this.approvalLevelField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public DeliveryTemplate DeliveryTemplate {
+            get {
+                return this.deliveryTemplateField;
+            }
+            set {
+                this.deliveryTemplateField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class Product {
+        
+        private bool templateProductField;
+        
+        private string productXmlField;
+        
+        private System.Guid productIdField;
+        
+        private System.Nullable<System.Guid> portalIdField;
+        
+        private string nameField;
+        
+        private string imageField;
+        
+        private bool equitracProductField;
+        
+        private string descriptionField;
+        
+        private bool deletedField;
+        
+        private System.Nullable<System.Guid> productCategoryIdField;
+        
+        private Portal portalField;
+        
+        /// <remarks/>
+        public bool TemplateProduct {
+            get {
+                return this.templateProductField;
+            }
+            set {
+                this.templateProductField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ProductXml {
+            get {
+                return this.productXmlField;
+            }
+            set {
+                this.productXmlField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public System.Guid ProductId {
+            get {
+                return this.productIdField;
+            }
+            set {
+                this.productIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.Guid> PortalId {
+            get {
+                return this.portalIdField;
+            }
+            set {
+                this.portalIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Name {
+            get {
+                return this.nameField;
+            }
+            set {
+                this.nameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Image {
+            get {
+                return this.imageField;
+            }
+            set {
+                this.imageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool EquitracProduct {
+            get {
+                return this.equitracProductField;
+            }
+            set {
+                this.equitracProductField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                this.descriptionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool Deleted {
+            get {
+                return this.deletedField;
+            }
+            set {
+                this.deletedField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.Guid> ProductCategoryId {
+            get {
+                return this.productCategoryIdField;
+            }
+            set {
+                this.productCategoryIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public Portal Portal {
+            get {
+                return this.portalField;
+            }
+            set {
+                this.portalField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class Document {
+        
+        private System.Guid uploadedByField;
+        
+        private System.DateTime updateDateField;
+        
+        private System.Nullable<int> thumbnailsCreatedField;
+        
+        private string statusIdField;
+        
+        private string productXmlField;
+        
+        private System.Nullable<System.Guid> productIdField;
+        
+        private string originalExtensionField;
+        
+        private System.Nullable<int> numberOfPagesField;
+        
+        private string missingFontsField;
+        
+        private System.Nullable<System.Guid> libraryIdField;
+        
+        private System.Nullable<System.DateTime> lastOrderedDateField;
+        
+        private string finalExtensionField;
+        
+        private int fileTypeIdField;
+        
+        private int fileSizeField;
+        
+        private string fileNameField;
+        
+        private string errorMessageField;
+        
+        private System.Guid documentIdField;
+        
+        private string descriptionField;
+        
+        private System.DateTime createdDateField;
+        
+        private System.Nullable<bool> previewedField;
+        
+        private System.Nullable<bool> hiddenField;
+        
+        private User userField;
+        
+        private Product productField;
+        
+        private Library libraryField;
+        
+        private FileType fileTypeField;
+        
+        private DocumentStatus documentStatusField;
+        
+        /// <remarks/>
+        public System.Guid UploadedBy {
+            get {
+                return this.uploadedByField;
+            }
+            set {
+                this.uploadedByField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public System.DateTime UpdateDate {
+            get {
+                return this.updateDateField;
+            }
+            set {
+                this.updateDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> ThumbnailsCreated {
+            get {
+                return this.thumbnailsCreatedField;
+            }
+            set {
+                this.thumbnailsCreatedField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string StatusId {
+            get {
+                return this.statusIdField;
+            }
+            set {
+                this.statusIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ProductXml {
+            get {
+                return this.productXmlField;
+            }
+            set {
+                this.productXmlField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.Guid> ProductId {
+            get {
+                return this.productIdField;
+            }
+            set {
+                this.productIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string OriginalExtension {
+            get {
+                return this.originalExtensionField;
+            }
+            set {
+                this.originalExtensionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> NumberOfPages {
+            get {
+                return this.numberOfPagesField;
+            }
+            set {
+                this.numberOfPagesField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string MissingFonts {
+            get {
+                return this.missingFontsField;
+            }
+            set {
+                this.missingFontsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.Guid> LibraryId {
+            get {
+                return this.libraryIdField;
+            }
+            set {
+                this.libraryIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> LastOrderedDate {
+            get {
+                return this.lastOrderedDateField;
+            }
+            set {
+                this.lastOrderedDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string FinalExtension {
+            get {
+                return this.finalExtensionField;
+            }
+            set {
+                this.finalExtensionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int FileTypeId {
+            get {
+                return this.fileTypeIdField;
+            }
+            set {
+                this.fileTypeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int FileSize {
+            get {
+                return this.fileSizeField;
+            }
+            set {
+                this.fileSizeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string FileName {
+            get {
+                return this.fileNameField;
+            }
+            set {
+                this.fileNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ErrorMessage {
+            get {
+                return this.errorMessageField;
+            }
+            set {
+                this.errorMessageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public System.Guid DocumentId {
+            get {
+                return this.documentIdField;
+            }
+            set {
+                this.documentIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                this.descriptionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public System.DateTime CreatedDate {
+            get {
+                return this.createdDateField;
+            }
+            set {
+                this.createdDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<bool> Previewed {
+            get {
+                return this.previewedField;
+            }
+            set {
+                this.previewedField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<bool> Hidden {
+            get {
+                return this.hiddenField;
+            }
+            set {
+                this.hiddenField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public User User {
+            get {
+                return this.userField;
+            }
+            set {
+                this.userField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public Product Product {
+            get {
+                return this.productField;
+            }
+            set {
+                this.productField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public Library Library {
+            get {
+                return this.libraryField;
+            }
+            set {
+                this.libraryField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public FileType FileType {
+            get {
+                return this.fileTypeField;
+            }
+            set {
+                this.fileTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public DocumentStatus DocumentStatus {
+            get {
+                return this.documentStatusField;
+            }
+            set {
+                this.documentStatusField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class DeliveryType {
+        
+        private string productXmlField;
+        
+        private System.Nullable<System.Guid> portalIdField;
+        
+        private string nameField;
+        
+        private string descriptionField;
+        
+        private System.Guid deliveryTypeIdField;
+        
+        private bool defaultField;
+        
+        /// <remarks/>
+        public string ProductXml {
+            get {
+                return this.productXmlField;
+            }
+            set {
+                this.productXmlField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.Guid> PortalId {
+            get {
+                return this.portalIdField;
+            }
+            set {
+                this.portalIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Name {
+            get {
+                return this.nameField;
+            }
+            set {
+                this.nameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                this.descriptionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public System.Guid DeliveryTypeId {
+            get {
+                return this.deliveryTypeIdField;
+            }
+            set {
+                this.deliveryTypeIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool Default {
+            get {
+                return this.defaultField;
+            }
+            set {
+                this.defaultField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
     public enum AuthenticationType {
         
@@ -4366,6 +4400,136 @@ namespace SkylineUploader.SkylineWebService {
         
         /// <remarks/>
         Database,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void AddElementControlCompletedEventHandler(object sender, AddElementControlCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class AddElementControlCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal AddElementControlCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public System.Guid Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((System.Guid)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void GetAllAddressFormsCompletedEventHandler(object sender, GetAllAddressFormsCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetAllAddressFormsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetAllAddressFormsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public DeliveryTemplate[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((DeliveryTemplate[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void GetAllDeliveryFormsCompletedEventHandler(object sender, GetAllDeliveryFormsCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetAllDeliveryFormsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetAllDeliveryFormsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public DeliveryType[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((DeliveryType[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void GetDocumentsInUserLibraryCompletedEventHandler(object sender, GetDocumentsInUserLibraryCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetDocumentsInUserLibraryCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetDocumentsInUserLibraryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Document[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Document[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void HideDocumentInLibraryCompletedEventHandler(object sender, HideDocumentInLibraryCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class HideDocumentInLibraryCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal HideDocumentInLibraryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
     }
     
     /// <remarks/>
@@ -4779,6 +4943,32 @@ namespace SkylineUploader.SkylineWebService {
         private object[] results;
         
         internal GetUserLibrariesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public LibraryDetails[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((LibraryDetails[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void GetAllUserLibrariesCompletedEventHandler(object sender, GetAllUserLibrariesCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetAllUserLibrariesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetAllUserLibrariesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -5745,136 +5935,6 @@ namespace SkylineUploader.SkylineWebService {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void AddElementToControlCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
-    public delegate void AddElementControlCompletedEventHandler(object sender, AddElementControlCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class AddElementControlCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal AddElementControlCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public System.Guid Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((System.Guid)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
-    public delegate void GetAllAddressFormsCompletedEventHandler(object sender, GetAllAddressFormsCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetAllAddressFormsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal GetAllAddressFormsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public DeliveryTemplate[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((DeliveryTemplate[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
-    public delegate void GetAllDeliveryFormsCompletedEventHandler(object sender, GetAllDeliveryFormsCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetAllDeliveryFormsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal GetAllDeliveryFormsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public DeliveryType[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((DeliveryType[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
-    public delegate void GetDocumentsInUserLibraryCompletedEventHandler(object sender, GetDocumentsInUserLibraryCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetDocumentsInUserLibraryCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal GetDocumentsInUserLibraryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public Document[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((Document[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
-    public delegate void HideDocumentInLibraryCompletedEventHandler(object sender, HideDocumentInLibraryCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class HideDocumentInLibraryCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal HideDocumentInLibraryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
 }
 
 #pragma warning restore 1591

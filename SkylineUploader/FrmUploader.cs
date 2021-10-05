@@ -28,46 +28,44 @@ namespace SkylineUploader
         private bool sqlFound = false;
         private bool dataSourceSet = false;
 
-        
+
         public FrmUploader()
         {
             InitializeComponent();
             InitializeBackgroundWorker();
             Database.SetInitializer<UploaderDbContext>(null);
 
-            CreateRegistryKeys();
+            if (!FileHelper.CreateProgramDataFolder())
+            {
+                Debug.Error("Unable to create the ProgramData Folder");
+                MessageBox.Show("Unable to create the ProgramData Folder. Closing application", "Fatal Error", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                Close();
+            }
             CheckAppConfig();
-            
+
         }
 
-        private void CreateRegistryKeys()
-        {
-            string errorMessage = RegistryHelper.CreateRegistryKeys();
-            if (!string.IsNullOrEmpty(errorMessage))
-            {
-                MessageBox.Show("Error creatating the registry key. Please run as Administrator\n\n" + errorMessage,
-                    "Run as Administrator", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Application.Exit();
-            }
-        }
+        
+
 
         private void CheckAppConfig()
         {
             string connectionString = SqlHelper.GetConnectionString("UploaderDbContext");
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connectionString);
             var dataSource = builder["Data Source"].ToString();
-            if (string.IsNullOrEmpty(dataSource))
+            if (string.IsNullOrEmpty(dataSource)|| dataSource=="NotSet")
             {
                 Debug.Log("ConnectionString = " + connectionString);
                 Debug.Log("Datasource not found in ConnectionString. Calling CheckSqlInstance()");
 
-                RegistryHelper.SaveRegistryKey("ConnectionString", String.Empty);
+                //RegistryHelper.SaveRegistryKey("ConnectionString", String.Empty);
 
                 CheckSqlInstance();
             }
             else
             {
-                RegistryHelper.SaveRegistryKey("ConnectionString", connectionString);
+                //RegistryHelper.SaveRegistryKey("ConnectionString", connectionString);
                 uxLabelStatus.Text = "Ready";
                 uxButtonNew.Enabled = true;
                 if (!InitialiseFoldersGrid())
@@ -168,7 +166,7 @@ namespace SkylineUploader
             {
                 uxLabelStatus.Text = "Ready";
                 uxButtonNew.Enabled = true;
-                if(!InitialiseFoldersGrid())
+                if (!InitialiseFoldersGrid())
                 {
                     Application.Exit();
                 }
@@ -261,10 +259,10 @@ namespace SkylineUploader
                                        LibraryUsername = ul.Username,
                                        LibraryName = ul.LibraryName,
                                        Files = 0,
-                                       Enabled = f.Enabled
+                                       Enabled = f.Enabled,
+                                       SourceFolder = sf.FolderPath
                                    }).ToList();
                 }
-
                 uxGridViewFolders.DataSource = _folderData;
                 uxGridViewFolders.EndUpdate();
             }
@@ -286,9 +284,9 @@ namespace SkylineUploader
                 {
                     //reset the app.config ConnectionString back to blank Data Source
                     SqlConnectionStringBuilder sqlConBuilder = new SqlConnectionStringBuilder();
-                    sqlConBuilder.ConnectionString = "Data Source=;Initial Catalog=SkylineUploader;Integrated Security=SSPI;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+                    sqlConBuilder.ConnectionString = "Data Source=NotSet;Initial Catalog=SkylineUploader;Integrated Security=SSPI;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-                    string errorMessage= SqlHelper.ModifyConnectionString("UploaderDbContext", sqlConBuilder.ConnectionString);
+                    string errorMessage = SqlHelper.ModifyConnectionString("UploaderDbContext", sqlConBuilder.ConnectionString);
                     Debug.Error(errorMessage);
                     MessageBox.Show(errorMessage, "Run As Administrator", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }

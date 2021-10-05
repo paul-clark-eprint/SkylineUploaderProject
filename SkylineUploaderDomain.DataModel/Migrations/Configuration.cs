@@ -1,6 +1,9 @@
 ﻿namespace SkylineUploaderDomain.DataModel.Migrations
 {
+    using System;
+    using System.Data.Entity;
     using System.Data.Entity.Migrations;
+    using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<SkylineUploaderDomain.DataModel.UploaderDbContext>
     {
@@ -8,7 +11,6 @@
         {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
-            ContextKey = "SkylineUploaderDomain.DataModel.UploaderContext";
         }
 
         protected override void Seed(SkylineUploaderDomain.DataModel.UploaderDbContext context)
