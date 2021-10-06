@@ -26,7 +26,8 @@ namespace SkylineUploaderDomain.DataModel.Classes
         public int DeleteAfterDays { get; set; }
         public bool HideOnOrder { get; set; }
         public bool DeleteAfterUpload { get; set; }
-        public bool InEditMode{get;set;}
+        public bool InEditMode { get; set; }
+        public DateTime DateUpdated { get; set; }
     }
 
     public class Login

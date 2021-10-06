@@ -12,9 +12,18 @@ namespace SkylineUploader.Classes
             //Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             //ConnectionStringsSection section = (ConnectionStringsSection)config.GetSection("connectionStrings");
             //var connectionString = section.ConnectionStrings[contextName].ConnectionString;
-            var connectionString = ConfigurationManager.ConnectionStrings[contextName].ConnectionString;
-
-            return connectionString;
+            
+            try
+            {
+                var connectionString = ConfigurationManager.ConnectionStrings[contextName].ConnectionString;
+                return connectionString;
+            }
+            catch (Exception e)
+            {
+                string errorMessage = "*error* " + e.Message;
+                return errorMessage;
+            }
+            
         }
 
         public static string ModifyConnectionString(string contextName, string connectionString)

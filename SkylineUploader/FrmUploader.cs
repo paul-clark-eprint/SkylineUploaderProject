@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Configuration;
 using System.Data.Entity;
-using System.Data.Entity.Core;
 using System.Data.SqlClient;
-using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -25,9 +22,8 @@ namespace SkylineUploader
         private List<GridData> _folderData;
         private BackgroundWorker _bwCheckSql;
         private List<SqlHelper> _sqlInstances;
-        private bool sqlFound = false;
-        private bool dataSourceSet = false;
-
+        private bool _sqlFound = false;
+        private bool _dataSourceSet = false;
 
         public FrmUploader()
         {
@@ -38,20 +34,22 @@ namespace SkylineUploader
             if (!FileHelper.CreateProgramDataFolder())
             {
                 Debug.Error("Unable to create the ProgramData Folder");
-                MessageBox.Show("Unable to create the ProgramData Folder. Closing application", "Fatal Error", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                Close();
+                MessageBox.Show("Unable to create the ProgramData Folder. Closing application", "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Environment.Exit(0);
             }
             CheckAppConfig();
-
         }
-
         
-
-
         private void CheckAppConfig()
         {
             string connectionString = SqlHelper.GetConnectionString("UploaderDbContext");
+            if (connectionString.Contains("*error*"))
+            {
+                Debug.Error("ConnectionString missing from app.config. Closing application. "+ connectionString);
+                MessageBox.Show("ConnectionString missing from app.config. Closing application\n\n"+ connectionString, "Unexpected Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Environment.Exit(0);
+            }
+
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connectionString);
             var dataSource = builder["Data Source"].ToString();
             if (string.IsNullOrEmpty(dataSource)|| dataSource=="NotSet")
@@ -68,9 +66,10 @@ namespace SkylineUploader
                 //RegistryHelper.SaveRegistryKey("ConnectionString", connectionString);
                 uxLabelStatus.Text = "Ready";
                 uxButtonNew.Enabled = true;
+                
                 if (!InitialiseFoldersGrid())
                 {
-                    Application.Exit();
+                    Environment.Exit(0);
                 }
             }
 
@@ -105,7 +104,7 @@ namespace SkylineUploader
                     foreach (var instanceName in instanceKey.GetValueNames())
                     {
                         string serverInstance = ServerName + "\\" + instanceName;
-                        Console.WriteLine(serverInstance);
+                        _bwCheckSql.ReportProgress(-1,"Found SQL Instance: "+serverInstance);
                         _sqlInstances.Add(new SqlHelper()
                         {
                             ServerInstance = serverInstance
@@ -116,7 +115,7 @@ namespace SkylineUploader
 
             if (_sqlInstances.Count > 0)
             {
-                sqlFound = true;
+                _sqlFound = true;
             }
         }
 
@@ -135,9 +134,9 @@ namespace SkylineUploader
             uxWaitingBar.StopWaiting();
             uxWaitingBar.Visible = false;
 
-            Debug.Log("sqlFound = " + sqlFound);
-            Debug.Log("dataSourceSet = " + dataSourceSet);
-            if (sqlFound && !dataSourceSet)
+            Debug.Log("sqlFound = " + _sqlFound);
+            Debug.Log("dataSourceSet = " + _dataSourceSet);
+            if (_sqlFound && !_dataSourceSet)
             {
                 Debug.Log("sqlInstances.Count = " + _sqlInstances.Count);
                 if (_sqlInstances.Count > 0)
@@ -149,8 +148,8 @@ namespace SkylineUploader
                         frmSelectSqlInstance.ShowDialog(this);
 
                         string dataSource = frmSelectSqlInstance.SelectedInstance;
-                        dataSourceSet = frmSelectSqlInstance.DataSourceSet;
-                        Debug.Log("dataSourceSet = " + dataSourceSet);
+                        _dataSourceSet = frmSelectSqlInstance.DataSourceSet;
+                        Debug.Log("dataSourceSet = " + _dataSourceSet);
 
                         if (string.IsNullOrEmpty(dataSource))
                         {
@@ -162,7 +161,7 @@ namespace SkylineUploader
                 }
             }
 
-            if (sqlFound && dataSourceSet)
+            if (_sqlFound && _dataSourceSet)
             {
                 uxLabelStatus.Text = "Ready";
                 uxButtonNew.Enabled = true;
@@ -190,6 +189,21 @@ namespace SkylineUploader
 
         private bool InitialiseFoldersGrid()
         {
+            try
+            {
+                
+                //var configuration = new DbMigrationsConfiguration();
+                //var migrator = new DbMigrator(configuration);
+                //migrator.Update();
+            }
+            catch (Exception e)
+            {
+                Debug.Error("Unexpected Error trying to run Migration: "+ e.Message);
+                MessageBox.Show("Unexpected Error trying to run Migration\n\n" + e.Message, "Unexpectedx Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            
             var ok = GetGridData();
             if (ok == false)
             {
@@ -246,6 +260,11 @@ namespace SkylineUploader
                 uxGridViewFolders.BeginUpdate();
                 using (UploaderDbContext context = new UploaderDbContext())
                 {
+                    //string connectionString = context.Database.Connection.ConnectionString;
+
+                    //context.Database.Connection.ConnectionString = _connectionString;
+                    //connectionString = context.Database.Connection.ConnectionString;
+
                     _folderData = (from f in context.Folders
                                    join l in context.Login on f.FolderId equals l.FolderId
                                    join ul in context.UserLibraries on f.FolderId equals ul.FolderId
@@ -261,6 +280,7 @@ namespace SkylineUploader
                                        Files = 0,
                                        Enabled = f.Enabled,
                                        SourceFolder = sf.FolderPath
+                                       
                                    }).ToList();
                 }
                 uxGridViewFolders.DataSource = _folderData;
@@ -300,7 +320,7 @@ namespace SkylineUploader
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 Debug.Error("Error connectiing to the database. Closing application", e);
-                return false;
+                Environment.Exit(0);
             }
 
             return true;

@@ -37,7 +37,6 @@
                         DeleteAfterDays = c.Int(nullable: false),
                         HideOnOrder = c.Boolean(nullable: false),
                         DeleteAfterUpload = c.Boolean(nullable: false),
-                        InEditMode = c.Boolean(nullable: false),
                         Login_Id = c.Int(),
                         SourceFolder_Id = c.Int(),
                         UserLibrary_Id = c.Int(),

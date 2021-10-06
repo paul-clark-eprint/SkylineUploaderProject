@@ -57,9 +57,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\202110051630075_Initial.cs" />
-    <Compile Include="Migrations\202110051630075_Initial.designer.cs">
-      <DependentUpon>202110051630075_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202110061607158_Initial.cs" />
+    <Compile Include="Migrations\202110061607158_Initial.designer.cs">
+      <DependentUpon>202110061607158_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110061611340_AddInEditModeAndDateUpdated.cs" />
+    <Compile Include="Migrations\202110061611340_AddInEditModeAndDateUpdated.designer.cs">
+      <DependentUpon>202110061611340_AddInEditModeAndDateUpdated.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="UploaderContext.cs" />
@@ -68,13 +72,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="Skyline.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202110051630075_Initial.resx">
-      <DependentUpon>202110051630075_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202110061607158_Initial.resx">
+      <DependentUpon>202110061607158_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110061611340_AddInEditModeAndDateUpdated.resx">
+      <DependentUpon>202110061611340_AddInEditModeAndDateUpdated.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

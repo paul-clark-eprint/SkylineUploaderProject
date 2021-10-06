@@ -977,6 +977,8 @@ namespace SkylineUploader
                 folder.HideOnOrder = uxCheckBoxRemoveDocOnOrder.Checked;
                 folder.DeleteAfterDays = -1;
                 folder.DeleteAfterUpload = uxCheckBoxDeleteSource.Checked;
+                folder.DateUpdated=DateTime.Now;
+                folder.InEditMode = true;
 
                 var login = (from l in context.Login where l.FolderId == folderId select l).FirstOrDefault();
                 if (login == null)

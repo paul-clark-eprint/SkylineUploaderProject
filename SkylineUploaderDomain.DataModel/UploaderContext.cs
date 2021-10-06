@@ -6,11 +6,13 @@ namespace SkylineUploaderDomain.DataModel
 {
     public class UploaderDbContext : DbContext
     {
-        public UploaderDbContext() : base("SkylineUploader")
-        {
-            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<UploaderDbContext, Migrations.Configuration>());
-            Database.SetInitializer<UploaderDbContext>(null);
-        }
+        //public UploaderDbContext() : base("SkylineUploader")
+        //{
+        //    Database.SetInitializer(new MigrateDatabaseToLatestVersion<UploaderDbContext, Migrations.Configuration>());
+        //    //Database.SetInitializer<UploaderDbContext>(null);
+        //}
+
+
 
         public DbSet<Folder> Folders { get; set; }
         public DbSet<Login> Login { get; set; }
@@ -20,10 +22,10 @@ namespace SkylineUploaderDomain.DataModel
         public DbSet<SynchronizedFile> SynchronizedFiles { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-        }
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    base.OnModelCreating(modelBuilder);
+        //}
 
     }
 }

@@ -7,13 +7,13 @@ namespace SkylineUploaderDomain.DataModel.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class Initial : IMigrationMetadata
+    public sealed partial class AddInEditModeAndDateUpdated : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddInEditModeAndDateUpdated));
         
         string IMigrationMetadata.Id
         {
-            get { return "202110051630075_Initial"; }
+            get { return "202110061611340_AddInEditModeAndDateUpdated"; }
         }
         
         string IMigrationMetadata.Source
