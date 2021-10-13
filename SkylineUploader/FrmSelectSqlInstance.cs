@@ -144,7 +144,12 @@ namespace SkylineUploader
                 {
                     InitialCatalog = "SkylineUploader",
                     DataSource = SelectedInstance,
-                    IntegratedSecurity = true
+                    IntegratedSecurity = true,
+                    ConnectTimeout = 30,
+                    Encrypt = false,
+                    TrustServerCertificate = false,
+                    ApplicationIntent = ApplicationIntent.ReadWrite,
+                    MultiSubnetFailover = false
                 };
             }
             else
@@ -154,7 +159,12 @@ namespace SkylineUploader
                     InitialCatalog = "SkylineUploader",
                     DataSource = SelectedInstance,
                     UserID = SqlUsername,
-                    Password = SqlPassword
+                    Password = SqlPassword,
+                    ConnectTimeout = 30,
+                    Encrypt = false,
+                    TrustServerCertificate = false,
+                    ApplicationIntent = ApplicationIntent.ReadWrite,
+                    MultiSubnetFailover = false
                 };
             }
 
@@ -201,6 +211,7 @@ namespace SkylineUploader
                 Debug.Error("Unexpected error connecting to the database.", ex);
             }
 
+            Debug.Log("Setting the connectionString to: '" + sqlConBuilder.ConnectionString + "'");
             string errorMessage = SqlHelper.ModifyConnectionString("UploaderDbContext", sqlConBuilder.ConnectionString);
             if (!string.IsNullOrEmpty(errorMessage))
             {
@@ -214,20 +225,27 @@ namespace SkylineUploader
                 try
                 {
                     Debug.Log("ConnectionString string saved to app.config");
-                    //RegistryHelper.SaveRegistryKey("ConnectionString", sqlConBuilder.ConnectionString);
-                    Debug.Log("ConnectionString saved in the Registry");
 
-                    DataSourceSet = true;
+                    if (!SettingsHelper.CreateSettingsFile())
+                    {
+                        Debug.Error("Unable to check if the settings file exists");
+                        DataSourceSet = false;
+                        return;
+                    }
+                    Debug.Log("Settings file found. Saving ConnectionString");
+
+                    DataSourceSet = SettingsHelper.SaveConnectionString(sqlConBuilder.ConnectionString);
+                    return;
                 }
                 catch (Exception ex)
                 {
                     Debug.Error(ex.Message, ex);
-                    MessageBox.Show("Unable to write setting to the registry. Please run as Administrator",
-                        "Run as Administrator", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Unexptected error saving the ConnectionString setting\n\n" + ex.Message,
+                        "Unexpected Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                    DataSourceSet = false;
                 }
-                DataSourceSet = true;
+
+                DataSourceSet = false;
             }
 
             Close();
@@ -238,7 +256,7 @@ namespace SkylineUploader
             var sqlAuthentication = radDropDownList1.SelectedIndex == 1;
             uxLabelUsername.Enabled = sqlAuthentication;
             uxLabelPassword.Enabled = sqlAuthentication;
-            
+
             uxTextBoxUsername.Enabled = sqlAuthentication;
             uxTextBoxPassword.Enabled = sqlAuthentication;
 
@@ -262,7 +280,7 @@ namespace SkylineUploader
             {
                 _sqlUsername = uxTextBoxUsername.Text;
             }
-            
+
         }
 
         private void uxTextBoxPassword_Leave(object sender, EventArgs e)

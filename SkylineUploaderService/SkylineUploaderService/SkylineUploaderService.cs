@@ -74,16 +74,17 @@ namespace SkylineUploaderService
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
-            _connectionString =  GetConnectionStringFromRegistry(); 
+            _connectionString =  GetConnectionString(); 
+
         }
 
-        private string GetConnectionStringFromRegistry([CallerLineNumber] int lineNumber = 0)
+        private string GetConnectionString([CallerLineNumber] int lineNumber = 0)
         {
             string connectionString= string.Empty;
             try
             {
                 eventLog.WriteEntry("Looking for ConnectionString");
-                //connectionString = RegistryHelper.ReadRegistryKey("ConnectionString");
+                connectionString = SettingsHelper.GetConnectionString();
                 if (string.IsNullOrEmpty(connectionString))
                 {
                     eventLog.WriteEntry("ConnectionString empty. Stopping service",EventLogEntryType.Error,lineNumber);

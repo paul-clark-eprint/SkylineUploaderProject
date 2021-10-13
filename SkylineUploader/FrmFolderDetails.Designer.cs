@@ -476,7 +476,7 @@
             this.uxButtonCancel.Padding = new System.Windows.Forms.Padding(3);
             this.uxButtonCancel.ShowBorder = false;
             this.uxStatusStrip.SetSpring(this.uxButtonCancel, false);
-            this.uxButtonCancel.Text = "Cancel Upload";
+            this.uxButtonCancel.Text = "Stop Upload";
             this.uxButtonCancel.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             this.uxButtonCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.uxButtonCancel.Visibility = Telerik.WinControls.ElementVisibility.Hidden;
@@ -596,7 +596,7 @@
             // 
             this.RootElement.ApplyShapeToControl = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Folder Details";
+            this.Text = "Profile Settings";
             this.Load += new System.EventHandler(this.FolderDetails_Load);
             this.groupBoxAdminLogin.ResumeLayout(false);
             this.groupBoxAdminLogin.PerformLayout();

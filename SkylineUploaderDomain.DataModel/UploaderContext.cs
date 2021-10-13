@@ -7,10 +7,11 @@ namespace SkylineUploaderDomain.DataModel
     public class UploaderDbContext : DbContext
     {
         //public UploaderDbContext() : base("SkylineUploader")
-        //{
-        //    Database.SetInitializer(new MigrateDatabaseToLatestVersion<UploaderDbContext, Migrations.Configuration>());
-        //    //Database.SetInitializer<UploaderDbContext>(null);
-        //}
+        public UploaderDbContext()
+        {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<UploaderDbContext, Migrations.Configuration>());
+            //Database.SetInitializer<UploaderDbContext>(null);
+        }
 
 
 

@@ -36,9 +36,14 @@ namespace SkylineUploader
         public static void Error(string error, Exception e)
         {
             if (LogDir == null) return;
+
+            StackTrace stackTrace = new StackTrace();
+            string callingProcedure = stackTrace.GetFrame(1).GetMethod().Name;
+
             string timeStamp = DateTime.Now.ToString("F");
             try
             {
+                File.AppendAllText(Path.Combine(LogDir, "Error.txt"), timeStamp + ":\t" + stackTrace + Environment.NewLine);
                 File.AppendAllText(Path.Combine(LogDir, "Error.txt"), timeStamp + ":\t" + error + Environment.NewLine);
                 File.AppendAllText(Path.Combine(LogDir, "Error.txt"), timeStamp + ":\t" + "Error source: " + e.Source + Environment.NewLine);
                 File.AppendAllText(Path.Combine(LogDir, "Error.txt"), e.Message + Environment.NewLine);
@@ -53,9 +58,14 @@ namespace SkylineUploader
         public static void Error(string error)
         {
             if (LogDir == null) return;
+
+            StackTrace stackTrace = new StackTrace();
+            string callingProcedure = stackTrace.GetFrame(1).GetMethod().Name;
+
             string timeStamp = DateTime.Now.ToString("F");
             try
             {
+                File.AppendAllText(Path.Combine(LogDir, "Error.txt"), timeStamp + ":\t" + stackTrace + Environment.NewLine);
                 File.AppendAllText(Path.Combine(LogDir, "Error.txt"), timeStamp + ":\t" + error + Environment.NewLine);
                 File.AppendAllText(Path.Combine(LogDir, "Error.txt"), Environment.NewLine);
             }

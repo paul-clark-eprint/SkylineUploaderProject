@@ -725,22 +725,45 @@ namespace SkylineUploader
 
         private void uxButtonClose_Click(object sender, EventArgs e)
         {
-            if (_workStationVersion != null && _bwLogin!= null && _bwLogin.WorkerSupportsCancellation == true)
+            try
             {
-                // Cancel the asynchronous operation.
-                _bwLogin.CancelAsync();
-            }
-
-            using (UploaderDbContext context = new UploaderDbContext())
-            {
-                var folder = (from f in context.Folders where f.FolderId == FolderId select f).FirstOrDefault();
-                if (folder != null)
+                if (_workStationVersion != null && _bwLogin!= null && _bwLogin.WorkerSupportsCancellation == true)
                 {
-                    folder.InEditMode = false;
+                    // Cancel the asynchronous operation.
+                    _bwLogin.CancelAsync();
                 }
 
-                context.SaveChanges();
+                if (_bwCheckUrl.IsBusy)
+                {
+                    _bwCheckUrl.CancelAsync();
+                    _checkUrlCancelled = true;
+                }
+
+                if (_bwUpload.IsBusy)
+                {
+                    _bwUpload.ReportProgress(-3);
+                    _bwUpload.CancelAsync();
+                }
+
+                using (UploaderDbContext context = new UploaderDbContext())
+                {
+                    var folder = (from f in context.Folders where f.FolderId == FolderId select f).FirstOrDefault();
+                    if (folder != null)
+                    {
+                        folder.InEditMode = false;
+                    }
+
+                    context.SaveChanges();
+                }
             }
+            catch (Exception ex)
+            {
+                Debug.Error("Unexpected error closing the profile",ex);
+                MessageBox.Show("Unexpected error closing the profile\n\n" + ex.Message, "Unexpected Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Environment.Exit(0);
+            }
+            
             Close();
         }
 

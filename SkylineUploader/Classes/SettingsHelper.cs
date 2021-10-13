@@ -20,28 +20,14 @@ namespace SkylineUploader.Classes
         /// Check if settings file exists and create if not
         /// </summary>
         /// <returns>bool</returns>
-        public static bool CheckIfSettingsFileExists()
+        public static bool CreateSettingsFile()
         {
-            if (!Directory.Exists(@"C:\Skyline\SkylineUploader"))
-            {
-                try
-                {
-                    Directory.CreateDirectory(@"C:\Skyline\SkylineUploader");
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("SkylineUploader cannot create the local working directory C:\\Skyline\\SkylineUploader", "Error creating folder", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    Application.Exit();
-                    return false;
-                }
-            }
-
             if (!File.Exists(Global.SettingsPath))
             {
                 return CreateBlankSettingsFile();
             }
 
-            if (!CheckUseHttpsExists())
+            if (!CheckConnectionStringExists())
             {
                 DeleteSettingsFile();
                 return CreateBlankSettingsFile();
@@ -57,17 +43,18 @@ namespace SkylineUploader.Classes
         {
             XDocument doc = new XDocument(
                 new XElement("SkylineUploader",
-                    new XElement("Username", string.Empty),
-                    new XElement("Password", string.Empty),
-                    new XElement("PortalUrl", string.Empty),
-                    new XElement("UseHttps", string.Empty),
-                    new XElement("RememberMe", false),
-                    new XElement("UseProxy", false),
-                    new XElement("ProxyAddress", string.Empty),
-                    new XElement("ProxyPort", string.Empty),
-                    new XElement("ProxyUsername", string.Empty),
-                    new XElement("ProxyPassword", string.Empty),
-                    new XElement("ProxyDomain", string.Empty)
+                    new XElement("ConnectionString", string.Empty)
+                    //new XElement("Username", string.Empty),
+                    //new XElement("Password", string.Empty),
+                    //new XElement("PortalUrl", string.Empty),
+                    //new XElement("UseHttps", string.Empty),
+                    //new XElement("RememberMe", false),
+                    //new XElement("UseProxy", false),
+                    //new XElement("ProxyAddress", string.Empty),
+                    //new XElement("ProxyPort", string.Empty),
+                    //new XElement("ProxyUsername", string.Empty),
+                    //new XElement("ProxyPassword", string.Empty),
+                    //new XElement("ProxyDomain", string.Empty)
                     )
                 );
             try
@@ -102,40 +89,20 @@ namespace SkylineUploader.Classes
             return true;
         }
         /// <summary>
-        /// Updates the login details in the settings file
+        /// Updates the ConnectionString in the settings file
         /// </summary>
-        /// <param name="userName">Username</param>
-        /// <param name="password">Password</param>
-        /// <param name="portalUrl">Portal URL</param>
-        /// <param name="useHttps">Use HTTPS</param>
-        /// <param name="rememberMe">Remember details</param>
         /// <returns>bool</returns>
-        public static bool UpdateLoginDetails(string userName, string password, string portalUrl, bool rememberMe)
+        public static bool UpdateConnectionString(string connectionString)
         {
             if (File.Exists(Global.SettingsPath))
             {
                 XDocument doc = XDocument.Load(Global.SettingsPath);
                 if (doc.Root != null)
                 {
-                    var xElement = doc.Root.Element("Username");
+                    XElement xElement = doc.Root.Element("ConnectionString");
                     if (xElement != null)
                     {
-                        xElement.Value = userName;
-                    }
-                    xElement = doc.Root.Element("Password");
-                    if (xElement != null)
-                    {
-                        xElement.Value = Encrypt(password);
-                    }
-                    xElement = doc.Root.Element("PortalUrl");
-                    if (xElement != null)
-                    {
-                        xElement.Value = portalUrl;
-                    }
-                    xElement = doc.Root.Element("RememberMe");
-                    if (xElement != null)
-                    {
-                        xElement.Value = rememberMe.ToString();
+                        xElement.Value = Encrypt(connectionString);
                     }
                 }
                 try
@@ -151,37 +118,18 @@ namespace SkylineUploader.Classes
             return false;
         }
 
-        public static bool SaveLoginDetails(string userName, string password, string portalUrl, bool useHttps, bool rememberMe)
+        public static bool SaveConnectionString(string connectionString)
         {
+            
             if (File.Exists(Global.SettingsPath))
             {
                 XDocument doc = XDocument.Load(Global.SettingsPath);
                 if (doc.Root != null)
                 {
-                    var xElement = doc.Root.Element("Username");
+                    XElement xElement = doc.Root.Element("ConnectionString");
                     if (xElement != null)
                     {
-                        xElement.Value = userName;
-                    }
-                    xElement = doc.Root.Element("Password");
-                    if (xElement != null)
-                    {
-                        xElement.Value = Encrypt(password);
-                    }
-                    xElement = doc.Root.Element("PortalUrl");
-                    if (xElement != null)
-                    {
-                        xElement.Value = portalUrl;
-                    }
-                    xElement = doc.Root.Element("UseHttps");
-                    if (xElement != null)
-                    {
-                        xElement.Value = useHttps.ToString();
-                    }
-                    xElement = doc.Root.Element("RememberMe");
-                    if (xElement != null)
-                    {
-                        xElement.Value = rememberMe.ToString();
+                        xElement.Value = Encrypt(connectionString);
                     }
                 }
                 try
@@ -204,7 +152,7 @@ namespace SkylineUploader.Classes
         /// <returns>bool</returns>
         public static bool UpdateProxyDetails(Proxy proxy)
         {
-            SettingsHelper.CheckIfSettingsFileExists();
+            SettingsHelper.CreateSettingsFile();
 
                 
             if (File.Exists(Global.SettingsPath))
@@ -306,7 +254,10 @@ namespace SkylineUploader.Classes
         public static string Decrypt(string cipherText)
         {
             if (cipherText.Length < 8) return string.Empty;
-            // Get the complete stream of bytes that represent:
+
+            try
+            {
+                // Get the complete stream of bytes that represent:
             // [32 bytes of Salt] + [32 bytes of IV] + [n bytes of CipherText]
             var cipherTextBytesWithSaltAndIv = Convert.FromBase64String(cipherText);
             // Get the saltbytes by extracting the first 32 bytes from the supplied cipherText bytes.
@@ -340,6 +291,13 @@ namespace SkylineUploader.Classes
                     }
                 }
             }
+            }
+            catch (Exception e)
+            {
+                Debug.Error("Unexpected Error in Decrypt ",e);
+                return string.Empty;
+            }
+            
         }
         private static byte[] Generate256BitsOfRandomEntropy()
         {
@@ -435,20 +393,50 @@ namespace SkylineUploader.Classes
             return proxy;
         }
 
-        private static bool CheckUseHttpsExists()
+        private static bool CheckConnectionStringExists()
         {
             if (File.Exists(Global.SettingsPath))
             {
                 XDocument doc = XDocument.Load(Global.SettingsPath);
                 if (doc.Root != null)
                 {
-                    var xElement = doc.Root.Element("UseHttps");
-                    return xElement != null;
+                    var xElement = doc.Root.Element("ConnectionString");
+
+                    if (xElement != null)
+                    {
+                        var connectionString = Decrypt(xElement.Value);
+                        return !string.IsNullOrEmpty(connectionString);
+                    }
                 }
             }
 
             return false;
         }
-        
+
+        public static string GetConnectionString()
+        {
+            string connectionString = string.Empty;
+            try
+            {
+                if (File.Exists(Global.SettingsPath))
+                {
+                    XDocument doc = XDocument.Load(Global.SettingsPath);
+                    if (doc.Root != null)
+                    {
+                        var xElement = doc.Root.Element("ConnectionString");
+                        if (xElement != null)
+                        {
+                            connectionString = Decrypt(xElement.Value);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                connectionString = "*error* " + e.Message;
+            }
+            
+            return connectionString;
+        }
     }
 }

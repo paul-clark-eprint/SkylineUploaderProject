@@ -4,7 +4,7 @@
     {
         Ready, 
         Uploading, 
-        Idle, 
+        Disabled, 
         Waiting
     }
 }

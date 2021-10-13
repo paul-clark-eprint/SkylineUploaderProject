@@ -48,8 +48,8 @@ namespace SkylineUploader
             ((System.ComponentModel.ISupportInitialize)(this.uxButtonClose)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxLabelStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxWaitingBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radMenu1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
             // uxGridViewFolders
@@ -79,7 +79,7 @@ namespace SkylineUploader
             this.uxButtonNew.Name = "uxButtonNew";
             this.uxButtonNew.Size = new System.Drawing.Size(100, 26);
             this.uxButtonNew.TabIndex = 1;
-            this.uxButtonNew.Text = "New Folder";
+            this.uxButtonNew.Text = "New Profile";
             this.uxButtonNew.Click += new System.EventHandler(this.uxButtonNew_Click);
             // 
             // uxButtonClose
@@ -150,12 +150,6 @@ namespace SkylineUploader
             this.uxMenuItemExit.Text = "Exit";
             this.uxMenuItemExit.Click += new System.EventHandler(this.uxMenuItemExit_Click);
             // 
-            // FrmUploader
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(874, 301);
-            // 
             // radMenu1
             // 
             this.radMenu1.Items.AddRange(new Telerik.WinControls.RadItem[] {
@@ -164,6 +158,12 @@ namespace SkylineUploader
             this.radMenu1.Name = "radMenu1";
             this.radMenu1.Size = new System.Drawing.Size(874, 25);
             this.radMenu1.TabIndex = 52;
+            // 
+            // FrmUploader
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(874, 301);
             this.Controls.Add(this.radMenu1);
             this.Controls.Add(this.uxWaitingBar);
             this.Controls.Add(this.uxLabelStatus);

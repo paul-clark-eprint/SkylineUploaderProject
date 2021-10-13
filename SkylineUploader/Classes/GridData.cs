@@ -7,6 +7,8 @@ namespace SkylineUploader.Classes
         public Guid FolderId { get; set; }
         public Guid PortalId { get; set; }
         public string PortalUrl { get; set; }
+        public string AdminUsername { get; set; }
+        public string AdminPassword { get; set; }
         public string FolderName { get; set; }
         public string LibraryUsername { get; set; }
         public string LibraryName { get; set; }
@@ -14,5 +16,6 @@ namespace SkylineUploader.Classes
         public string Status { get; set; }
         public bool Enabled { get; set; }
         public string SourceFolder { get; set; }
+        public bool InEditMode { get; set; }
     }
 }
