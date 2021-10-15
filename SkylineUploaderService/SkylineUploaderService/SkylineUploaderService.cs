@@ -74,7 +74,12 @@ namespace SkylineUploaderService
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
-            _connectionString =  GetConnectionString(); 
+            _connectionString =  GetConnectionString();
+
+            if (string.IsNullOrEmpty(_connectionString))
+            {
+
+            }
 
         }
 
