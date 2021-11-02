@@ -174,6 +174,7 @@ namespace SkylineUploader
                 StopWaitingBar();
                 StopProgressBar();
                 uxLabelStatus.Text = "Cancelled";
+                timer1.Enabled = true;
                 return;
             }
 
@@ -185,6 +186,7 @@ namespace SkylineUploader
                 Debug.Error("The upload page '" + _portalUrl + "' is not available", e.Error);
                 MessageBox.Show(this, "The upload website '" + _portalUrl + "' is not available.", "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 uxLabelStatus.Text = "The upload website '" + _portalUrl + "' is not available.";
+                timer1.Enabled = true;
                 return;
             }
 
@@ -195,7 +197,7 @@ namespace SkylineUploader
             uploadParams = new Webcalls.UploadParams();
             uploadParams.username = _username;
             uploadParams.Password = _password;
-            uploadParams.SelectedUserId = _userLibraryUserId;
+            uploadParams.UserLibraryId = _userLibraryUserId;
             uploadParams.UploadUrl = _portalUrl;
             uploadParams.PdfPath = uxTextBoxSourceFolder.Text;
 
@@ -234,6 +236,7 @@ namespace SkylineUploader
                 MessageBox.Show("No File Types have been selected", "Error", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 uxLabelStatus.Text = "No File Types have been selected";
+                timer1.Enabled = true;
                 return;
             }
 
@@ -279,7 +282,7 @@ namespace SkylineUploader
 
                     string pdfPath = Path.Combine(uploadParams.PdfPath, filename);
                     string url = uploadParams.UploadUrl;
-                    Guid selectedUserId = uploadParams.SelectedUserId;
+                    Guid userLibraryId = uploadParams.UserLibraryId;
 
                     string uploadDir = _userLibraryUserId.ToString();
 
@@ -351,6 +354,7 @@ namespace SkylineUploader
                         fs.Close();
                         _errorMessage = "Error uploading the document:\n\n" + ex.Message;
                         _uploadOK = false;
+                        timer1.Enabled = true;
                         return;
                     }
                     finally
@@ -367,6 +371,7 @@ namespace SkylineUploader
                             _bwUpload.ReportProgress(-4);
                             _uploadOK = false;
                             _errorMessage = "Upload Cancelled";
+                            timer1.Enabled = true;
                             return;
                         }
 
@@ -375,7 +380,7 @@ namespace SkylineUploader
                     _bwUpload.ReportProgress(-2, "\"" + filenameTruncated + "\"");
                     try
                     {
-                        string docIdOrError = webSvc.MoveTempDocumentsToSpecificLibrary(selectedUserId, _userLibraryLibraryId,false);
+                        string docIdOrError = webSvc.MoveTempDocumentsToSpecificLibrary(userLibraryId, _userLibraryLibraryId,false);
                         try
                         {
                             _docId = new Guid(docIdOrError);
@@ -501,8 +506,7 @@ namespace SkylineUploader
                 //Webcalls.GotoSite(siteUrl, username, password, _docId.ToString(), _numPages);
 
                 //Close();
-                timer1.Enabled = true;
-
+                Debug.Log("All files uploaded OK");
             }
             else if (!_uploadCancelled)
             {
@@ -513,6 +517,7 @@ namespace SkylineUploader
                 }
             }
             _uploadCancelled = false;
+            timer1.Enabled = true;
         }
 
         void BwLoginDoWork(object sender, DoWorkEventArgs e)
@@ -1339,28 +1344,31 @@ namespace SkylineUploader
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            timer1.Enabled = false;
             StartWaitingBar();
             if (_bwCheckUrl.IsBusy)
             {
                 MessageBox.Show("Please wait until the current upload is complete", "Upload in progress", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                timer1.Enabled = true;
                 return;
             }
 
             if (_bwUpload.IsBusy)
             {
                 MessageBox.Show("Please wait until the current upload is complete", "Upload in progress", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                timer1.Enabled = true;
                 return;
             }
 
             _totalFiles = CheckSourceFolder();
             if (_totalFiles > 0)
             {
-                timer1.Enabled = false;
                 if (!_bwCheckUrl.IsBusy) _bwCheckUrl.RunWorkerAsync(_portalUrl);
             }
             else
             {
                 uxLabelStatus.Text = "Waiting for files to upload";
+                timer1.Enabled = true;
             }
         }
 

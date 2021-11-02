@@ -70,6 +70,7 @@ namespace SkylineUploader
             this.uxGridViewFolders.Name = "uxGridViewFolders";
             this.uxGridViewFolders.Size = new System.Drawing.Size(850, 226);
             this.uxGridViewFolders.TabIndex = 0;
+            this.uxGridViewFolders.CellFormatting += new Telerik.WinControls.UI.CellFormattingEventHandler(this.uxGridViewFolders_CellFormatting);
             // 
             // uxButtonNew
             // 

@@ -496,6 +496,12 @@ namespace SkylineUploader
             Application.Exit();
         }
 
-
+        private void uxGridViewFolders_CellFormatting(object sender, CellFormattingEventArgs e)
+        {
+            if (e.CellElement.Value != null) 
+            { 
+                e.CellElement.ToolTipText = e.CellElement.Value.ToString(); 
+            } 
+        }
     }
 }

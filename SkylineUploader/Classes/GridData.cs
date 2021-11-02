@@ -17,5 +17,6 @@ namespace SkylineUploader.Classes
         public bool Enabled { get; set; }
         public string SourceFolder { get; set; }
         public bool InEditMode { get; set; }
+        public bool DeleteAfterUpload { get; set; }
     }
 }
