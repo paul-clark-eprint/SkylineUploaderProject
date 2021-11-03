@@ -236,10 +236,20 @@ namespace SkylineUploader
             uxGridViewFolders.DataSource = _folderData;
             uxGridViewFolders.Columns["FolderId"].IsVisible = false;
             uxGridViewFolders.Columns["PortalId"].IsVisible = false;
+            if (uxGridViewFolders.Columns["AdminUsername"] != null) uxGridViewFolders.Columns["AdminUsername"].IsVisible = false;
+            if (uxGridViewFolders.Columns["AdminPassword"] != null) uxGridViewFolders.Columns["AdminPassword"].IsVisible = false;
             uxGridViewFolders.Columns["PortalUrl"].BestFit();
             uxGridViewFolders.Columns["PortalUrl"].BestFit();
             uxGridViewFolders.Columns["Files"].Width = 30;
             uxGridViewFolders.Columns["Files"].TextAlignment = ContentAlignment.MiddleCenter;
+
+            uxGridViewFolders.Columns["PortalUrl"].HeaderText="Portal URL";
+            uxGridViewFolders.Columns["FolderName"].HeaderText="Folder Name";
+            uxGridViewFolders.Columns["LibraryUsername"].HeaderText="Library Username";
+            uxGridViewFolders.Columns["LibraryName"].HeaderText="Library Name";
+            uxGridViewFolders.Columns["SourceFolder"].HeaderText="Source Folder";
+            uxGridViewFolders.Columns["InEditMode"].HeaderText="In Edit Mode";
+            uxGridViewFolders.Columns["DeleteAfterUpload"].HeaderText="Delete After Upload";
 
             GridViewCommandColumn editColumn = new GridViewCommandColumn();
             editColumn.Name = "Edit";
