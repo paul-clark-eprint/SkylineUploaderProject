@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using SkylineUploaderDomain.DataModel.Enums;
 
 namespace SkylineUploaderDomain.DataModel.Classes
@@ -9,6 +10,7 @@ namespace SkylineUploaderDomain.DataModel.Classes
         public int Id { get; set; }
         public Guid FolderId { get; set; }
         public Guid PortalId { get; set; }
+        [StringLength(1000)]
         public string FolderName { get; set; }
 
         //[Required]
@@ -17,7 +19,10 @@ namespace SkylineUploaderDomain.DataModel.Classes
         public UserLibrary UserLibrary { get; set; }
         //[Required]
         public SourceFolder SourceFolder { get; set; }
-        public FolderStatus Status { get; set; }
+
+        [StringLength(1000)]
+        public string Status { get; set; }
+        public int Files { get; set; }
         //[Required]
         public List<DocumentType> DocumentTypes { get; set; }
         public bool Enabled { get; set; }
@@ -34,18 +39,25 @@ namespace SkylineUploaderDomain.DataModel.Classes
     {
         public int Id { get; set; }
         public Guid FolderId { get; set; }
+        [StringLength(1000)]
         public string Username { get; set; }
+        [StringLength(1000)]
         public string Password { get; set; }
+        [StringLength(1000)]
         public string PortalUrl { get; set; }
     }
     public class Proxy
     {
         public int Id { get; set; }
         public bool UseProxy { get; set; }
+        [StringLength(1000)]
         public string ProxyAddress { get; set; }
         public int ProxyPort { get; set; }
+        [StringLength(1000)]
         public string ProxyUsername { get; set; }
+        [StringLength(1000)]
         public string ProxyPassword { get; set; }
+        [StringLength(1000)]
         public string ProxyDomain { get; set; }
     }
 
@@ -53,9 +65,12 @@ namespace SkylineUploaderDomain.DataModel.Classes
     {
         public int Id { get; set;}
         public Guid FolderId { get; set; }
+        [StringLength(1000)]
         public string Username { get; set; }
         public Guid UserId { get; set; }
+        [StringLength(1000)]
         public string UserEmail { get; set; }
+        [StringLength(1000)]
         public string LibraryName { get; set; }
         public Guid LibraryId { get; set; }
     }
@@ -64,6 +79,7 @@ namespace SkylineUploaderDomain.DataModel.Classes
     {
         public int Id { get; set; }
         public Guid FolderId { get; set; }
+        [StringLength(1000)]
         public string FolderPath { get; set; }
         public List<DocumentType> SupportedDocumentTypes { get; set; }
         public bool Enabled { get; set; }
@@ -74,6 +90,7 @@ namespace SkylineUploaderDomain.DataModel.Classes
     {
         public bool Id { get; set; }
         public Guid FolderId { get; set; }
+        [StringLength(1000)]
         public string DocumentName { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
@@ -85,8 +102,17 @@ namespace SkylineUploaderDomain.DataModel.Classes
     {
         public int Id { get; set; }
         public Guid FolderId { get; set; }
+        [StringLength(1000)]
         public string FileType { get; set; }
     }
 
-    
+    public class ServiceSettings
+    {
+        [Key]
+        public int Id { get; set; }
+        public DateTime LastUpdate { get; set; }
+        [StringLength(1000)] 
+        public string ServiceMessage { get; set; }
+
+    }
 }

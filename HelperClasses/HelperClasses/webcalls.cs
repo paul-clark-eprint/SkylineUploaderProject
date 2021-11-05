@@ -41,7 +41,8 @@ namespace HelperClasses
             public string DocumentName { get; set; }
             public string PdfPath { get; set; }
             public string UploadUrl { get; set; }
-            public Guid UserLibraryId { get; set; }
+            public Guid UserId { get; set; }
+            public Guid LibraryId { get; set; }
             public string username { get; set; }
             public string Password { get; set; }
             public string email { get; set; }

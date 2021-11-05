@@ -102,6 +102,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data" />
@@ -373,6 +374,10 @@
     <None Include="Resources\Save %282%29.gif" />
     <None Include="Resources\Edit.gif" />
     <None Include="Resources\Delete.png" />
+    <None Include="Resources\error_warning.png" />
+    <None Include="Resources\cog-animated-16.gif" />
+    <None Include="Resources\cog-animated-24.gif" />
+    <None Include="Resources\cog-animated-32.gif" />
     <Content Include="SkylineLogo32.ico" />
   </ItemGroup>
   <ItemGroup>

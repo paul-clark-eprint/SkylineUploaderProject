@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -14,6 +15,8 @@ using SkylineUploader.Classes;
 using SkylineUploaderDomain.DataModel;
 using SkylineUploaderDomain.DataModel.Classes;
 using Telerik.WinControls.UI;
+using System.ServiceProcess;
+using ServiceSettings = SkylineUploaderDomain.DataModel.Classes.ServiceSettings;
 
 namespace SkylineUploader
 {
@@ -25,6 +28,7 @@ namespace SkylineUploader
         private bool _sqlFound = false;
         private bool _dataSourceSet = false;
         private string _dataSource = string.Empty;
+        private bool _SkylineServiceRunning = false;
 
         public FrmUploader()
         {
@@ -39,7 +43,11 @@ namespace SkylineUploader
                 Environment.Exit(0);
             }
             CheckAppConfig();
+            
+            CheckServiceStatus();
         }
+
+        
 
         private void CheckAppConfig()
         {
@@ -72,6 +80,101 @@ namespace SkylineUploader
                 }
             }
 
+            string value = ConfigurationManager.AppSettings["TimerInterval"];
+            if (!string.IsNullOrEmpty(value))
+            {
+                int timerInterval = 0;
+                if (int.TryParse(value, out timerInterval))
+                {
+                    if (timerInterval > 500 && timerInterval < 60000)
+                    {
+                        timer1.Interval = timerInterval;
+                    } 
+                }
+            }
+        }
+
+        private void CheckServiceStatus()
+        {
+            
+            uxLabelStatus.Visible = true;
+            
+            //uxLabelStatus.TextAlignment = ContentAlignment.MiddleCenter;
+            
+
+            var pcName = Environment.MachineName;
+
+            if (!DoesServiceExist("Skyline Uploader", pcName))
+            {
+                uxLabelStatus.Image = Properties.Resources.error_warning;
+                uxLabelStatus.Text = "Skyline Uploader service not found";
+                _SkylineServiceRunning = false;
+                return;
+            }
+
+            _SkylineServiceRunning = false;
+            string serviceStatus = GetServiceStatus("Skyline Uploader", pcName);
+            switch (serviceStatus)
+            {
+                case "Running":
+                    uxLabelStatus.Image = Properties.Resources.cog_animated_32;
+                    _SkylineServiceRunning = true;
+                    break;
+                case "Stopped":
+                    uxLabelStatus.Text = "Skyline Uploader service is Stopped";
+                    uxLabelStatus.Image = Properties.Resources.error_warning;
+                    return;
+                case "Paused":
+                    uxLabelStatus.Text = "Skyline Uploader service is Paused";
+                    uxLabelStatus.Image = Properties.Resources.error_warning;
+                    return;
+                case "Stopping":
+                    uxLabelStatus.Text = "Skyline Uploader service is Stopping";
+                    uxLabelStatus.Image = Properties.Resources.error_warning;
+                    return;
+                case "Starting":
+                    uxLabelStatus.Text = "Skyline Uploader service is Starting";
+                    uxLabelStatus.Image = Properties.Resources.error_warning;
+                    return;
+            }
+
+            using (UploaderDbContext context = new UploaderDbContext())
+            {
+                ServiceSettings serviceSettings = (from s in context.ServiceSettings select s).FirstOrDefault();
+                
+                if (_SkylineServiceRunning && serviceSettings != null && serviceSettings.LastUpdate>DateTime.MinValue && !string.IsNullOrEmpty(serviceSettings.ServiceMessage))
+                {
+                    uxLabelStatus.Text = serviceSettings.ServiceMessage;
+                }
+            }
+        }
+
+        private bool DoesServiceExist(string serviceName, string machineName)
+        {
+            ServiceController[] services = ServiceController.GetServices(machineName);
+            var service = services.FirstOrDefault(s => s.ServiceName == serviceName);
+            return service != null;
+        }
+
+        private string GetServiceStatus(string serviceName, string machineName)
+        {
+            ServiceController sc = new ServiceController(serviceName);
+
+            switch (sc.Status)
+            {
+                case ServiceControllerStatus.Running:
+                    return "Running";
+                case ServiceControllerStatus.Stopped:
+                    return "Stopped";
+                case ServiceControllerStatus.Paused:
+                    return "Paused";
+                case ServiceControllerStatus.StopPending:
+                    return "Stopping";
+                case ServiceControllerStatus.StartPending:
+                    return "Starting";
+                default:
+                    return "Status Changing";
+            }
         }
 
         private void InitializeBackgroundWorker()
@@ -142,7 +245,7 @@ namespace SkylineUploader
                 {
                     using (var frmSelectSqlInstance = new FrmSelectSqlInstance())
                     {
-                        frmSelectSqlInstance.sqlInstances = _sqlInstances;
+                        frmSelectSqlInstance.SqlInstances = _sqlInstances;
                         frmSelectSqlInstance.StartPosition = FormStartPosition.CenterParent;
                         frmSelectSqlInstance.ShowDialog(this);
 
@@ -227,8 +330,7 @@ namespace SkylineUploader
                 Environment.Exit(0);
             }
 
-            var ok = GetGridData();
-            if (ok == false)
+            if (!GetGridData())
             {
                 return false;
             }
@@ -238,6 +340,9 @@ namespace SkylineUploader
             uxGridViewFolders.Columns["PortalId"].IsVisible = false;
             if (uxGridViewFolders.Columns["AdminUsername"] != null) uxGridViewFolders.Columns["AdminUsername"].IsVisible = false;
             if (uxGridViewFolders.Columns["AdminPassword"] != null) uxGridViewFolders.Columns["AdminPassword"].IsVisible = false;
+            if (uxGridViewFolders.Columns["LibraryId"] != null) uxGridViewFolders.Columns["LibraryId"].IsVisible = false;
+            if (uxGridViewFolders.Columns["InEditMode"] != null) uxGridViewFolders.Columns["InEditMode"].IsVisible = false;
+            if (uxGridViewFolders.Columns["DeleteAfterUpload"] != null) uxGridViewFolders.Columns["DeleteAfterUpload"].IsVisible = false;
             uxGridViewFolders.Columns["PortalUrl"].BestFit();
             uxGridViewFolders.Columns["PortalUrl"].BestFit();
             uxGridViewFolders.Columns["Files"].Width = 30;
@@ -250,6 +355,8 @@ namespace SkylineUploader
             uxGridViewFolders.Columns["SourceFolder"].HeaderText="Source Folder";
             uxGridViewFolders.Columns["InEditMode"].HeaderText="In Edit Mode";
             uxGridViewFolders.Columns["DeleteAfterUpload"].HeaderText="Delete After Upload";
+            uxGridViewFolders.Columns["Status"].HeaderText="Service Status";
+            uxGridViewFolders.Columns["Status"].TextAlignment = ContentAlignment.MiddleCenter;
 
             GridViewCommandColumn editColumn = new GridViewCommandColumn();
             editColumn.Name = "Edit";
@@ -278,6 +385,7 @@ namespace SkylineUploader
             deleteColumn.ImageAlignment = ContentAlignment.MiddleCenter;
             deleteColumn.Image = Properties.Resources.Delete;
             uxGridViewFolders.MasterTemplate.Columns.Add(deleteColumn);
+
 
             uxGridViewFolders.CommandCellClick += new CommandCellClickEventHandler(uxGridViewFolders_CommandCellClick);
 
@@ -311,6 +419,7 @@ namespace SkylineUploader
                                        FolderName = f.FolderName,
                                        LibraryUsername = ul.Username,
                                        LibraryName = ul.LibraryName,
+                                       Status= _SkylineServiceRunning? f.Status:"Not running",
                                        Files = 0,
                                        Enabled = f.Enabled,
                                        SourceFolder = sf.FolderPath
@@ -328,13 +437,13 @@ namespace SkylineUploader
                 var inner = sqlExc.InnerException;
                 var errorNumber = sqlExc.Number;
 
-                MessageBox.Show("Error connectiing to the database. Closing application\n\n" + sqlExc.Message, "Unexpected Error",
+                MessageBox.Show("Error connecting to the database. Closing application\n\n" + sqlExc.Message, "Unexpected Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 MessageBox.Show("ConnectionString: " + connectionString, "Diagnostic Message", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
-                Debug.Error("Error connectiing to the database.", sqlExc);
+                Debug.Error("Error connecting to the database.", sqlExc);
                 Debug.Error("SQL Error number: " + errorNumber);
 
                 if (errorNumber == 262)
@@ -353,7 +462,7 @@ namespace SkylineUploader
 
             catch (Exception e)
             {
-                MessageBox.Show("Error connectiing to the database. Closing application\n\n" + e.Message, "Unexpected Error",
+                MessageBox.Show("Error connecting to the database. Closing application\n\n" + e.Message, "Unexpected Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 MessageBox.Show("ConnectionString = " + connectionString, "Diagnostic Message", MessageBoxButtons.OK,
@@ -361,7 +470,7 @@ namespace SkylineUploader
 
                 Debug.Error("ConnectionString = " + connectionString);
 
-                Debug.Error("Error connectiing to the database. Closing application", e);
+                Debug.Error("Error connecting to the database. Closing application", e);
                 Environment.Exit(0);
             }
 
@@ -388,10 +497,13 @@ namespace SkylineUploader
                 return;
             }
 
+            timer1.Enabled = false;
+
             int selectedIndex = -1;
             var commandName = e.Column.Name;
             if (commandName == "Edit")
             {
+                
                 selectedIndex = uxGridViewFolders.Rows.IndexOf(this.uxGridViewFolders.CurrentRow);
                 using (var frmFolderDetails = new FrmFolderDetails())
                 {
@@ -399,6 +511,8 @@ namespace SkylineUploader
                     frmFolderDetails.StartPosition = FormStartPosition.CenterParent;
                     frmFolderDetails.ShowDialog(this);
                 }
+
+                if(_SkylineServiceRunning) timer1.Enabled = true;
             }
 
             if (commandName == "Delete")
@@ -406,6 +520,7 @@ namespace SkylineUploader
                 DialogResult res = MessageBox.Show("Are you sure that you want to delete this folder?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (res != DialogResult.Yes)
                 {
+                    if(_SkylineServiceRunning) timer1.Enabled = true;
                     return;
                 }
 
@@ -423,11 +538,15 @@ namespace SkylineUploader
                     if (documentType != null) context.DocumentTypes.Remove(documentType);
                     context.SaveChanges();
                 }
+                if(_SkylineServiceRunning) timer1.Enabled = true;
             }
 
-            var ok = GetGridData();
-            if (ok == false)
+            if (!GetGridData())
             {
+                MessageBox.Show("There was a problem getting the data for the grid. Closing application", "Error getting data",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.Error("Error connecting to the database. Closing application");
+                Environment.Exit(0);
 
             }
 
@@ -456,10 +575,12 @@ namespace SkylineUploader
                 frmFolderDetails.ShowDialog(this);
             }
 
-            var ok = GetGridData();
-            if (ok == false)
+            if (!GetGridData())
             {
-
+                MessageBox.Show("There was a problem getting the data for the grid. closing application", "Error getting data",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.Error("Error connecting to the database. Closing application");
+                Environment.Exit(0);
             }
         }
 
@@ -512,6 +633,14 @@ namespace SkylineUploader
             { 
                 e.CellElement.ToolTipText = e.CellElement.Value.ToString(); 
             } 
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timer1.Enabled = false;
+            GetGridData();
+            CheckServiceStatus();
+            timer1.Enabled = true;
         }
     }
 }

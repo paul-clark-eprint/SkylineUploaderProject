@@ -18,7 +18,7 @@ namespace SkylineUploader
 {
     public partial class FrmSelectSqlInstance : Form
     {
-        public List<SqlHelper> sqlInstances;
+        public List<SqlHelper> SqlInstances;
         public string SelectedInstance = string.Empty;
         public bool WindowsAuthentication = true;
         public string SqlUsername = string.Empty;
@@ -37,7 +37,7 @@ namespace SkylineUploader
         private void FrmSelectSqlInstance_Load(object sender, EventArgs e)
         {
             RadListDataItem dataItem;
-            foreach (var sqlInstance in sqlInstances)
+            foreach (var sqlInstance in SqlInstances)
             {
                 dataItem = new RadListDataItem();
                 dataItem.Text = sqlInstance.ServerInstance;
@@ -122,7 +122,6 @@ namespace SkylineUploader
             }
 
             string connectionString = sqlConBuilder.ToString();
-
 
             try
             {
@@ -235,17 +234,15 @@ namespace SkylineUploader
                     Debug.Log("Settings file found. Saving ConnectionString");
 
                     DataSourceSet = SettingsHelper.SaveConnectionString(sqlConBuilder.ConnectionString);
-                    return;
+                    
                 }
                 catch (Exception ex)
                 {
                     Debug.Error(ex.Message, ex);
                     MessageBox.Show("Unexptected error saving the ConnectionString setting\n\n" + ex.Message,
                         "Unexpected Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                    DataSourceSet = false;
                 }
-
-                DataSourceSet = false;
             }
 
             Close();

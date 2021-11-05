@@ -17,6 +17,7 @@ using SkylineUploader.Classes;
 using SkylineUploader.SkylineWebService;
 using SkylineUploaderDomain.DataModel;
 using Debug = SkylineUploader.Debug;
+using ServiceSettings = SkylineUploaderDomain.DataModel.Classes.ServiceSettings;
 
 namespace ConsoleApp
 {
@@ -115,6 +116,7 @@ namespace ConsoleApp
                                   FolderName = f.FolderName,
                                   LibraryUsername = ul.Username,
                                   LibraryName = ul.LibraryName,
+                                  LibraryId = ul.LibraryId,
                                   Files = 0,
                                   Enabled = f.Enabled,
                                   SourceFolder = sf.FolderPath,
@@ -126,6 +128,16 @@ namespace ConsoleApp
                 {
                     _timer.Start();
                     return;
+                }
+
+                var serviceSettings = (from ss in context.ServiceSettings select ss).FirstOrDefault();
+                if (serviceSettings == null)
+                {
+                    serviceSettings = new ServiceSettings();
+                    serviceSettings.ServiceRunning = true;
+                    serviceSettings.ServiceMessage = "Skyline Uploader service running";
+                    context.ServiceSettings.Add(serviceSettings);
+                    context.SaveChanges();
                 }
 
                 var count = _folderData.Count();
@@ -185,7 +197,8 @@ namespace ConsoleApp
                             uploadParams.Password = password;
                             uploadParams.DocumentName = fileName;
                             uploadParams.PdfPath = profile.SourceFolder;
-                            uploadParams.UserLibraryId = profile.FolderId;
+                            uploadParams.UserId = profile.FolderId;
+                            uploadParams.LibraryId = profile.LibraryId;
 
                             bool uploadedOk = UploadDocument(uploadParams);
 
@@ -209,12 +222,14 @@ namespace ConsoleApp
 
                 _timer.Start();
             }
+
+            
         }
 
         private static bool UploadDocument(Webcalls.UploadParams uploadParams)
         {
             string filename = uploadParams.DocumentName;
-            string uploadDir = uploadParams.UserLibraryId.ToString();
+            string uploadDir = uploadParams.UserId.ToString();
             //Upload the document          
             int Offset = 0; // starting offset.
 
@@ -225,8 +240,8 @@ namespace ConsoleApp
 
             string pdfPath = Path.Combine(uploadParams.PdfPath, filename);
             string url = uploadParams.UploadUrl;
-            Guid userLibraryId = uploadParams.UserLibraryId;
-
+            Guid userId = uploadParams.UserId;
+            Guid libraryId = uploadParams.LibraryId;
 
 
             //_bwUpload.ReportProgress(0); //Set ProgressBar to 0
@@ -306,7 +321,7 @@ namespace ConsoleApp
 
             try
             {
-                string docIdOrError = webSvc.MoveTempDocumentsToSpecificLibrary(userLibraryId, _userLibraryLibraryId,false);
+                string docIdOrError = webSvc.MoveTempDocumentsToSpecificLibrary(userId, libraryId,false);
                 try
                 {
                     _docId = new Guid(docIdOrError);

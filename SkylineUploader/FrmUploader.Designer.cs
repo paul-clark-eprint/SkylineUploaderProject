@@ -29,12 +29,12 @@ namespace SkylineUploader
         /// </summary>
         private void InitializeComponent()
         {
-            Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
+            this.components = new System.ComponentModel.Container();
+            Telerik.WinControls.UI.TableViewDefinition tableViewDefinition2 = new Telerik.WinControls.UI.TableViewDefinition();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmUploader));
             this.uxGridViewFolders = new Telerik.WinControls.UI.RadGridView();
             this.uxButtonNew = new Telerik.WinControls.UI.RadButton();
             this.uxButtonClose = new Telerik.WinControls.UI.RadButton();
-            this.uxLabelStatus = new Telerik.WinControls.UI.RadLabel();
             this.uxWaitingBar = new Telerik.WinControls.UI.RadWaitingBar();
             this.dotsLineWaitingBarIndicatorElement1 = new Telerik.WinControls.UI.DotsLineWaitingBarIndicatorElement();
             this.uxMenuItemFile = new Telerik.WinControls.UI.RadMenuItem();
@@ -42,13 +42,15 @@ namespace SkylineUploader
             this.uxMenuItemError = new Telerik.WinControls.UI.RadMenuItem();
             this.uxMenuItemExit = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenu1 = new Telerik.WinControls.UI.RadMenu();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.uxLabelStatus = new Telerik.WinControls.UI.RadLabel();
             ((System.ComponentModel.ISupportInitialize)(this.uxGridViewFolders)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxGridViewFolders.MasterTemplate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxButtonNew)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxButtonClose)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uxLabelStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxWaitingBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radMenu1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxLabelStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,7 +68,7 @@ namespace SkylineUploader
             this.uxGridViewFolders.MasterTemplate.AllowDragToGroup = false;
             this.uxGridViewFolders.MasterTemplate.AllowEditRow = false;
             this.uxGridViewFolders.MasterTemplate.AutoSizeColumnsMode = Telerik.WinControls.UI.GridViewAutoSizeColumnsMode.Fill;
-            this.uxGridViewFolders.MasterTemplate.ViewDefinition = tableViewDefinition1;
+            this.uxGridViewFolders.MasterTemplate.ViewDefinition = tableViewDefinition2;
             this.uxGridViewFolders.Name = "uxGridViewFolders";
             this.uxGridViewFolders.Size = new System.Drawing.Size(850, 226);
             this.uxGridViewFolders.TabIndex = 0;
@@ -97,16 +99,6 @@ namespace SkylineUploader
             this.uxButtonClose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.uxButtonClose.Click += new System.EventHandler(this.uxButtonClose_Click);
             // 
-            // uxLabelStatus
-            // 
-            this.uxLabelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.uxLabelStatus.Location = new System.Drawing.Point(12, 271);
-            this.uxLabelStatus.Name = "uxLabelStatus";
-            this.uxLabelStatus.Size = new System.Drawing.Size(37, 18);
-            this.uxLabelStatus.TabIndex = 50;
-            this.uxLabelStatus.Text = "Status";
-            this.uxLabelStatus.Visible = false;
-            // 
             // uxWaitingBar
             // 
             this.uxWaitingBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -119,6 +111,9 @@ namespace SkylineUploader
             this.uxWaitingBar.WaitingIndicatorSize = new System.Drawing.Size(100, 14);
             this.uxWaitingBar.WaitingSpeed = 80;
             this.uxWaitingBar.WaitingStyle = Telerik.WinControls.Enumerations.WaitingBarStyles.DotsLine;
+            ((Telerik.WinControls.UI.RadWaitingBarElement)(this.uxWaitingBar.GetChildAt(0))).WaitingIndicatorSize = new System.Drawing.Size(100, 14);
+            ((Telerik.WinControls.UI.RadWaitingBarElement)(this.uxWaitingBar.GetChildAt(0))).WaitingSpeed = 80;
+            ((Telerik.WinControls.UI.WaitingBarSeparatorElement)(this.uxWaitingBar.GetChildAt(0).GetChildAt(0).GetChildAt(0))).Dash = false;
             // 
             // dotsLineWaitingBarIndicatorElement1
             // 
@@ -160,6 +155,22 @@ namespace SkylineUploader
             this.radMenu1.Size = new System.Drawing.Size(874, 25);
             this.radMenu1.TabIndex = 52;
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 2000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // uxLabelStatus
+            // 
+            this.uxLabelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.uxLabelStatus.Location = new System.Drawing.Point(12, 275);
+            this.uxLabelStatus.Name = "uxLabelStatus";
+            this.uxLabelStatus.Size = new System.Drawing.Size(37, 18);
+            this.uxLabelStatus.TabIndex = 50;
+            this.uxLabelStatus.Text = "Status";
+            this.uxLabelStatus.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.uxLabelStatus.Visible = false;
+            // 
             // FrmUploader
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -182,9 +193,9 @@ namespace SkylineUploader
             ((System.ComponentModel.ISupportInitialize)(this.uxGridViewFolders)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxButtonNew)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxButtonClose)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uxLabelStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxWaitingBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radMenu1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxLabelStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -204,5 +215,6 @@ namespace SkylineUploader
         private Telerik.WinControls.UI.RadMenuItem uxMenuItemError;
         private Telerik.WinControls.UI.RadMenuItem uxMenuItemExit;
         private Telerik.WinControls.UI.RadMenu radMenu1;
+        private System.Windows.Forms.Timer timer1;
     }
 }

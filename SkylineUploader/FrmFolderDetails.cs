@@ -197,7 +197,7 @@ namespace SkylineUploader
             uploadParams = new Webcalls.UploadParams();
             uploadParams.username = _username;
             uploadParams.Password = _password;
-            uploadParams.UserLibraryId = _userLibraryUserId;
+            uploadParams.UserId = _userLibraryUserId;
             uploadParams.UploadUrl = _portalUrl;
             uploadParams.PdfPath = uxTextBoxSourceFolder.Text;
 
@@ -282,7 +282,7 @@ namespace SkylineUploader
 
                     string pdfPath = Path.Combine(uploadParams.PdfPath, filename);
                     string url = uploadParams.UploadUrl;
-                    Guid userLibraryId = uploadParams.UserLibraryId;
+                    Guid userLibraryId = uploadParams.UserId;
 
                     string uploadDir = _userLibraryUserId.ToString();
 
@@ -738,13 +738,13 @@ namespace SkylineUploader
                     _bwLogin.CancelAsync();
                 }
 
-                if (_bwCheckUrl.IsBusy)
+                if (_bwCheckUrl != null && _bwCheckUrl.IsBusy)
                 {
                     _bwCheckUrl.CancelAsync();
                     _checkUrlCancelled = true;
                 }
 
-                if (_bwUpload.IsBusy)
+                if (_bwUpload != null && _bwUpload.IsBusy)
                 {
                     _bwUpload.ReportProgress(-3);
                     _bwUpload.CancelAsync();
