@@ -597,6 +597,7 @@
             this.RootElement.ApplyShapeToControl = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Profile Settings";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmFolderDetails_FormClosing);
             this.Load += new System.EventHandler(this.FolderDetails_Load);
             this.groupBoxAdminLogin.ResumeLayout(false);
             this.groupBoxAdminLogin.PerformLayout();

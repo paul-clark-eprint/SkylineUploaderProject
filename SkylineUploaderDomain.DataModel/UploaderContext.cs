@@ -21,7 +21,6 @@ namespace SkylineUploaderDomain.DataModel
         public DbSet<UserLibrary> UserLibraries { get; set; }
         public DbSet<SourceFolder> SourceFolders { get; set; }
         public DbSet<SynchronizedFile> SynchronizedFiles { get; set; }
-        public DbSet<DocumentType> DocumentTypes { get; set; }
         public DbSet<ServiceSettings> ServiceSettings { get; set; }
 
         //protected override void OnModelCreating(DbModelBuilder modelBuilder)

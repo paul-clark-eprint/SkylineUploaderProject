@@ -23,8 +23,6 @@ namespace SkylineUploaderDomain.DataModel.Classes
         [StringLength(1000)]
         public string Status { get; set; }
         public int Files { get; set; }
-        //[Required]
-        public List<DocumentType> DocumentTypes { get; set; }
         public bool Enabled { get; set; }
         public bool SynchronizeFiles { get; set; }
         public List<SynchronizedFile> SynchronizedFiles { get; set; }
@@ -33,6 +31,9 @@ namespace SkylineUploaderDomain.DataModel.Classes
         public bool DeleteAfterUpload { get; set; }
         public bool InEditMode { get; set; }
         public DateTime DateUpdated { get; set; }
+        [StringLength(1000)]
+        public string FileType { get; set; }
+
     }
 
     public class Login
@@ -81,7 +82,6 @@ namespace SkylineUploaderDomain.DataModel.Classes
         public Guid FolderId { get; set; }
         [StringLength(1000)]
         public string FolderPath { get; set; }
-        public List<DocumentType> SupportedDocumentTypes { get; set; }
         public bool Enabled { get; set; }
         public int FileCount { get; set; }
     }
@@ -98,14 +98,6 @@ namespace SkylineUploaderDomain.DataModel.Classes
         public int Size { get; set; }
     }
 
-    public class DocumentType
-    {
-        public int Id { get; set; }
-        public Guid FolderId { get; set; }
-        [StringLength(1000)]
-        public string FileType { get; set; }
-    }
-
     public class ServiceSettings
     {
         [Key]
@@ -113,6 +105,10 @@ namespace SkylineUploaderDomain.DataModel.Classes
         public DateTime LastUpdate { get; set; }
         [StringLength(1000)] 
         public string ServiceMessage { get; set; }
-
+        public int Progress { get; set; }
+        public int ProgressMaximum { get; set; }
+        public bool Running { get; set; }
+        public bool Uploading { get; set; }
+        public bool Transferring { get; set; }
     }
 }

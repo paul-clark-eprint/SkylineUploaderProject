@@ -70,7 +70,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>SkylineLogo32.ico</ApplicationIcon>
+    <ApplicationIcon>SkylineUploader32.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>
@@ -368,6 +368,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SkylineUploader32.ico" />
     <None Include="Web References\SkylineService\Printstation.disco" />
     <None Include="Resources\gear-16.png" />
     <None Include="Resources\process.png" />

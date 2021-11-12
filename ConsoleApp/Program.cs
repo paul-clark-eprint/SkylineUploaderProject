@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Mime;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.ServiceModel.Configuration;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ using HelperClasses;
 using SkylineUploader.Classes;
 using SkylineUploader.SkylineWebService;
 using SkylineUploaderDomain.DataModel;
+using SkylineUploaderDomain.DataModel.Classes;
 using Debug = SkylineUploader.Debug;
 using ServiceSettings = SkylineUploaderDomain.DataModel.Classes.ServiceSettings;
 
@@ -25,7 +27,7 @@ namespace ConsoleApp
     {
         private static string _connectionString;
         private static System.Timers.Timer _timer;
-        private static IQueryable<GridData> _folderData;
+        private static List<GridData> _folderData;
 
         public static SkylineUploader.PricingService.PricingService PricingService;
         public static SkylineUploader.SkylineWebService.SkylineWebService SkylineService;
@@ -79,14 +81,16 @@ namespace ConsoleApp
                 }
                 Console.WriteLine("DataSource: " + dataSource);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 StopService();
             }
 
+            InitialiseServiceSettings();
+
             _timer = new System.Timers.Timer();
-            _timer.Elapsed += new ElapsedEventHandler(OnTimerEvent);
-            _timer.Interval = 5000;
+            _timer.Elapsed += new ElapsedEventHandler(TimerEvent);
+            _timer.Interval = 1000;
             _timer.Enabled = true;
 
             Console.WriteLine("Press \'q\' to quit.");
@@ -96,134 +100,291 @@ namespace ConsoleApp
 
         }
 
-        private static void OnTimerEvent(object sender, ElapsedEventArgs e)
+        private static void InitialiseServiceSettings()
         {
-            _timer.Stop();
             using (UploaderDbContext context = new UploaderDbContext())
             {
                 context.Database.Connection.ConnectionString = _connectionString;
-                _folderData = from f in context.Folders
-                              join l in context.Login on f.FolderId equals l.FolderId
-                              join ul in context.UserLibraries on f.FolderId equals ul.FolderId
-                              join sf in context.SourceFolders on f.FolderId equals sf.FolderId
-                              select new GridData
-                              {
-                                  FolderId = f.FolderId,
-                                  PortalId = f.PortalId,
-                                  PortalUrl = l.PortalUrl,
-                                  AdminUsername = l.Username,
-                                  AdminPassword = l.Password,
-                                  FolderName = f.FolderName,
-                                  LibraryUsername = ul.Username,
-                                  LibraryName = ul.LibraryName,
-                                  LibraryId = ul.LibraryId,
-                                  Files = 0,
-                                  Enabled = f.Enabled,
-                                  SourceFolder = sf.FolderPath,
-                                  InEditMode = f.InEditMode,
-                                  DeleteAfterUpload = f.DeleteAfterUpload
-                              };
-
-                if (!_folderData.Any())
-                {
-                    _timer.Start();
-                    return;
-                }
 
                 var serviceSettings = (from ss in context.ServiceSettings select ss).FirstOrDefault();
                 if (serviceSettings == null)
                 {
                     serviceSettings = new ServiceSettings();
-                    serviceSettings.ServiceRunning = true;
-                    serviceSettings.ServiceMessage = "Skyline Uploader service running";
+                    serviceSettings.ServiceMessage = "Skyline Uploader service starting";
+                    serviceSettings.LastUpdate = DateTime.Now;
+                    serviceSettings.Running = true;
                     context.ServiceSettings.Add(serviceSettings);
                     context.SaveChanges();
                 }
-
-                var count = _folderData.Count();
-                Console.WriteLine("Number of profile: " + count);
-                foreach (var profile in _folderData)
+                else
                 {
-                    if (profile.InEditMode)
+                    serviceSettings.ServiceMessage = "Skyline Uploader service starting";
+                    serviceSettings.LastUpdate = DateTime.Now;
+                    serviceSettings.Running = true;
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        private static void SetServiceMessage(string message)
+        {
+            using (UploaderDbContext context = new UploaderDbContext())
+            {
+                context.Database.Connection.ConnectionString = _connectionString;
+
+                var serviceSettings = (from ss in context.ServiceSettings select ss).FirstOrDefault();
+
+                serviceSettings.ServiceMessage = message;
+                serviceSettings.LastUpdate = DateTime.Now;
+                serviceSettings.Running = true;
+                context.SaveChanges();
+            }
+        }
+
+        private static void SetFolderStatus(string status, Guid folderId)
+        {
+            using (UploaderDbContext context = new UploaderDbContext())
+            {
+                context.Database.Connection.ConnectionString = _connectionString;
+
+                Folder folder = (from f in context.Folders where f.FolderId == folderId select f).FirstOrDefault();
+                if (folder != null)
+                {
+                    folder.Status = status;
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        private static void SetFileCount(Guid folderId, int count)
+        {
+            using (UploaderDbContext context = new UploaderDbContext())
+            {
+                context.Database.Connection.ConnectionString = _connectionString;
+
+                Folder folder = (from f in context.Folders where f.FolderId == folderId select f).FirstOrDefault();
+                if (folder != null)
+                {
+                    folder.Files = count;
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        private static void TimerEvent(object sender, ElapsedEventArgs e)
+        {
+            _timer.Stop();
+
+            _folderData = GetFolderData();
+
+            if (!_folderData.Any())
+            {
+                _timer.Start();
+                return;
+            }
+
+            var count = _folderData.Count();
+            //Console.WriteLine("Number of profiles: " + count);
+
+            int totalFiles = 0;
+
+            foreach (var profile in _folderData)
+            {
+                if (profile.InEditMode)
+                {
+                    //Console.WriteLine("Profile " + profile.FolderName + " is in edit mode. Skipping it");
+                    SetFolderStatus("Edit Mode",profile.FolderId);
+                    continue;
+                }
+
+                var portalUrl = profile.PortalUrl;
+                var username = profile.AdminUsername;
+                var password = SettingsHelper.Decrypt(profile.AdminPassword);
+                var sourceFolder = profile.SourceFolder;
+                var fileTypes = profile.FileTypes;
+
+                if (!Directory.Exists(sourceFolder))
+                {
+                    Console.WriteLine("profile Source Folder does not exist: '" + sourceFolder + "'. Skipping profile");
+                    continue;
+                }
+
+                int profileFiles = 0;
+                if (fileTypes != null)
+                {
+                    var supplortedfileTypes = fileTypes.Split(',');
+                    foreach (var supplortedfileType in supplortedfileTypes)
                     {
-                        Console.WriteLine("Profile " + profile.FolderName + " is in edit mode. Skipping it");
-                        continue;
-                    }
-
-                    var portalUrl = profile.PortalUrl;
-                    var username = profile.AdminUsername;
-                    var password = SettingsHelper.Decrypt(profile.AdminPassword);
-
-                    if (!CheckUrl(portalUrl))
-                    {
-                        Console.WriteLine("profile URL is not valid: '" + portalUrl + "'. Skipping profile");
-                        continue;
-                    }
-
-                    if (DoLogin(portalUrl, username, password))
-                    {
-                        FileInfo[] files = GetFilesToUpload(profile.SourceFolder);
-
-                        if (files != null && files.Length > 0)
+                        switch (supplortedfileType)
                         {
-                            var oldestDate = DateTime.MaxValue;
-                            int fileIndex = 0;
-                            int oldestIndex = 0;
-                            foreach (FileInfo file in files)
-                            {
-                                if (FileLocked(file))
-                                {
-                                    Console.WriteLine("File " + file.FullName + " is locked. Skipping this file");
-                                    fileIndex++;
-                                    continue;
-                                }
-
-                                var fileDate = file.LastWriteTime;
-                                if (fileDate < oldestDate)
-                                {
-                                    oldestDate = fileDate;
-                                    oldestIndex = fileIndex;
-                                }
-
-                                fileIndex++;
-                            }
-
-                            var fileName = files[oldestIndex].Name;
-                            Console.WriteLine("Oldest modified file is " + fileName);
-
-                            Webcalls.UploadParams uploadParams = new Webcalls.UploadParams();
-                            uploadParams.UploadUrl = portalUrl;
-                            uploadParams.username = username;
-                            uploadParams.Password = password;
-                            uploadParams.DocumentName = fileName;
-                            uploadParams.PdfPath = profile.SourceFolder;
-                            uploadParams.UserId = profile.FolderId;
-                            uploadParams.LibraryId = profile.LibraryId;
-
-                            bool uploadedOk = UploadDocument(uploadParams);
-
-                            if (uploadedOk && profile.DeleteAfterUpload)
-                            {
-                                var filePath = Path.Combine(profile.SourceFolder, fileName);
-                                if (File.Exists(filePath))
-                                {
-                                    File.Delete(filePath);
-                                }
-                            }
+                            case "PDF":
+                                profileFiles += GetFileTypes(sourceFolder, "*.pdf");
+                                break;
+                            case "Word":
+                                profileFiles += GetFileTypes(sourceFolder, "*.doc");
+                                profileFiles += GetFileTypes(sourceFolder, "*.docx");
+                                break;
 
                         }
                     }
-                    else
-                    {
-                        Console.WriteLine("Unable to log in to the portal: '" + portalUrl + "'. Skipping profile");
-                        continue;
-                    }
                 }
 
-                _timer.Start();
+                if (profileFiles == 0)
+                {
+                    SetFolderStatus("Idle", profile.FolderId);
+                    SetFileCount(profile.FolderId, 0);
+                    continue;
+                }
+
+                SetFileCount(profile.FolderId, profileFiles);
+                SetServiceMessage("Checking folder " + profile.FolderName + ". " + profileFiles + " files found");
+                totalFiles += profileFiles;
+
+
+
+                if (!CheckUrl(portalUrl))
+                {
+                    SetServiceMessage("Profile URL is not valid: '" + portalUrl + "'. Skipping profile");
+                    continue;
+                }
+
+
+
+                if (DoLogin(portalUrl, username, password))
+                {
+                    if (_loginUserId == Guid.Empty)
+                    {
+                        continue;
+                    }
+
+                    FileInfo[] files = GetFilesToUpload(profile.SourceFolder);
+
+                    if (files != null && files.Length > 0)
+                    {
+                        var oldestDate = DateTime.MaxValue;
+                        int fileIndex = 0;
+                        int oldestIndex = 0;
+                        foreach (FileInfo file in files)
+                        {
+                            if (FileLocked(file))
+                            {
+                                Console.WriteLine("File " + file.FullName + " is locked. Skipping this file");
+                                fileIndex++;
+                                continue;
+                            }
+
+                            var fileDate = file.LastWriteTime;
+                            if (fileDate < oldestDate)
+                            {
+                                oldestDate = fileDate;
+                                oldestIndex = fileIndex;
+                            }
+
+                            fileIndex++;
+                        }
+
+                        var fileName = files[oldestIndex].Name;
+                        Console.WriteLine("Oldest modified file is " + fileName);
+
+                        Webcalls.UploadParams uploadParams = new Webcalls.UploadParams();
+                        uploadParams.UploadUrl = portalUrl;
+                        uploadParams.username = username;
+                        uploadParams.Password = password;
+                        uploadParams.DocumentName = fileName;
+                        uploadParams.PdfPath = profile.SourceFolder;
+                        uploadParams.UserId = _loginUserId;
+                        uploadParams.LibraryId = profile.LibraryId;
+
+                        SetServiceMessage("Uploading " + fileName + " in folder " + profile.FolderName);
+                        SetFolderStatus("Uploading", profile.FolderId);
+
+                        bool uploadedOk = UploadDocument(uploadParams);
+                        if (uploadedOk)
+                        {
+                            SetServiceMessage(fileName + " uploaded OK");
+                        }
+                        else
+                        {
+                            SetServiceMessage("There was a problem uploading " + fileName);
+                        }
+
+                        if (uploadedOk && profile.DeleteAfterUpload)
+                        {
+                            var filePath = Path.Combine(profile.SourceFolder, fileName);
+                            if (File.Exists(filePath))
+                            {
+                                File.Delete(filePath);
+                            }
+                        }
+                        
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Unable to log in to the portal: '" + portalUrl + "'. Skipping profile");
+                    continue;
+                }
             }
 
             
+            if (totalFiles == 0)
+            {
+                SetServiceMessage("No files to upload");
+            }
+            else
+            {
+                SetServiceMessage(totalFiles + " files to upload");
+            }
+            _timer.Start();
+        }
+
+        private static List<GridData> GetFolderData()
+        {
+            List<GridData> folderData;
+
+            try
+            {
+                using (UploaderDbContext context = new UploaderDbContext())
+                {
+                    context.Database.Connection.ConnectionString = _connectionString;
+
+                    folderData = (from f in context.Folders
+                                  join l in context.Login on f.FolderId equals l.FolderId
+                                  join ul in context.UserLibraries on f.FolderId equals ul.FolderId
+                                  join sf in context.SourceFolders on f.FolderId equals sf.FolderId
+
+                                  select new GridData
+                                  {
+                                      FolderId = f.FolderId,
+                                      PortalId = f.PortalId,
+                                      PortalUrl = l.PortalUrl,
+                                      AdminUsername = l.Username,
+                                      AdminPassword = l.Password,
+                                      FolderName = f.FolderName,
+                                      LibraryUsername = ul.Username,
+                                      LibraryName = ul.LibraryName,
+                                      LibraryId = ul.LibraryId,
+                                      Enabled = f.Enabled,
+                                      SourceFolder = sf.FolderPath,
+                                      InEditMode = f.InEditMode,
+                                      DeleteAfterUpload = f.DeleteAfterUpload,
+                                      FileTypes = f.FileType
+                                  }).ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return folderData;
+        }
+
+        private static int GetFileTypes(string sourceFolder, string extension)
+        {
+            var files = Directory.GetFiles(sourceFolder, extension, SearchOption.TopDirectoryOnly);
+            return files.Length;
         }
 
         private static bool UploadDocument(Webcalls.UploadParams uploadParams)
@@ -265,7 +426,7 @@ namespace ConsoleApp
                 long fileSize = new FileInfo(pdfPath).Length; // File size of file being uploaded.
                                                               // reading the file.
 
-                //UxProgressBar.Maximum = Convert.ToInt32(fileSize);
+                SetProgressBarMaximum(Convert.ToInt32(fileSize));
                 fs.Position = Offset;
                 int bytesRead = 0;
                 while (Offset != fileSize) // continue uploading the file chunks until offset = file size.
@@ -302,15 +463,16 @@ namespace ConsoleApp
                     //    break;
                     //}
 
-                    //_bwUpload.ReportProgress(Offset, fileNumber + "/" + _totalFiles);
+                    ReportProgress(Offset, true);
                 }
             }
             catch (Exception ex)
             {
-                Debug.Error("Error uploading file " + pdfPath + " to " + url, ex);
+                //Debug.Error("Error uploading file " + pdfPath + " to " + url, ex);
                 fs.Close();
-                _errorMessage = "Error uploading the document:\n\n" + ex.Message;
+                _errorMessage = "Error uploading file " + pdfPath + " to " + url + "\n\n" + ex.Message;
                 _uploadOK = false;
+                ReportProgress(0, false);
                 //timer1.Enabled = true;
                 return false;
             }
@@ -318,10 +480,12 @@ namespace ConsoleApp
             {
                 fs.Close();
             }
+            ReportProgress(0, false);
+            ReportTransferring(true);
 
             try
             {
-                string docIdOrError = webSvc.MoveTempDocumentsToSpecificLibrary(userId, libraryId,false);
+                string docIdOrError = webSvc.MoveTempDocumentsToSpecificLibrary(userId, libraryId, false);
                 try
                 {
                     _docId = new Guid(docIdOrError);
@@ -335,22 +499,70 @@ namespace ConsoleApp
                 {
                     _uploadOK = false;
                     _errorMessage = docIdOrError;
-                    Debug.Error(docIdOrError);
+                    //Debug.Error(docIdOrError);
+                    return false;
                 }
-                else
-                {
-                    _uploadOK = true;
-                }
+
+                _uploadOK = true;
+
             }
             catch (Exception ex)
             {
                 //possible timeout
-                Debug.Error("Error calling MoveTempDocumentsToUserLibrary", ex);
+                //Debug.Error("Error calling MoveTempDocumentsToUserLibrary", ex);
                 _errorMessage = "Error copying your document to your online library:\n\n" + ex.Message;
                 _uploadOK = false;
+                ReportTransferring(false);
+                return false;
             }
-
+            ReportTransferring(false);
             return true;
+        }
+
+        private static void ReportTransferring(bool transferring)
+        {
+            using (UploaderDbContext context = new UploaderDbContext())
+            {
+                context.Database.Connection.ConnectionString = _connectionString;
+
+                var serviceSettings = (from ss in context.ServiceSettings select ss).FirstOrDefault();
+                serviceSettings.Transferring = transferring;
+                serviceSettings.Uploading = false;
+                context.SaveChanges();
+            }
+        }
+
+        private static void ReportProgress(int offset, bool uploading)
+        {
+            using (UploaderDbContext context = new UploaderDbContext())
+            {
+                context.Database.Connection.ConnectionString = _connectionString;
+
+                var serviceSettings = (from ss in context.ServiceSettings select ss).FirstOrDefault();
+                serviceSettings.Uploading = uploading;
+                if (uploading)
+                {
+                    serviceSettings.Progress = offset;
+                }
+                else
+                {
+                    serviceSettings.Progress = 0;
+                    serviceSettings.ProgressMaximum = 100;
+                }
+                context.SaveChanges();
+            }
+        }
+
+        private static void SetProgressBarMaximum(int maxValue)
+        {
+            using (UploaderDbContext context = new UploaderDbContext())
+            {
+                context.Database.Connection.ConnectionString = _connectionString;
+
+                var serviceSettings = (from ss in context.ServiceSettings select ss).FirstOrDefault();
+                serviceSettings.ProgressMaximum = maxValue;
+                context.SaveChanges();
+            }
         }
 
         private static bool FileLocked(FileInfo file)

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
 using HelperClasses;
 using SkylineUploader.Classes;
@@ -29,6 +30,7 @@ namespace SkylineUploader
         private static string _username;
         private static string _password;
         private static bool _urlValid;
+        private static string _loginError;
         private static bool _checkUrlCancelled = false;
         private static bool _uploadCancelled = false;
         private static bool _uploadOK = false;
@@ -112,6 +114,9 @@ namespace SkylineUploader
             }
 
             uxTextBoxPortalUrl.Text = uxTextBoxPortalUrl.Text.Trim();
+            if (uxTextBoxPortalUrl.Text.EndsWith("/"))
+                uxTextBoxPortalUrl.Text = uxTextBoxPortalUrl.Text.Substring(0, uxTextBoxPortalUrl.Text.Length - 1);
+
             uxTextBoxPortalUrl.Enabled = false;
             uxTextBoxUsername.Enabled = false;
             uxTextBoxPassword.Enabled = false;
@@ -282,7 +287,7 @@ namespace SkylineUploader
 
                     string pdfPath = Path.Combine(uploadParams.PdfPath, filename);
                     string url = uploadParams.UploadUrl;
-                    Guid userLibraryId = uploadParams.UserId;
+                    Guid userId = uploadParams.UserId;
 
                     string uploadDir = _userLibraryUserId.ToString();
 
@@ -380,7 +385,7 @@ namespace SkylineUploader
                     _bwUpload.ReportProgress(-2, "\"" + filenameTruncated + "\"");
                     try
                     {
-                        string docIdOrError = webSvc.MoveTempDocumentsToSpecificLibrary(userLibraryId, _userLibraryLibraryId,false);
+                        string docIdOrError = webSvc.MoveTempDocumentsToSpecificLibrary(userId, _userLibraryLibraryId,false);
                         try
                         {
                             _docId = new Guid(docIdOrError);
@@ -609,12 +614,24 @@ namespace SkylineUploader
             }
             catch (WebException ex)
             {
-                if (ex.Status == WebExceptionStatus.NameResolutionFailure)
-                {
+                
                     _portalFound = false;
-                    _bwLogin.ReportProgress(0, "Error connecting to " + uxTextBoxPortalUrl.Text);
+                    switch (ex.Status)
+                    {
+                        case  WebExceptionStatus.NameResolutionFailure:
+                            _loginError = "Could not find the website name " + uxTextBoxPortalUrl.Text;
+                            break;
+                        case WebExceptionStatus.ProtocolError:
+                            _loginError = "There was an problem connecting to " + uxTextBoxPortalUrl.Text;
+                            break;
+                        default:
+                            _loginError = ex.Message;
+                            break;
+                    }
+
+                    _bwLogin.ReportProgress(0, _loginError);
                     return;
-                }
+                
             }
             catch (Exception)
             {
@@ -650,8 +667,7 @@ namespace SkylineUploader
 
             if (!_portalFound)
             {
-                MessageBox.Show("Portal not found", "Error", MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
+                MessageBox.Show(_loginError, "Portal not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 uxLabelStatus.Text = "Portal not found";
                 return;
             }
@@ -748,17 +764,6 @@ namespace SkylineUploader
                 {
                     _bwUpload.ReportProgress(-3);
                     _bwUpload.CancelAsync();
-                }
-
-                using (UploaderDbContext context = new UploaderDbContext())
-                {
-                    var folder = (from f in context.Folders where f.FolderId == FolderId select f).FirstOrDefault();
-                    if (folder != null)
-                    {
-                        folder.InEditMode = false;
-                    }
-
-                    context.SaveChanges();
                 }
             }
             catch (Exception ex)
@@ -982,18 +987,19 @@ namespace SkylineUploader
         {
             if (RequiredSettingsMissing())
             {
+                MessageBox.Show(uxLabelErrorMessage.Text);
                 return;
             }
 
             using (UploaderDbContext context = new UploaderDbContext())
             {
-                var folderId = FolderId;
+                Guid folderId = FolderId;
                 Folder folder = (from f in context.Folders where f.FolderId == folderId select f).FirstOrDefault();
                 if (folder == null)
                 {
                     folder = new Folder();
                     context.Folders.Add(folder);
-                    folderId = Guid.NewGuid();
+                    //folderId = Guid.NewGuid();
                     folder.FolderId = folderId;
                 }
 
@@ -1006,7 +1012,8 @@ namespace SkylineUploader
                 folder.DeleteAfterDays = -1;
                 folder.DeleteAfterUpload = uxCheckBoxDeleteSource.Checked;
                 folder.DateUpdated=DateTime.Now;
-                folder.InEditMode = true;
+                folder.Status = "Idle";
+                //folder.InEditMode = true;
 
                 var login = (from l in context.Login where l.FolderId == folderId select l).FirstOrDefault();
                 if (login == null)
@@ -1045,7 +1052,7 @@ namespace SkylineUploader
                 userLibrary.LibraryId = _userLibraryLibraryId;
 
 
-                var sourceFolder = (from sf in context.SourceFolders where sf.FolderId == folderId select sf).FirstOrDefault();
+                SourceFolder sourceFolder = (from sf in context.SourceFolders where sf.FolderId == folderId select sf).FirstOrDefault();
                 if (sourceFolder == null)
                 {
                     sourceFolder = new SourceFolder();
@@ -1056,15 +1063,20 @@ namespace SkylineUploader
                 sourceFolder.FolderPath = uxTextBoxSourceFolder.Text;
                 sourceFolder.Enabled = uxCheckBoxEnabled.Checked;
                 sourceFolder.FileCount = 0;
-                List<DocumentType> supportedDocumentTypes = new List<DocumentType>();
+
+                
+                StringBuilder fileTypes = new StringBuilder();
                 foreach (RadCheckedListDataItem item in uxCheckedDropDownListFileTypes.CheckedItems)
                 {
-                    var documentType = new DocumentType();
-                    documentType.FileType = item.Text;
-                    documentType.FolderId = folderId;
-                    supportedDocumentTypes.Add(documentType);
+                    fileTypes.Append(item.Text) ;
+                    fileTypes.Append(",");
                 }
-                sourceFolder.SupportedDocumentTypes = supportedDocumentTypes;
+
+                var supportedDocumentTypes = fileTypes.ToString();
+
+                //delete last comma
+                supportedDocumentTypes = supportedDocumentTypes.Substring(0, supportedDocumentTypes.LastIndexOf(","));
+                folder.FileType = supportedDocumentTypes;
 
                 try
                 {
@@ -1189,19 +1201,26 @@ namespace SkylineUploader
                         "Database error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-
-
                 uxTextBoxSourceFolder.Text = sourceFolder.FolderPath;
                 uxCheckBoxEnabled.Checked = sourceFolder.Enabled;
-                List<DocumentType> supportedDocumentTypes = sourceFolder.SupportedDocumentTypes;
-                if (supportedDocumentTypes != null)
+
+                string documentTypes = folder.FileType;
+                if (!string.IsNullOrEmpty(documentTypes))
                 {
-                    foreach (var supportedDocumentType in supportedDocumentTypes)
+                    string[] values = documentTypes.Split(',');
+                    foreach (var value in values)
                     {
-                        var fileType = supportedDocumentType.FileType;
+                    
+                        foreach (RadCheckedListDataItem item in this.uxCheckedDropDownListFileTypes.Items)
+                        {
+                            if (item.Text == value)
+                            {
+                                item.Checked = true;
+                            }
+                        }
                     }
                 }
-                //sourceFolder.FileCount = 0;
+
                 EnableSaveButton();
 
                 var login = (from l in context.Login where l.FolderId == folderId select l).FirstOrDefault();
@@ -1306,6 +1325,7 @@ namespace SkylineUploader
         {
             if (RequiredSettingsMissing())
             {
+                MessageBox.Show(uxLabelErrorMessage.Text);
                 return;
             }
 
@@ -1345,6 +1365,7 @@ namespace SkylineUploader
         private void timer1_Tick(object sender, EventArgs e)
         {
             timer1.Enabled = false;
+
             StartWaitingBar();
             if (_bwCheckUrl.IsBusy)
             {
@@ -1392,6 +1413,21 @@ namespace SkylineUploader
         private void StopProgressBar()
         {
             uxProgressBar.Visibility = ElementVisibility.Collapsed;
+        }
+
+        private void FrmFolderDetails_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            using (UploaderDbContext context = new UploaderDbContext())
+            {
+                var folder = (from f in context.Folders where f.FolderId == FolderId select f).FirstOrDefault();
+                if (folder != null)
+                {
+                    folder.InEditMode = false;
+                    folder.Status = "Idle";
+                }
+
+                context.SaveChanges();
+            }
         }
     }
 }

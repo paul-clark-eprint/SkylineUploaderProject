@@ -38,7 +38,7 @@ namespace SkylineUploader
             if (LogDir == null) return;
 
             StackTrace stackTrace = new StackTrace();
-            string callingProcedure = stackTrace.GetFrame(1).GetMethod().Name;
+            //string callingProcedure = stackTrace.GetFrame(1).GetMethod().Name;
 
             string timeStamp = DateTime.Now.ToString("F");
             try
