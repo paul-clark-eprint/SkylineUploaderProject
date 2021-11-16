@@ -227,7 +227,7 @@ namespace SkylineUploader
 
                     if (!SettingsHelper.CreateSettingsFile())
                     {
-                        Debug.Error("Unable to check if the settings file exists");
+                        Debug.Error("Unable to create the settings file");
                         DataSourceSet = false;
                         return;
                     }

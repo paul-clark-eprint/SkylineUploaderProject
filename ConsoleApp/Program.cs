@@ -66,6 +66,7 @@ namespace ConsoleApp
 
             if (string.IsNullOrEmpty(_connectionString))
             {
+                Console.WriteLine("Unable to find the ConnectionString");
                 StopService();
             }
 
@@ -77,12 +78,14 @@ namespace ConsoleApp
                 var dataSource = builder["Data Source"].ToString();
                 if (string.IsNullOrEmpty(dataSource))
                 {
+                    Console.WriteLine("The ConnectionString dataSource is empty");
                     StopService();
                 }
-                Console.WriteLine("DataSource: " + dataSource);
+                //Console.WriteLine("DataSource: " + dataSource);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine("Unexpected error looking for the ConnectionString dataSource: "+ ex.Message);
                 StopService();
             }
 
@@ -192,8 +195,8 @@ namespace ConsoleApp
             {
                 if (profile.InEditMode)
                 {
-                    //Console.WriteLine("Profile " + profile.FolderName + " is in edit mode. Skipping it");
-                    SetFolderStatus("Edit Mode",profile.FolderId);
+                    Console.WriteLine("Profile " + profile.FolderName + " is in edit mode. Skipping it");
+                    SetFolderStatus("Edit Mode", profile.FolderId);
                     continue;
                 }
 
@@ -316,7 +319,7 @@ namespace ConsoleApp
                                 File.Delete(filePath);
                             }
                         }
-                        
+
                     }
                 }
                 else
@@ -326,7 +329,7 @@ namespace ConsoleApp
                 }
             }
 
-            
+
             if (totalFiles == 0)
             {
                 SetServiceMessage("No files to upload");

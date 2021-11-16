@@ -20,7 +20,7 @@ namespace SkylineUploaderDomain.DataModel.Classes
         //[Required]
         public SourceFolder SourceFolder { get; set; }
 
-        [StringLength(1000)]
+        [StringLength(200)]
         public string Status { get; set; }
         public int Files { get; set; }
         public bool Enabled { get; set; }

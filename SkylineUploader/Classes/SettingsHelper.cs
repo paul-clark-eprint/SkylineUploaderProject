@@ -24,7 +24,10 @@ namespace SkylineUploader.Classes
         {
             if (!File.Exists(Global.SettingsPath))
             {
-                return CreateBlankSettingsFile();
+                if (!CreateBlankSettingsFile())
+                {
+                    return false;
+                }
             }
 
             if (!CheckConnectionStringExists())

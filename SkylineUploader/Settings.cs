@@ -23,7 +23,7 @@ namespace SkylineUploader
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteEventLog("Unable to create the directory '" + userDataPath + "': " + ex.Message);
+                    Debug.WriteEventLogError("Unable to create the directory '" + userDataPath + "': " + ex.Message);
                     Debug.ShowErrorMessage("Unable to create the directory '" + userDataPath + "': \n\n" + ex.Message);
                     Environment.Exit(0);
                     throw;
@@ -33,13 +33,13 @@ namespace SkylineUploader
             return userDataPath;
         }
 
-        private static string _progDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @"ePrint Direct\Skyline\Driver");
+        //private static string _progDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @"ePrint Direct\Skyline\Driver");
 
-        private static string ProgDataPath
-        {
-            get { return _progDataPath; }
-            set { _progDataPath = value; }
-        }
+        //private static string ProgDataPath
+        //{
+        //    get { return _progDataPath; }
+        //    set { _progDataPath = value; }
+        //}
 
         
 
@@ -60,7 +60,7 @@ namespace SkylineUploader
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteEventLog("Unable to create the directory '" + logDir + "': " + ex.Message);
+                    Debug.WriteEventLogError("Unable to create the directory '" + logDir + "': " + ex.Message);
                     Debug.ShowErrorMessage("Unable to create the directory '" + logDir + "': " + ex.Message);
                     logDir = null;
                 }
@@ -68,16 +68,6 @@ namespace SkylineUploader
             return logDir;
         }
 
-        
 
-        
-
-        
-
-        
-
-        
-        
-        
     }
 }

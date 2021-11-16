@@ -65,7 +65,8 @@ namespace SkylineUploader
             string timeStamp = DateTime.Now.ToString("F");
             try
             {
-                File.AppendAllText(Path.Combine(LogDir, "Error.txt"), timeStamp + ":\t" + stackTrace + Environment.NewLine);
+                File.AppendAllText(Path.Combine(LogDir, "Error.txt"), timeStamp + ":\tCallingProcedure: " + callingProcedure + Environment.NewLine);
+                File.AppendAllText(Path.Combine(LogDir, "Error.txt"), timeStamp + ":\tStackTrace: " + stackTrace + Environment.NewLine);
                 File.AppendAllText(Path.Combine(LogDir, "Error.txt"), timeStamp + ":\t" + error + Environment.NewLine);
                 File.AppendAllText(Path.Combine(LogDir, "Error.txt"), Environment.NewLine);
             }
@@ -123,7 +124,7 @@ namespace SkylineUploader
         /// Event log information 
         /// </summary>
         /// <param name="message"></param>
-        public static void WriteEventLog(string message)
+        public static void WriteEventLogError(string message)
         {
             string sSource = "SkylineUploaded";
             string sLog = "Application";
@@ -133,7 +134,7 @@ namespace SkylineUploader
                 if (!EventLog.SourceExists(sSource))
                     EventLog.CreateEventSource(sSource, sLog);
 
-                EventLog.WriteEntry(sSource, message, EventLogEntryType.Information);
+                EventLog.WriteEntry(sSource, message, EventLogEntryType.Error);
             }
             catch (Exception)
             {
@@ -159,7 +160,7 @@ namespace SkylineUploader
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteEventLog("Error copying  the directory '" + debugLog + "' to " + oldFile +" : " + ex.Message);                        
+                        Debug.WriteEventLogError("Error copying  the directory '" + debugLog + "' to " + oldFile +" : " + ex.Message);                        
                     }
                 }
             }
@@ -178,7 +179,7 @@ namespace SkylineUploader
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteEventLog("Error copying  the directory '" + errorLog + "' to " + oldFile + " : " + ex.Message);
+                        Debug.WriteEventLogError("Error copying  the directory '" + errorLog + "' to " + oldFile + " : " + ex.Message);
                     }
                 }
             }
@@ -190,7 +191,11 @@ namespace SkylineUploader
         /// <param name="message"></param>
         public static void ShowErrorMessage(string message)
         {
-            MessageBox.Show(message, "Critical Error. Unable to continue", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (Environment.UserInteractive)
+            {
+                MessageBox.Show(message, "Critical Error. Unable to continue", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
     }
 }

@@ -43,6 +43,9 @@ namespace SkylineUploader
                 MessageBox.Show("Unable to create the ProgramData Folder. Closing application", "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Environment.Exit(0);
             }
+
+            Debug.CheckLogFileSizes();
+
             CheckAppConfig();
 
             if (_sqlFound && _dataSourceSet)
@@ -78,8 +81,9 @@ namespace SkylineUploader
             string connectionString = SqlHelper.GetConnectionString("UploaderDbContext");
             if (connectionString.Contains("*error*"))
             {
-                Debug.Error("ConnectionString missing from app.config. Closing application. " + connectionString);
+                Debug.WriteEventLogError("ConnectionString missing from app.config. Closing application. " + connectionString);
                 MessageBox.Show("ConnectionString missing from app.config. Closing application\n\n" + connectionString, "Unexpected Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                FileHelper.DeleteProgramDataFolder();
                 Environment.Exit(0);
             }
 
@@ -88,9 +92,10 @@ namespace SkylineUploader
             if (string.IsNullOrEmpty(dataSource) || dataSource == "NotSet")
             {
                 Debug.Log("ConnectionString = " + connectionString);
-                Debug.Log("Datasource not found in ConnectionString. Calling CheckSqlInstance()");
 
-                CheckSqlInstance();
+                Debug.Log("Datasource not found in ConnectionString. Calling CheckSqlInstance()");
+                uxLabelStatus.Visibility = ElementVisibility.Visible;
+                _bwCheckSql.RunWorkerAsync();
             }
             else
             {
@@ -282,6 +287,9 @@ namespace SkylineUploader
             Debug.Log("dataSourceSet = " + _dataSourceSet);
             if (_sqlFound && !_dataSourceSet)
             {
+                Debug.Log("Deleting ProgramData folder");
+                FileHelper.DeleteProgramDataFolder();
+                
                 Debug.Log("sqlInstances.Count = " + _sqlInstances.Count);
                 if (_sqlInstances.Count > 0)
                 {
@@ -310,17 +318,13 @@ namespace SkylineUploader
                 uxLabelStatus.Text = "Configuration complete";
                 uxButtonNew1.Enabled = false;
                 
-                //MessageBox.Show("Configuration complete. Skyline Upploader starting up", "Configuration complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("Configuration complete. Skyline Uploader starting up", "Configuration complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 //Application.Restart();
                 //Environment.Exit(0);
 
                 MessageBox.Show("Configuration complete. Please restart the Skyline Uploader", "Configuration complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Application.Exit();
 
-                //if (!InitialiseFoldersGrid())
-                //{
-                //    Application.Exit();
-                //}
             }
             else
             {
@@ -331,14 +335,7 @@ namespace SkylineUploader
 
         }
 
-        private void CheckSqlInstance()
-        {
-            uxLabelStatus.Visibility = ElementVisibility.Visible;
-                
-            
-            _bwCheckSql.RunWorkerAsync();
-        }
-
+        
         private bool InitialiseFoldersGrid()
         {
             //Debug.Log("InitialiseFoldersGrid");
@@ -543,12 +540,12 @@ namespace SkylineUploader
 
             timer1.Enabled = false;
 
-            int selectedIndex = -1;
+            //int selectedIndex = -1;
             var commandName = e.Column.Name;
             if (commandName == "Edit")
             {
                 
-                selectedIndex = uxGridViewFolders.Rows.IndexOf(this.uxGridViewFolders.CurrentRow);
+                //selectedIndex = uxGridViewFolders.Rows.IndexOf(this.uxGridViewFolders.CurrentRow);
                 using (var frmFolderDetails = new FrmFolderDetails())
                 {
                     frmFolderDetails.FolderId = folderId;
@@ -557,6 +554,7 @@ namespace SkylineUploader
                 }
 
                 timer1.Enabled = true;
+                return;
             }
 
             if (commandName == "Delete")
@@ -566,6 +564,7 @@ namespace SkylineUploader
                 {
                     timer1.Enabled = true;
                     return;
+
                 }
 
                 using (var context = new UploaderDbContext())
@@ -582,35 +581,26 @@ namespace SkylineUploader
                     context.SaveChanges();
                 }
                 timer1.Enabled = true;
+                return;
             }
 
-            if (!GetGridData())
-            {
-                MessageBox.Show("There was a problem getting the data for the grid. Closing application", "Error getting data",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Debug.Error("Error connecting to the database. Closing application");
-                Environment.Exit(0);
+            //if (!GetGridData())
+            //{
+            //    MessageBox.Show("There was a problem getting the data for the grid. Closing application", "Error getting data",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    Debug.Error("Error connecting to the database. Closing application");
+            //    Environment.Exit(0);
 
-            }
+            //}
 
-            if (selectedIndex > -1)
-            {
-                uxGridViewFolders.CurrentRow = null;
-                uxGridViewFolders.Rows[selectedIndex].IsSelected = true;
-            }
+            //if (selectedIndex > -1)
+            //{
+            //    uxGridViewFolders.CurrentRow = null;
+            //    uxGridViewFolders.Rows[selectedIndex].IsSelected = true;
+            //}
         }
 
-        private void uxButtonClose_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void uxButtonNew_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-
+        
         //https://stackoverflow.com/questions/34748589/how-to-create-a-database-user-in-entity-framework
         private void AddDbUser(UploaderDbContext myDB)
         {

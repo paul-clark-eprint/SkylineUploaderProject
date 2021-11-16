@@ -37,9 +37,13 @@ namespace SkylineUploader.Classes
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show(
-                        "SkylineUploader cannot create the local working directory" + programDataSkylineUploader,
-                        "Error creating folder", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    if (Environment.UserInteractive)
+                    {
+                        MessageBox.Show(
+                            "SkylineUploader cannot create the local working directory " + programDataSkylineUploader,
+                            "Startup problem", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    }
+                    Debug.WriteEventLogError("SkylineUploader cannot create the local working directory: " + programDataSkylineUploader);
                     return "*error*";
                 }
             }

@@ -65,6 +65,10 @@
     <Compile Include="Migrations\202110061611340_AddInEditModeAndDateUpdated.designer.cs">
       <DependentUpon>202110061611340_AddInEditModeAndDateUpdated.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111160923089_ChangeStatusFieldLength.cs" />
+    <Compile Include="Migrations\202111160923089_ChangeStatusFieldLength.designer.cs">
+      <DependentUpon>202111160923089_ChangeStatusFieldLength.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="UploaderContext.cs" />
     <Compile Include="Enums\FolderStatus.cs" />
@@ -81,6 +85,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110061611340_AddInEditModeAndDateUpdated.resx">
       <DependentUpon>202110061611340_AddInEditModeAndDateUpdated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111160923089_ChangeStatusFieldLength.resx">
+      <DependentUpon>202111160923089_ChangeStatusFieldLength.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
