@@ -1,0 +1,1091 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="GetAssemblyVersion">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetAssemblyVersionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAssemblyVersionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddMediaBandingItem">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="mediaId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="from" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="to" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="colourSingleSided" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="colourDoubleSided" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="monoSingleSided" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="monoDoubleSided" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="mediaCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="laminatingCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="printerType" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddMediaBandingItemResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddMediaBandingItemResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteMediaItems">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="mediaId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="printerType" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteMediaItemsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteMediaItemsResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddBandingItem">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="elementId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="value" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="price" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="order" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="from" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="to" nillable="true" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddBandingItemResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddBandingItemResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteItems">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="elementId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteItemsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteItemsResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckGloalProducts">
+        <s:complexType />
+      </s:element>
+      <s:element name="CheckGloalProductsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CheckGloalProductsResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOptionPrice">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOptionPriceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetOptionPriceResult" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCustomOptionTitles">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCustomOptionTitlesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCustomOptionTitlesResult" type="tns:ArrayOfCustomOptionTitle" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfCustomOptionTitle">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CustomOptionTitle" nillable="true" type="tns:CustomOptionTitle" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CustomOptionTitle">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ElementType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ControlType" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UpdateOptionPrice">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="elementId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="price" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateOptionPriceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateOptionPriceResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindMedisItem">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="paperName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="qty" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="printType" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="globalPricing" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindMedisItemResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FindMedisItemResult" type="tns:PricingMedium" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PricingMedium">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="PricingMediaId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="ControlItemId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="PortalId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="ColourSingleSided" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="ColourDoubleSided" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="MonoSingleSided" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="MonoDoubleSided" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="MediaCost" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="LaminatingCost" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="PrinterType" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="QtyTo" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="QtyFrom" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductControlItem" type="tns:ProductControlItem" />
+          <s:element minOccurs="0" maxOccurs="1" name="Portal" type="tns:Portal" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ProductControlItem">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="PortalId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ItemLocXML" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ControlItemId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Portal" type="tns:Portal" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Portal">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="PortalName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PortalId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="MembershipProviderName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="HTTPS" nillable="true" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExpiryDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="Default" nillable="true" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Culture" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="AwaitingUpdate" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="AutoDeleteDate" nillable="true" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PricingAddEditSingleMediaItem">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="mediaId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="colourSingleSided" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="colourDoubleSided" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="monoSingleSided" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="monoDoubleSided" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="mediaCost" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="laminatingCost" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PricingAddEditSingleMediaItemResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PricingAddEditSingleMediaItemResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdatePricingProduct">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="pricingProductId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="calcPrice" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="fixedPrice" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="priceEach" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="markUp" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="taxRate" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdatePricingProductResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdatePricingProductResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOptionsByPortal">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOptionsByPortalResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOptionsByPortalResult" type="tns:ArrayOfPricingOptions" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfPricingOptions">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PricingOptions" nillable="true" type="tns:PricingOptions" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PricingOptions">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="PricingOptionId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="ElementId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="PortalId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="Order" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="QtyFrom" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="QtyTo" nillable="true" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetMediaItem">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="mediaItemId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="printerType" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMediaItemResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMediaItemResult" type="tns:ArrayOfPricingGetMediaItemResultSet" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfPricingGetMediaItemResultSet">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PricingGetMediaItemResultSet" nillable="true" type="tns:PricingGetMediaItemResultSet" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PricingGetMediaItemResultSet">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="QtyFrom" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="QtyTo" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ColourSingleSided" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="ColourDoubleSided" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="MonoSingleSided" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="MonoDoubleSided" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="MediaCost" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="LaminatingCost" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetOptionItems">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="elementId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOptionItemsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOptionItemsResult" type="tns:ArrayOfOptionCost" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfOptionCost">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="OptionCost" nillable="true" type="tns:OptionCost" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="OptionCost">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="PricingOptionId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="ElementId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="PortalId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="Order" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="QtyFrom" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="QtyTo" nillable="true" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetMediaByPortal">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="printerId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMediaByPortalResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMediaByPortalResult" type="tns:ArrayOfMediaCosting" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfMediaCosting">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="MediaCosting" nillable="true" type="tns:MediaCosting" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="MediaCosting">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="PricingMediaId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="ControlItemId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="QtyFrom" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="QtyTo" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ColourSingleSided" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="ColourDoubleSided" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="MonoSingleSided" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="MonoDoubleSided" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="MediaCost" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="LaminatingCost" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetProductsByPortal">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProductsByPortalResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetProductsByPortalResult" type="tns:ArrayOfProductCost" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfProductCost">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ProductCost" nillable="true" type="tns:ProductCost" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ProductCost">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="PricingProductId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CalculatedPrice" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="FixedPrice" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="PriceEach" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="Markup" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="TaxRate" type="s:double" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AddExistingPorducts">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddExistingPorductsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddExistingPorductsResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPortalGuidFromUrl">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPortalGuidFromUrlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetPortalGuidFromUrlResult" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UseHttps">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UseHttpsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UseHttpsResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ValidateUserResult" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="validUser" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="globalUser" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="guid">
+        <s:restriction base="s:string">
+          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetAssemblyVersionSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAssemblyVersion" />
+  </wsdl:message>
+  <wsdl:message name="GetAssemblyVersionSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAssemblyVersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddMediaBandingItemSoapIn">
+    <wsdl:part name="parameters" element="tns:AddMediaBandingItem" />
+  </wsdl:message>
+  <wsdl:message name="AddMediaBandingItemSoapOut">
+    <wsdl:part name="parameters" element="tns:AddMediaBandingItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteMediaItemsSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteMediaItems" />
+  </wsdl:message>
+  <wsdl:message name="DeleteMediaItemsSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteMediaItemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddBandingItemSoapIn">
+    <wsdl:part name="parameters" element="tns:AddBandingItem" />
+  </wsdl:message>
+  <wsdl:message name="AddBandingItemSoapOut">
+    <wsdl:part name="parameters" element="tns:AddBandingItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteItemsSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteItems" />
+  </wsdl:message>
+  <wsdl:message name="DeleteItemsSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteItemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckGloalProductsSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckGloalProducts" />
+  </wsdl:message>
+  <wsdl:message name="CheckGloalProductsSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckGloalProductsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOptionPriceSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOptionPrice" />
+  </wsdl:message>
+  <wsdl:message name="GetOptionPriceSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOptionPriceResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCustomOptionTitlesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCustomOptionTitles" />
+  </wsdl:message>
+  <wsdl:message name="GetCustomOptionTitlesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCustomOptionTitlesResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateOptionPriceSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateOptionPrice" />
+  </wsdl:message>
+  <wsdl:message name="UpdateOptionPriceSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateOptionPriceResponse" />
+  </wsdl:message>
+  <wsdl:message name="FindMedisItemSoapIn">
+    <wsdl:part name="parameters" element="tns:FindMedisItem" />
+  </wsdl:message>
+  <wsdl:message name="FindMedisItemSoapOut">
+    <wsdl:part name="parameters" element="tns:FindMedisItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="PricingAddEditSingleMediaItemSoapIn">
+    <wsdl:part name="parameters" element="tns:PricingAddEditSingleMediaItem" />
+  </wsdl:message>
+  <wsdl:message name="PricingAddEditSingleMediaItemSoapOut">
+    <wsdl:part name="parameters" element="tns:PricingAddEditSingleMediaItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePricingProductSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdatePricingProduct" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePricingProductSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdatePricingProductResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOptionsByPortalSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOptionsByPortal" />
+  </wsdl:message>
+  <wsdl:message name="GetOptionsByPortalSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOptionsByPortalResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMediaItemSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMediaItem" />
+  </wsdl:message>
+  <wsdl:message name="GetMediaItemSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMediaItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOptionItemsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOptionItems" />
+  </wsdl:message>
+  <wsdl:message name="GetOptionItemsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOptionItemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMediaByPortalSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMediaByPortal" />
+  </wsdl:message>
+  <wsdl:message name="GetMediaByPortalSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMediaByPortalResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetProductsByPortalSoapIn">
+    <wsdl:part name="parameters" element="tns:GetProductsByPortal" />
+  </wsdl:message>
+  <wsdl:message name="GetProductsByPortalSoapOut">
+    <wsdl:part name="parameters" element="tns:GetProductsByPortalResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddExistingPorductsSoapIn">
+    <wsdl:part name="parameters" element="tns:AddExistingPorducts" />
+  </wsdl:message>
+  <wsdl:message name="AddExistingPorductsSoapOut">
+    <wsdl:part name="parameters" element="tns:AddExistingPorductsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPortalGuidFromUrlSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPortalGuidFromUrl" />
+  </wsdl:message>
+  <wsdl:message name="GetPortalGuidFromUrlSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPortalGuidFromUrlResponse" />
+  </wsdl:message>
+  <wsdl:message name="UseHttpsSoapIn">
+    <wsdl:part name="parameters" element="tns:UseHttps" />
+  </wsdl:message>
+  <wsdl:message name="UseHttpsSoapOut">
+    <wsdl:part name="parameters" element="tns:UseHttpsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidateUserSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateUser" />
+  </wsdl:message>
+  <wsdl:message name="ValidateUserSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateUserResponse" />
+  </wsdl:message>
+  <wsdl:portType name="PricingServiceSoap">
+    <wsdl:operation name="GetAssemblyVersion">
+      <wsdl:input message="tns:GetAssemblyVersionSoapIn" />
+      <wsdl:output message="tns:GetAssemblyVersionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddMediaBandingItem">
+      <wsdl:input message="tns:AddMediaBandingItemSoapIn" />
+      <wsdl:output message="tns:AddMediaBandingItemSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMediaItems">
+      <wsdl:input message="tns:DeleteMediaItemsSoapIn" />
+      <wsdl:output message="tns:DeleteMediaItemsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddBandingItem">
+      <wsdl:input message="tns:AddBandingItemSoapIn" />
+      <wsdl:output message="tns:AddBandingItemSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteItems">
+      <wsdl:input message="tns:DeleteItemsSoapIn" />
+      <wsdl:output message="tns:DeleteItemsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckGloalProducts">
+      <wsdl:input message="tns:CheckGloalProductsSoapIn" />
+      <wsdl:output message="tns:CheckGloalProductsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOptionPrice">
+      <wsdl:input message="tns:GetOptionPriceSoapIn" />
+      <wsdl:output message="tns:GetOptionPriceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomOptionTitles">
+      <wsdl:input message="tns:GetCustomOptionTitlesSoapIn" />
+      <wsdl:output message="tns:GetCustomOptionTitlesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOptionPrice">
+      <wsdl:input message="tns:UpdateOptionPriceSoapIn" />
+      <wsdl:output message="tns:UpdateOptionPriceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindMedisItem">
+      <wsdl:input message="tns:FindMedisItemSoapIn" />
+      <wsdl:output message="tns:FindMedisItemSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PricingAddEditSingleMediaItem">
+      <wsdl:input message="tns:PricingAddEditSingleMediaItemSoapIn" />
+      <wsdl:output message="tns:PricingAddEditSingleMediaItemSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePricingProduct">
+      <wsdl:input message="tns:UpdatePricingProductSoapIn" />
+      <wsdl:output message="tns:UpdatePricingProductSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOptionsByPortal">
+      <wsdl:input message="tns:GetOptionsByPortalSoapIn" />
+      <wsdl:output message="tns:GetOptionsByPortalSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMediaItem">
+      <wsdl:input message="tns:GetMediaItemSoapIn" />
+      <wsdl:output message="tns:GetMediaItemSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOptionItems">
+      <wsdl:input message="tns:GetOptionItemsSoapIn" />
+      <wsdl:output message="tns:GetOptionItemsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMediaByPortal">
+      <wsdl:input message="tns:GetMediaByPortalSoapIn" />
+      <wsdl:output message="tns:GetMediaByPortalSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductsByPortal">
+      <wsdl:input message="tns:GetProductsByPortalSoapIn" />
+      <wsdl:output message="tns:GetProductsByPortalSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddExistingPorducts">
+      <wsdl:input message="tns:AddExistingPorductsSoapIn" />
+      <wsdl:output message="tns:AddExistingPorductsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalGuidFromUrl">
+      <wsdl:input message="tns:GetPortalGuidFromUrlSoapIn" />
+      <wsdl:output message="tns:GetPortalGuidFromUrlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UseHttps">
+      <wsdl:input message="tns:UseHttpsSoapIn" />
+      <wsdl:output message="tns:UseHttpsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUser">
+      <wsdl:input message="tns:ValidateUserSoapIn" />
+      <wsdl:output message="tns:ValidateUserSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PricingServiceSoap" type="tns:PricingServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAssemblyVersion">
+      <soap:operation soapAction="http://tempuri.org/GetAssemblyVersion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddMediaBandingItem">
+      <soap:operation soapAction="http://tempuri.org/AddMediaBandingItem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMediaItems">
+      <soap:operation soapAction="http://tempuri.org/DeleteMediaItems" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddBandingItem">
+      <soap:operation soapAction="http://tempuri.org/AddBandingItem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteItems">
+      <soap:operation soapAction="http://tempuri.org/DeleteItems" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckGloalProducts">
+      <soap:operation soapAction="http://tempuri.org/CheckGloalProducts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOptionPrice">
+      <soap:operation soapAction="http://tempuri.org/GetOptionPrice" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomOptionTitles">
+      <soap:operation soapAction="http://tempuri.org/GetCustomOptionTitles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOptionPrice">
+      <soap:operation soapAction="http://tempuri.org/UpdateOptionPrice" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindMedisItem">
+      <soap:operation soapAction="http://tempuri.org/FindMedisItem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PricingAddEditSingleMediaItem">
+      <soap:operation soapAction="http://tempuri.org/PricingAddEditSingleMediaItem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePricingProduct">
+      <soap:operation soapAction="http://tempuri.org/UpdatePricingProduct" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOptionsByPortal">
+      <soap:operation soapAction="http://tempuri.org/GetOptionsByPortal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMediaItem">
+      <soap:operation soapAction="http://tempuri.org/GetMediaItem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOptionItems">
+      <soap:operation soapAction="http://tempuri.org/GetOptionItems" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMediaByPortal">
+      <soap:operation soapAction="http://tempuri.org/GetMediaByPortal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductsByPortal">
+      <soap:operation soapAction="http://tempuri.org/GetProductsByPortal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddExistingPorducts">
+      <soap:operation soapAction="http://tempuri.org/AddExistingPorducts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalGuidFromUrl">
+      <soap:operation soapAction="http://tempuri.org/GetPortalGuidFromUrl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UseHttps">
+      <soap:operation soapAction="http://tempuri.org/UseHttps" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUser">
+      <soap:operation soapAction="http://tempuri.org/ValidateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PricingServiceSoap12" type="tns:PricingServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAssemblyVersion">
+      <soap12:operation soapAction="http://tempuri.org/GetAssemblyVersion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddMediaBandingItem">
+      <soap12:operation soapAction="http://tempuri.org/AddMediaBandingItem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMediaItems">
+      <soap12:operation soapAction="http://tempuri.org/DeleteMediaItems" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddBandingItem">
+      <soap12:operation soapAction="http://tempuri.org/AddBandingItem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteItems">
+      <soap12:operation soapAction="http://tempuri.org/DeleteItems" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckGloalProducts">
+      <soap12:operation soapAction="http://tempuri.org/CheckGloalProducts" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOptionPrice">
+      <soap12:operation soapAction="http://tempuri.org/GetOptionPrice" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomOptionTitles">
+      <soap12:operation soapAction="http://tempuri.org/GetCustomOptionTitles" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOptionPrice">
+      <soap12:operation soapAction="http://tempuri.org/UpdateOptionPrice" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindMedisItem">
+      <soap12:operation soapAction="http://tempuri.org/FindMedisItem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PricingAddEditSingleMediaItem">
+      <soap12:operation soapAction="http://tempuri.org/PricingAddEditSingleMediaItem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePricingProduct">
+      <soap12:operation soapAction="http://tempuri.org/UpdatePricingProduct" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOptionsByPortal">
+      <soap12:operation soapAction="http://tempuri.org/GetOptionsByPortal" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMediaItem">
+      <soap12:operation soapAction="http://tempuri.org/GetMediaItem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOptionItems">
+      <soap12:operation soapAction="http://tempuri.org/GetOptionItems" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMediaByPortal">
+      <soap12:operation soapAction="http://tempuri.org/GetMediaByPortal" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductsByPortal">
+      <soap12:operation soapAction="http://tempuri.org/GetProductsByPortal" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddExistingPorducts">
+      <soap12:operation soapAction="http://tempuri.org/AddExistingPorducts" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalGuidFromUrl">
+      <soap12:operation soapAction="http://tempuri.org/GetPortalGuidFromUrl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UseHttps">
+      <soap12:operation soapAction="http://tempuri.org/UseHttps" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUser">
+      <soap12:operation soapAction="http://tempuri.org/ValidateUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PricingService">
+    <wsdl:port name="PricingServiceSoap" binding="tns:PricingServiceSoap">
+      <soap:address location="http://localhost/WebServices/PricingService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PricingServiceSoap12" binding="tns:PricingServiceSoap12">
+      <soap12:address location="http://localhost/WebServices/PricingService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,3184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s2="http://Eprint.Skyline/xml/serialization" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:import namespace="http://Eprint.Skyline/xml/serialization" />
+      <s:element name="GetVersionNumber">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetVersionNumberResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetVersionNumberResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFontList">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetFontListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetFontListResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetTableOfTestValues2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="JDF" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTableOfTestValues2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTableOfTestValues2Result" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteElementAndAllRelatedControlItemsAndPrices">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="elementId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteElementAndAllRelatedControlItemsAndPricesResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="UpdateElement">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="elementId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="value" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="customXpath" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="locXml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateElementResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="UploadFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="fileName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="buffer" type="s:base64Binary" />
+            <s:element minOccurs="1" maxOccurs="1" name="offset" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="uploadDir" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadFileResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteTempUploadedFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="uploadDir" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteTempUploadedFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteTempUploadedFileResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPortalIdForUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPortalIdForUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetPortalIdForUserResult" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPortalIdForUrl">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPortalIdForUrlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetPortalIdForUrlResult" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetConfigValue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="setting" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetConfigValueResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetConfigValueResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetConfigString">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="setting" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetConfigStringResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetConfigStringResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DoesUserExist">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DoesUserExistResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DoesUserExistResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsUserActive">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsUserActiveResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="IsUserActiveResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsUserAdminOrHost">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="portlalId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsUserAdminOrHostResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="IsUserAdminOrHostResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPortalUsers">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPortalUsersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPortalUsersResult" type="tns:ArrayOfUserSettings" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfUserSettings">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="UserSettings" nillable="true" type="tns:UserSettings" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UserSettings">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ApplicationName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Inactive" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Locked" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastActivity" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="ApprovalLevel" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="orders" nillable="true" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetPortalName">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPortalNameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPortalNameResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetApplicationUsers">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="applicationName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetApplicationUsersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetApplicationUsersResult" type="tns:ArrayOfUserSettings" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserLibraries">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserLibrariesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserLibrariesResult" type="tns:ArrayOfLibraryDetails" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfLibraryDetails">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="LibraryDetails" nillable="true" type="tns:LibraryDetails" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="LibraryDetails">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LibraryId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="ParentId" nillable="true" type="s1:guid" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAllUserLibraries">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllUserLibrariesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllUserLibrariesResult" type="tns:ArrayOfLibraryDetails" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetUserIdResult" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegisterNewUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegisterNewUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RegisterNewUserResult" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="errorMsg" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserGroups">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserGroupsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserGroupsResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFirstUserGroup">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFirstUserGroupResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetFirstUserGroupResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MoveTempDocumentsToUserLibrary">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MoveTempDocumentsToUserLibraryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MoveTempDocumentsToUserLibraryResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MoveTempDocumentsToSpecificLibrary">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="libraryId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteWhenOrdered" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MoveTempDocumentsToSpecificLibraryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MoveTempDocumentsToSpecificLibraryResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MoveTempDocumentsToHiddenLibrary">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MoveTempDocumentsToHiddenLibraryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MoveTempDocumentsToHiddenLibraryResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MoveTempDocumentsToProductsPage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MoveTempDocumentsToProductsPageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MoveTempDocumentsToProductsPageResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetToken">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTokenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTokenResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UrlEncode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="querryString" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UrlEncodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UrlEncodeResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAuthenticationType">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAuthenticationTypeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetAuthenticationTypeResult" type="tns:AuthenticationType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="AuthenticationType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Unknown" />
+          <s:enumeration value="Ldap" />
+          <s:enumeration value="Database" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="CheckDomainName">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="domainName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckDomainNameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CheckDomainNameResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDriverMessage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDriverMessageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDriverMessageResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCustomDocumentOptionName">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="customDocumentOptionType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCustomDocumentOptionNameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCustomDocumentOptionNameResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetCustomDocumentOptionName">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="caption" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="customDocumentOptionType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetCustomDocumentOptionNameResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetDocumentOptionTitle">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="elementType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDocumentOptionTitleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDocumentOptionTitleResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetDocumentOptionTitle">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="elementType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="caption" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetDocumentOptionTitleResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetProductImagesList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProductImagesListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetProductImagesListResult" type="tns:ArrayOfAnyType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfAnyType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetProductImage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="imageName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProductImageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetProductImageResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddProductImage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="image" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddProductImageResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetProductsUsingImage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="imageName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProductsUsingImageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetProductsUsingImageResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteProductImage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="imageName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteProductImageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteProductImageResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllProducts">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PortalProduct">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="PortalId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Image" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CategoryName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CategoryDescription" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CategoryImage" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DisplayOrder" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductXml" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="TemplateProduct" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="CategoryId" nillable="true" type="s1:guid" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPortalProduct">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PortalProduct" nillable="true" type="tns:PortalProduct" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAllProductsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllProductsResult" type="tns:ArrayOfPortalProduct" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProductControls">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ProductControl">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="PortalId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="ParentControlId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="GroupType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ControlXML" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ControlType" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ControlId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Caption" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfProductControl">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ProductControl" nillable="true" type="tns:ProductControl" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetProductControlsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetProductControlsResult" type="tns:ArrayOfProductControl" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPaperGridItems">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PaperGridItems">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ControlItemId" type="s1:guid" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPaperGridItems">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PaperGridItems" nillable="true" type="tns:PaperGridItems" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetPaperGridItemsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPaperGridItemsResult" type="tns:ArrayOfPaperGridItems" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetControlItemsUsingElement">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="elementId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetControlItemsUsingElementResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetControlItemsUsingElementResult" type="s2:EntityCollection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProduct">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="productId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Product">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="TemplateProduct" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductXml" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="PortalId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Image" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="EquitracProduct" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Deleted" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="ProductCategoryId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Portal" type="tns:Portal" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Portal">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="PortalName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PortalId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="MembershipProviderName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="HTTPS" nillable="true" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExpiryDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="Default" nillable="true" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Culture" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="AwaitingUpdate" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="AutoDeleteDate" nillable="true" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetProductResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetProductResult" type="tns:Product" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProductRules">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="productId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Rule">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="RuleType" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="RuleId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="RuleExpression" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ProductId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="PortalId" nillable="true" type="s1:guid" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfRule">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Rule" nillable="true" type="tns:Rule" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetProductRulesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetProductRulesResult" type="tns:ArrayOfRule" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDeliveryForm">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="deliveryTypeId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DeliveryType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ProductXml" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PortalId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DeliveryTypeId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="Default" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetDeliveryFormResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDeliveryFormResult" type="tns:DeliveryType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAddressForm">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="addressFormId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DeliveryTemplate">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ProductXml" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PortalId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DeliveryTemplateId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="Default" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Portal" type="tns:Portal" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAddressFormResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAddressFormResult" type="tns:DeliveryTemplate" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetElements">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ProductElement">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PortalId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="Order" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ElementLocXml" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ElementId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomXpath" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Portal" type="tns:Portal" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfProductElement">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ProductElement" nillable="true" type="tns:ProductElement" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetElementsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetElementsResult" type="tns:ArrayOfProductElement" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetElementControls">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ProductElementControl">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="PortalId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ElementType" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ElementControlId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="ControlXML" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ControlType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Caption" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfProductElementControl">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ProductElementControl" nillable="true" type="tns:ProductElementControl" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetElementControlsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetElementControlsResult" type="tns:ArrayOfProductElementControl" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetControlItem">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="itemId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ProductControlItem">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="PortalId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ItemLocXML" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ControlItemId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Portal" type="tns:Portal" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetControlItemResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetControlItemResult" type="tns:ProductControlItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllocatedProductControlItems">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="contolId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfProductControlItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ProductControlItem" nillable="true" type="tns:ProductControlItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAllocatedProductControlItemsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllocatedProductControlItemsResult" type="tns:ArrayOfProductControlItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPortalProductControlItems">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPortalProductControlItemsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPortalProductControlItemsResult" type="tns:ArrayOfProductControlItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllPortals">
+        <s:complexType />
+      </s:element>
+      <s:complexType name="ArrayOfPortal">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Portal" nillable="true" type="tns:Portal" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAllPortalsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllPortalsResult" type="tns:ArrayOfPortal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllocatedElements">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="elementControlId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllocatedElementsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllocatedElementsResult" type="tns:ArrayOfProductElement" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateControl">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="controlId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="newCaption" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="controlXML" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateControlResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="RemoveAllItemsFromControl">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="controlId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveAllItemsFromControlResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="AddControlItemToControl">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="controlItemId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="controlId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="order" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddControlItemToControlResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="AddControl">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="caption" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="controlType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="groupType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="elementType" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="parentControlId" nillable="true" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="controlXML" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddControlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddControlResult" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateElementControl">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="controlId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="newCaption" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="controlXML" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateElementControlResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="RemoveAllElementsFromElementControl">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="controlId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveAllElementsFromElementControlResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="AddElementToControl">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="elementId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="elementControlId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="order" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddElementToControlResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="AddElementControl">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="caption" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="controlType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="elementType" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="controlXML" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddElementControlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddElementControlResult" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllAddressForms">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDeliveryTemplate">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DeliveryTemplate" nillable="true" type="tns:DeliveryTemplate" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAllAddressFormsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllAddressFormsResult" type="tns:ArrayOfDeliveryTemplate" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllDeliveryForms">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDeliveryType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DeliveryType" nillable="true" type="tns:DeliveryType" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAllDeliveryFormsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllDeliveryFormsResult" type="tns:ArrayOfDeliveryType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDocumentsInUserLibrary">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="libraryId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Document">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="UploadedBy" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="UpdateDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="ThumbnailsCreated" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="StatusId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductXml" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ProductId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="OriginalExtension" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="NumberOfPages" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="MissingFonts" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LibraryId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastOrderedDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="FinalExtension" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="FileTypeId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="FileSize" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DocumentId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreatedDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="Previewed" nillable="true" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Hidden" nillable="true" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="User" type="tns:User" />
+          <s:element minOccurs="0" maxOccurs="1" name="Product" type="tns:Product" />
+          <s:element minOccurs="0" maxOccurs="1" name="Library" type="tns:Library" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileType" type="tns:FileType" />
+          <s:element minOccurs="0" maxOccurs="1" name="DocumentStatus" type="tns:DocumentStatus" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="User">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="Inactive" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeliveryXml" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DeliveryTemplateId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="ApplicationName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ApprovalLevel" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeliveryTemplate" type="tns:DeliveryTemplate" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Library">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="OwnerId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="OrderColumn" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LibraryId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="AllUsersHaveFullControl" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="ParentId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="User" type="tns:User" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="FileType">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="FileTypeId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Extension" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DocumentStatus">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="StatusName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StatusId" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDocument">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Document" nillable="true" type="tns:Document" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetDocumentsInUserLibraryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDocumentsInUserLibraryResult" type="tns:ArrayOfDocument" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="HideDocumentInLibrary">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="documentId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="HideDocumentInLibraryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="HideDocumentInLibraryResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="guid">
+        <s:restriction base="s:string">
+          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+    <xs:schema xmlns="http://Eprint.Skyline/xml/serialization" xmlns:mstns="http://Eprint.Skyline/xml/serialization" elementFormDefault="qualified" targetNamespace="http://Eprint.Skyline/xml/serialization" id="EntityCollectionSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="EntityCollection" />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="GetVersionNumberSoapIn">
+    <wsdl:part name="parameters" element="tns:GetVersionNumber" />
+  </wsdl:message>
+  <wsdl:message name="GetVersionNumberSoapOut">
+    <wsdl:part name="parameters" element="tns:GetVersionNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFontListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetFontList" />
+  </wsdl:message>
+  <wsdl:message name="GetFontListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetFontListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTableOfTestValues2SoapIn">
+    <wsdl:part name="parameters" element="tns:GetTableOfTestValues2" />
+  </wsdl:message>
+  <wsdl:message name="GetTableOfTestValues2SoapOut">
+    <wsdl:part name="parameters" element="tns:GetTableOfTestValues2Response" />
+  </wsdl:message>
+  <wsdl:message name="DeleteElementAndAllRelatedControlItemsAndPricesSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteElementAndAllRelatedControlItemsAndPrices" />
+  </wsdl:message>
+  <wsdl:message name="DeleteElementAndAllRelatedControlItemsAndPricesSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteElementAndAllRelatedControlItemsAndPricesResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateElementSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateElement" />
+  </wsdl:message>
+  <wsdl:message name="UpdateElementSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateElementResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadFileSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadFile" />
+  </wsdl:message>
+  <wsdl:message name="UploadFileSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteTempUploadedFileSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteTempUploadedFile" />
+  </wsdl:message>
+  <wsdl:message name="DeleteTempUploadedFileSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteTempUploadedFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPortalIdForUserSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPortalIdForUser" />
+  </wsdl:message>
+  <wsdl:message name="GetPortalIdForUserSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPortalIdForUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPortalIdForUrlSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPortalIdForUrl" />
+  </wsdl:message>
+  <wsdl:message name="GetPortalIdForUrlSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPortalIdForUrlResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetConfigValueSoapIn">
+    <wsdl:part name="parameters" element="tns:GetConfigValue" />
+  </wsdl:message>
+  <wsdl:message name="GetConfigValueSoapOut">
+    <wsdl:part name="parameters" element="tns:GetConfigValueResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetConfigStringSoapIn">
+    <wsdl:part name="parameters" element="tns:GetConfigString" />
+  </wsdl:message>
+  <wsdl:message name="GetConfigStringSoapOut">
+    <wsdl:part name="parameters" element="tns:GetConfigStringResponse" />
+  </wsdl:message>
+  <wsdl:message name="DoesUserExistSoapIn">
+    <wsdl:part name="parameters" element="tns:DoesUserExist" />
+  </wsdl:message>
+  <wsdl:message name="DoesUserExistSoapOut">
+    <wsdl:part name="parameters" element="tns:DoesUserExistResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsUserActiveSoapIn">
+    <wsdl:part name="parameters" element="tns:IsUserActive" />
+  </wsdl:message>
+  <wsdl:message name="IsUserActiveSoapOut">
+    <wsdl:part name="parameters" element="tns:IsUserActiveResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsUserAdminOrHostSoapIn">
+    <wsdl:part name="parameters" element="tns:IsUserAdminOrHost" />
+  </wsdl:message>
+  <wsdl:message name="IsUserAdminOrHostSoapOut">
+    <wsdl:part name="parameters" element="tns:IsUserAdminOrHostResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPortalUsersSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPortalUsers" />
+  </wsdl:message>
+  <wsdl:message name="GetPortalUsersSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPortalUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPortalNameSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPortalName" />
+  </wsdl:message>
+  <wsdl:message name="GetPortalNameSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPortalNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetApplicationUsersSoapIn">
+    <wsdl:part name="parameters" element="tns:GetApplicationUsers" />
+  </wsdl:message>
+  <wsdl:message name="GetApplicationUsersSoapOut">
+    <wsdl:part name="parameters" element="tns:GetApplicationUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserLibrariesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserLibraries" />
+  </wsdl:message>
+  <wsdl:message name="GetUserLibrariesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserLibrariesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllUserLibrariesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllUserLibraries" />
+  </wsdl:message>
+  <wsdl:message name="GetAllUserLibrariesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllUserLibrariesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserId" />
+  </wsdl:message>
+  <wsdl:message name="GetUserIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="RegisterNewUserSoapIn">
+    <wsdl:part name="parameters" element="tns:RegisterNewUser" />
+  </wsdl:message>
+  <wsdl:message name="RegisterNewUserSoapOut">
+    <wsdl:part name="parameters" element="tns:RegisterNewUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserGroupsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserGroups" />
+  </wsdl:message>
+  <wsdl:message name="GetUserGroupsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserGroupsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFirstUserGroupSoapIn">
+    <wsdl:part name="parameters" element="tns:GetFirstUserGroup" />
+  </wsdl:message>
+  <wsdl:message name="GetFirstUserGroupSoapOut">
+    <wsdl:part name="parameters" element="tns:GetFirstUserGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="MoveTempDocumentsToUserLibrarySoapIn">
+    <wsdl:part name="parameters" element="tns:MoveTempDocumentsToUserLibrary" />
+  </wsdl:message>
+  <wsdl:message name="MoveTempDocumentsToUserLibrarySoapOut">
+    <wsdl:part name="parameters" element="tns:MoveTempDocumentsToUserLibraryResponse" />
+  </wsdl:message>
+  <wsdl:message name="MoveTempDocumentsToSpecificLibrarySoapIn">
+    <wsdl:part name="parameters" element="tns:MoveTempDocumentsToSpecificLibrary" />
+  </wsdl:message>
+  <wsdl:message name="MoveTempDocumentsToSpecificLibrarySoapOut">
+    <wsdl:part name="parameters" element="tns:MoveTempDocumentsToSpecificLibraryResponse" />
+  </wsdl:message>
+  <wsdl:message name="MoveTempDocumentsToHiddenLibrarySoapIn">
+    <wsdl:part name="parameters" element="tns:MoveTempDocumentsToHiddenLibrary" />
+  </wsdl:message>
+  <wsdl:message name="MoveTempDocumentsToHiddenLibrarySoapOut">
+    <wsdl:part name="parameters" element="tns:MoveTempDocumentsToHiddenLibraryResponse" />
+  </wsdl:message>
+  <wsdl:message name="MoveTempDocumentsToProductsPageSoapIn">
+    <wsdl:part name="parameters" element="tns:MoveTempDocumentsToProductsPage" />
+  </wsdl:message>
+  <wsdl:message name="MoveTempDocumentsToProductsPageSoapOut">
+    <wsdl:part name="parameters" element="tns:MoveTempDocumentsToProductsPageResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTokenSoapIn">
+    <wsdl:part name="parameters" element="tns:GetToken" />
+  </wsdl:message>
+  <wsdl:message name="GetTokenSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTokenResponse" />
+  </wsdl:message>
+  <wsdl:message name="UrlEncodeSoapIn">
+    <wsdl:part name="parameters" element="tns:UrlEncode" />
+  </wsdl:message>
+  <wsdl:message name="UrlEncodeSoapOut">
+    <wsdl:part name="parameters" element="tns:UrlEncodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAuthenticationTypeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAuthenticationType" />
+  </wsdl:message>
+  <wsdl:message name="GetAuthenticationTypeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAuthenticationTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckDomainNameSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckDomainName" />
+  </wsdl:message>
+  <wsdl:message name="CheckDomainNameSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckDomainNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDriverMessageSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDriverMessage" />
+  </wsdl:message>
+  <wsdl:message name="GetDriverMessageSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDriverMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCustomDocumentOptionNameSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCustomDocumentOptionName" />
+  </wsdl:message>
+  <wsdl:message name="GetCustomDocumentOptionNameSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCustomDocumentOptionNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetCustomDocumentOptionNameSoapIn">
+    <wsdl:part name="parameters" element="tns:SetCustomDocumentOptionName" />
+  </wsdl:message>
+  <wsdl:message name="SetCustomDocumentOptionNameSoapOut">
+    <wsdl:part name="parameters" element="tns:SetCustomDocumentOptionNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDocumentOptionTitleSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDocumentOptionTitle" />
+  </wsdl:message>
+  <wsdl:message name="GetDocumentOptionTitleSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDocumentOptionTitleResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetDocumentOptionTitleSoapIn">
+    <wsdl:part name="parameters" element="tns:SetDocumentOptionTitle" />
+  </wsdl:message>
+  <wsdl:message name="SetDocumentOptionTitleSoapOut">
+    <wsdl:part name="parameters" element="tns:SetDocumentOptionTitleResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetProductImagesListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetProductImagesList" />
+  </wsdl:message>
+  <wsdl:message name="GetProductImagesListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetProductImagesListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetProductImageSoapIn">
+    <wsdl:part name="parameters" element="tns:GetProductImage" />
+  </wsdl:message>
+  <wsdl:message name="GetProductImageSoapOut">
+    <wsdl:part name="parameters" element="tns:GetProductImageResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddProductImageSoapIn">
+    <wsdl:part name="parameters" element="tns:AddProductImage" />
+  </wsdl:message>
+  <wsdl:message name="AddProductImageSoapOut">
+    <wsdl:part name="parameters" element="tns:AddProductImageResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetProductsUsingImageSoapIn">
+    <wsdl:part name="parameters" element="tns:GetProductsUsingImage" />
+  </wsdl:message>
+  <wsdl:message name="GetProductsUsingImageSoapOut">
+    <wsdl:part name="parameters" element="tns:GetProductsUsingImageResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteProductImageSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteProductImage" />
+  </wsdl:message>
+  <wsdl:message name="DeleteProductImageSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteProductImageResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllProductsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllProducts" />
+  </wsdl:message>
+  <wsdl:message name="GetAllProductsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllProductsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetProductControlsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetProductControls" />
+  </wsdl:message>
+  <wsdl:message name="GetProductControlsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetProductControlsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPaperGridItemsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPaperGridItems" />
+  </wsdl:message>
+  <wsdl:message name="GetPaperGridItemsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPaperGridItemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetControlItemsUsingElementSoapIn">
+    <wsdl:part name="parameters" element="tns:GetControlItemsUsingElement" />
+  </wsdl:message>
+  <wsdl:message name="GetControlItemsUsingElementSoapOut">
+    <wsdl:part name="parameters" element="tns:GetControlItemsUsingElementResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetProductSoapIn">
+    <wsdl:part name="parameters" element="tns:GetProduct" />
+  </wsdl:message>
+  <wsdl:message name="GetProductSoapOut">
+    <wsdl:part name="parameters" element="tns:GetProductResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetProductRulesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetProductRules" />
+  </wsdl:message>
+  <wsdl:message name="GetProductRulesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetProductRulesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDeliveryFormSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDeliveryForm" />
+  </wsdl:message>
+  <wsdl:message name="GetDeliveryFormSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDeliveryFormResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAddressFormSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAddressForm" />
+  </wsdl:message>
+  <wsdl:message name="GetAddressFormSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAddressFormResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetElementsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetElements" />
+  </wsdl:message>
+  <wsdl:message name="GetElementsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetElementsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetElementControlsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetElementControls" />
+  </wsdl:message>
+  <wsdl:message name="GetElementControlsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetElementControlsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetControlItemSoapIn">
+    <wsdl:part name="parameters" element="tns:GetControlItem" />
+  </wsdl:message>
+  <wsdl:message name="GetControlItemSoapOut">
+    <wsdl:part name="parameters" element="tns:GetControlItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllocatedProductControlItemsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllocatedProductControlItems" />
+  </wsdl:message>
+  <wsdl:message name="GetAllocatedProductControlItemsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllocatedProductControlItemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPortalProductControlItemsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPortalProductControlItems" />
+  </wsdl:message>
+  <wsdl:message name="GetPortalProductControlItemsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPortalProductControlItemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllPortalsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllPortals" />
+  </wsdl:message>
+  <wsdl:message name="GetAllPortalsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllPortalsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllocatedElementsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllocatedElements" />
+  </wsdl:message>
+  <wsdl:message name="GetAllocatedElementsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllocatedElementsResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateControlSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateControl" />
+  </wsdl:message>
+  <wsdl:message name="UpdateControlSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateControlResponse" />
+  </wsdl:message>
+  <wsdl:message name="RemoveAllItemsFromControlSoapIn">
+    <wsdl:part name="parameters" element="tns:RemoveAllItemsFromControl" />
+  </wsdl:message>
+  <wsdl:message name="RemoveAllItemsFromControlSoapOut">
+    <wsdl:part name="parameters" element="tns:RemoveAllItemsFromControlResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddControlItemToControlSoapIn">
+    <wsdl:part name="parameters" element="tns:AddControlItemToControl" />
+  </wsdl:message>
+  <wsdl:message name="AddControlItemToControlSoapOut">
+    <wsdl:part name="parameters" element="tns:AddControlItemToControlResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddControlSoapIn">
+    <wsdl:part name="parameters" element="tns:AddControl" />
+  </wsdl:message>
+  <wsdl:message name="AddControlSoapOut">
+    <wsdl:part name="parameters" element="tns:AddControlResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateElementControlSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateElementControl" />
+  </wsdl:message>
+  <wsdl:message name="UpdateElementControlSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateElementControlResponse" />
+  </wsdl:message>
+  <wsdl:message name="RemoveAllElementsFromElementControlSoapIn">
+    <wsdl:part name="parameters" element="tns:RemoveAllElementsFromElementControl" />
+  </wsdl:message>
+  <wsdl:message name="RemoveAllElementsFromElementControlSoapOut">
+    <wsdl:part name="parameters" element="tns:RemoveAllElementsFromElementControlResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddElementToControlSoapIn">
+    <wsdl:part name="parameters" element="tns:AddElementToControl" />
+  </wsdl:message>
+  <wsdl:message name="AddElementToControlSoapOut">
+    <wsdl:part name="parameters" element="tns:AddElementToControlResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddElementControlSoapIn">
+    <wsdl:part name="parameters" element="tns:AddElementControl" />
+  </wsdl:message>
+  <wsdl:message name="AddElementControlSoapOut">
+    <wsdl:part name="parameters" element="tns:AddElementControlResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllAddressFormsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllAddressForms" />
+  </wsdl:message>
+  <wsdl:message name="GetAllAddressFormsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllAddressFormsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllDeliveryFormsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllDeliveryForms" />
+  </wsdl:message>
+  <wsdl:message name="GetAllDeliveryFormsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllDeliveryFormsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDocumentsInUserLibrarySoapIn">
+    <wsdl:part name="parameters" element="tns:GetDocumentsInUserLibrary" />
+  </wsdl:message>
+  <wsdl:message name="GetDocumentsInUserLibrarySoapOut">
+    <wsdl:part name="parameters" element="tns:GetDocumentsInUserLibraryResponse" />
+  </wsdl:message>
+  <wsdl:message name="HideDocumentInLibrarySoapIn">
+    <wsdl:part name="parameters" element="tns:HideDocumentInLibrary" />
+  </wsdl:message>
+  <wsdl:message name="HideDocumentInLibrarySoapOut">
+    <wsdl:part name="parameters" element="tns:HideDocumentInLibraryResponse" />
+  </wsdl:message>
+  <wsdl:portType name="SkylineWebServiceSoap">
+    <wsdl:operation name="GetVersionNumber">
+      <wsdl:input message="tns:GetVersionNumberSoapIn" />
+      <wsdl:output message="tns:GetVersionNumberSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFontList">
+      <wsdl:input message="tns:GetFontListSoapIn" />
+      <wsdl:output message="tns:GetFontListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTableOfTestValues2">
+      <wsdl:input message="tns:GetTableOfTestValues2SoapIn" />
+      <wsdl:output message="tns:GetTableOfTestValues2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteElementAndAllRelatedControlItemsAndPrices">
+      <wsdl:input message="tns:DeleteElementAndAllRelatedControlItemsAndPricesSoapIn" />
+      <wsdl:output message="tns:DeleteElementAndAllRelatedControlItemsAndPricesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateElement">
+      <wsdl:input message="tns:UpdateElementSoapIn" />
+      <wsdl:output message="tns:UpdateElementSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadFile">
+      <wsdl:input message="tns:UploadFileSoapIn" />
+      <wsdl:output message="tns:UploadFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTempUploadedFile">
+      <wsdl:input message="tns:DeleteTempUploadedFileSoapIn" />
+      <wsdl:output message="tns:DeleteTempUploadedFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalIdForUser">
+      <wsdl:input message="tns:GetPortalIdForUserSoapIn" />
+      <wsdl:output message="tns:GetPortalIdForUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalIdForUrl">
+      <wsdl:input message="tns:GetPortalIdForUrlSoapIn" />
+      <wsdl:output message="tns:GetPortalIdForUrlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetConfigValue">
+      <wsdl:input message="tns:GetConfigValueSoapIn" />
+      <wsdl:output message="tns:GetConfigValueSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetConfigString">
+      <wsdl:input message="tns:GetConfigStringSoapIn" />
+      <wsdl:output message="tns:GetConfigStringSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DoesUserExist">
+      <wsdl:input message="tns:DoesUserExistSoapIn" />
+      <wsdl:output message="tns:DoesUserExistSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IsUserActive">
+      <wsdl:input message="tns:IsUserActiveSoapIn" />
+      <wsdl:output message="tns:IsUserActiveSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IsUserAdminOrHost">
+      <wsdl:input message="tns:IsUserAdminOrHostSoapIn" />
+      <wsdl:output message="tns:IsUserAdminOrHostSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalUsers">
+      <wsdl:input message="tns:GetPortalUsersSoapIn" />
+      <wsdl:output message="tns:GetPortalUsersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalName">
+      <wsdl:input message="tns:GetPortalNameSoapIn" />
+      <wsdl:output message="tns:GetPortalNameSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetApplicationUsers">
+      <wsdl:input message="tns:GetApplicationUsersSoapIn" />
+      <wsdl:output message="tns:GetApplicationUsersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserLibraries">
+      <wsdl:input message="tns:GetUserLibrariesSoapIn" />
+      <wsdl:output message="tns:GetUserLibrariesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUserLibraries">
+      <wsdl:input message="tns:GetAllUserLibrariesSoapIn" />
+      <wsdl:output message="tns:GetAllUserLibrariesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserId">
+      <wsdl:input message="tns:GetUserIdSoapIn" />
+      <wsdl:output message="tns:GetUserIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterNewUser">
+      <wsdl:input message="tns:RegisterNewUserSoapIn" />
+      <wsdl:output message="tns:RegisterNewUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserGroups">
+      <wsdl:input message="tns:GetUserGroupsSoapIn" />
+      <wsdl:output message="tns:GetUserGroupsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFirstUserGroup">
+      <wsdl:input message="tns:GetFirstUserGroupSoapIn" />
+      <wsdl:output message="tns:GetFirstUserGroupSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MoveTempDocumentsToUserLibrary">
+      <wsdl:input message="tns:MoveTempDocumentsToUserLibrarySoapIn" />
+      <wsdl:output message="tns:MoveTempDocumentsToUserLibrarySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MoveTempDocumentsToSpecificLibrary">
+      <wsdl:input message="tns:MoveTempDocumentsToSpecificLibrarySoapIn" />
+      <wsdl:output message="tns:MoveTempDocumentsToSpecificLibrarySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MoveTempDocumentsToHiddenLibrary">
+      <wsdl:input message="tns:MoveTempDocumentsToHiddenLibrarySoapIn" />
+      <wsdl:output message="tns:MoveTempDocumentsToHiddenLibrarySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MoveTempDocumentsToProductsPage">
+      <wsdl:input message="tns:MoveTempDocumentsToProductsPageSoapIn" />
+      <wsdl:output message="tns:MoveTempDocumentsToProductsPageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetToken">
+      <wsdl:input message="tns:GetTokenSoapIn" />
+      <wsdl:output message="tns:GetTokenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UrlEncode">
+      <wsdl:input message="tns:UrlEncodeSoapIn" />
+      <wsdl:output message="tns:UrlEncodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthenticationType">
+      <wsdl:input message="tns:GetAuthenticationTypeSoapIn" />
+      <wsdl:output message="tns:GetAuthenticationTypeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckDomainName">
+      <wsdl:input message="tns:CheckDomainNameSoapIn" />
+      <wsdl:output message="tns:CheckDomainNameSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDriverMessage">
+      <wsdl:input message="tns:GetDriverMessageSoapIn" />
+      <wsdl:output message="tns:GetDriverMessageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomDocumentOptionName">
+      <wsdl:input message="tns:GetCustomDocumentOptionNameSoapIn" />
+      <wsdl:output message="tns:GetCustomDocumentOptionNameSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetCustomDocumentOptionName">
+      <wsdl:input message="tns:SetCustomDocumentOptionNameSoapIn" />
+      <wsdl:output message="tns:SetCustomDocumentOptionNameSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentOptionTitle">
+      <wsdl:input message="tns:GetDocumentOptionTitleSoapIn" />
+      <wsdl:output message="tns:GetDocumentOptionTitleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetDocumentOptionTitle">
+      <wsdl:input message="tns:SetDocumentOptionTitleSoapIn" />
+      <wsdl:output message="tns:SetDocumentOptionTitleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductImagesList">
+      <wsdl:input message="tns:GetProductImagesListSoapIn" />
+      <wsdl:output message="tns:GetProductImagesListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductImage">
+      <wsdl:input message="tns:GetProductImageSoapIn" />
+      <wsdl:output message="tns:GetProductImageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddProductImage">
+      <wsdl:input message="tns:AddProductImageSoapIn" />
+      <wsdl:output message="tns:AddProductImageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductsUsingImage">
+      <wsdl:input message="tns:GetProductsUsingImageSoapIn" />
+      <wsdl:output message="tns:GetProductsUsingImageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteProductImage">
+      <wsdl:input message="tns:DeleteProductImageSoapIn" />
+      <wsdl:output message="tns:DeleteProductImageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllProducts">
+      <wsdl:input message="tns:GetAllProductsSoapIn" />
+      <wsdl:output message="tns:GetAllProductsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductControls">
+      <wsdl:input message="tns:GetProductControlsSoapIn" />
+      <wsdl:output message="tns:GetProductControlsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPaperGridItems">
+      <wsdl:input message="tns:GetPaperGridItemsSoapIn" />
+      <wsdl:output message="tns:GetPaperGridItemsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetControlItemsUsingElement">
+      <wsdl:input message="tns:GetControlItemsUsingElementSoapIn" />
+      <wsdl:output message="tns:GetControlItemsUsingElementSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProduct">
+      <wsdl:input message="tns:GetProductSoapIn" />
+      <wsdl:output message="tns:GetProductSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductRules">
+      <wsdl:input message="tns:GetProductRulesSoapIn" />
+      <wsdl:output message="tns:GetProductRulesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDeliveryForm">
+      <wsdl:input message="tns:GetDeliveryFormSoapIn" />
+      <wsdl:output message="tns:GetDeliveryFormSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAddressForm">
+      <wsdl:input message="tns:GetAddressFormSoapIn" />
+      <wsdl:output message="tns:GetAddressFormSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetElements">
+      <wsdl:input message="tns:GetElementsSoapIn" />
+      <wsdl:output message="tns:GetElementsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetElementControls">
+      <wsdl:input message="tns:GetElementControlsSoapIn" />
+      <wsdl:output message="tns:GetElementControlsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetControlItem">
+      <wsdl:input message="tns:GetControlItemSoapIn" />
+      <wsdl:output message="tns:GetControlItemSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllocatedProductControlItems">
+      <wsdl:input message="tns:GetAllocatedProductControlItemsSoapIn" />
+      <wsdl:output message="tns:GetAllocatedProductControlItemsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalProductControlItems">
+      <wsdl:input message="tns:GetPortalProductControlItemsSoapIn" />
+      <wsdl:output message="tns:GetPortalProductControlItemsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPortals">
+      <wsdl:input message="tns:GetAllPortalsSoapIn" />
+      <wsdl:output message="tns:GetAllPortalsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllocatedElements">
+      <wsdl:input message="tns:GetAllocatedElementsSoapIn" />
+      <wsdl:output message="tns:GetAllocatedElementsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateControl">
+      <wsdl:input message="tns:UpdateControlSoapIn" />
+      <wsdl:output message="tns:UpdateControlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveAllItemsFromControl">
+      <wsdl:input message="tns:RemoveAllItemsFromControlSoapIn" />
+      <wsdl:output message="tns:RemoveAllItemsFromControlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddControlItemToControl">
+      <wsdl:input message="tns:AddControlItemToControlSoapIn" />
+      <wsdl:output message="tns:AddControlItemToControlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddControl">
+      <wsdl:input message="tns:AddControlSoapIn" />
+      <wsdl:output message="tns:AddControlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateElementControl">
+      <wsdl:input message="tns:UpdateElementControlSoapIn" />
+      <wsdl:output message="tns:UpdateElementControlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveAllElementsFromElementControl">
+      <wsdl:input message="tns:RemoveAllElementsFromElementControlSoapIn" />
+      <wsdl:output message="tns:RemoveAllElementsFromElementControlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddElementToControl">
+      <wsdl:input message="tns:AddElementToControlSoapIn" />
+      <wsdl:output message="tns:AddElementToControlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddElementControl">
+      <wsdl:input message="tns:AddElementControlSoapIn" />
+      <wsdl:output message="tns:AddElementControlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAddressForms">
+      <wsdl:input message="tns:GetAllAddressFormsSoapIn" />
+      <wsdl:output message="tns:GetAllAddressFormsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllDeliveryForms">
+      <wsdl:input message="tns:GetAllDeliveryFormsSoapIn" />
+      <wsdl:output message="tns:GetAllDeliveryFormsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentsInUserLibrary">
+      <wsdl:input message="tns:GetDocumentsInUserLibrarySoapIn" />
+      <wsdl:output message="tns:GetDocumentsInUserLibrarySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="HideDocumentInLibrary">
+      <wsdl:input message="tns:HideDocumentInLibrarySoapIn" />
+      <wsdl:output message="tns:HideDocumentInLibrarySoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SkylineWebServiceSoap" type="tns:SkylineWebServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetVersionNumber">
+      <soap:operation soapAction="http://tempuri.org/GetVersionNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFontList">
+      <soap:operation soapAction="http://tempuri.org/GetFontList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTableOfTestValues2">
+      <soap:operation soapAction="http://tempuri.org/GetTableOfTestValues2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteElementAndAllRelatedControlItemsAndPrices">
+      <soap:operation soapAction="http://tempuri.org/DeleteElementAndAllRelatedControlItemsAndPrices" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateElement">
+      <soap:operation soapAction="http://tempuri.org/UpdateElement" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadFile">
+      <soap:operation soapAction="http://tempuri.org/UploadFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTempUploadedFile">
+      <soap:operation soapAction="http://tempuri.org/DeleteTempUploadedFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalIdForUser">
+      <soap:operation soapAction="http://tempuri.org/GetPortalIdForUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalIdForUrl">
+      <soap:operation soapAction="http://tempuri.org/GetPortalIdForUrl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetConfigValue">
+      <soap:operation soapAction="http://tempuri.org/GetConfigValue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetConfigString">
+      <soap:operation soapAction="http://tempuri.org/GetConfigString" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DoesUserExist">
+      <soap:operation soapAction="http://tempuri.org/DoesUserExist" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsUserActive">
+      <soap:operation soapAction="http://tempuri.org/IsUserActive" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsUserAdminOrHost">
+      <soap:operation soapAction="http://tempuri.org/IsUserAdminOrHost" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalUsers">
+      <soap:operation soapAction="http://tempuri.org/GetPortalUsers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalName">
+      <soap:operation soapAction="http://tempuri.org/GetPortalName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetApplicationUsers">
+      <soap:operation soapAction="http://tempuri.org/GetApplicationUsers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserLibraries">
+      <soap:operation soapAction="http://tempuri.org/GetUserLibraries" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUserLibraries">
+      <soap:operation soapAction="http://tempuri.org/GetAllUserLibraries" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserId">
+      <soap:operation soapAction="http://tempuri.org/GetUserId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterNewUser">
+      <soap:operation soapAction="http://tempuri.org/RegisterNewUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserGroups">
+      <soap:operation soapAction="http://tempuri.org/GetUserGroups" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFirstUserGroup">
+      <soap:operation soapAction="http://tempuri.org/GetFirstUserGroup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MoveTempDocumentsToUserLibrary">
+      <soap:operation soapAction="http://tempuri.org/MoveTempDocumentsToUserLibrary" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MoveTempDocumentsToSpecificLibrary">
+      <soap:operation soapAction="http://tempuri.org/MoveTempDocumentsToSpecificLibrary" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MoveTempDocumentsToHiddenLibrary">
+      <soap:operation soapAction="http://tempuri.org/MoveTempDocumentsToHiddenLibrary" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MoveTempDocumentsToProductsPage">
+      <soap:operation soapAction="http://tempuri.org/MoveTempDocumentsToProductsPage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetToken">
+      <soap:operation soapAction="http://tempuri.org/GetToken" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UrlEncode">
+      <soap:operation soapAction="http://tempuri.org/UrlEncode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthenticationType">
+      <soap:operation soapAction="http://tempuri.org/GetAuthenticationType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckDomainName">
+      <soap:operation soapAction="http://tempuri.org/CheckDomainName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDriverMessage">
+      <soap:operation soapAction="http://tempuri.org/GetDriverMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomDocumentOptionName">
+      <soap:operation soapAction="http://tempuri.org/GetCustomDocumentOptionName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCustomDocumentOptionName">
+      <soap:operation soapAction="http://tempuri.org/SetCustomDocumentOptionName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentOptionTitle">
+      <soap:operation soapAction="http://tempuri.org/GetDocumentOptionTitle" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetDocumentOptionTitle">
+      <soap:operation soapAction="http://tempuri.org/SetDocumentOptionTitle" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductImagesList">
+      <soap:operation soapAction="http://tempuri.org/GetProductImagesList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductImage">
+      <soap:operation soapAction="http://tempuri.org/GetProductImage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddProductImage">
+      <soap:operation soapAction="http://tempuri.org/AddProductImage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductsUsingImage">
+      <soap:operation soapAction="http://tempuri.org/GetProductsUsingImage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteProductImage">
+      <soap:operation soapAction="http://tempuri.org/DeleteProductImage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllProducts">
+      <soap:operation soapAction="http://tempuri.org/GetAllProducts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductControls">
+      <soap:operation soapAction="http://tempuri.org/GetProductControls" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPaperGridItems">
+      <soap:operation soapAction="http://tempuri.org/GetPaperGridItems" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetControlItemsUsingElement">
+      <soap:operation soapAction="http://tempuri.org/GetControlItemsUsingElement" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProduct">
+      <soap:operation soapAction="http://tempuri.org/GetProduct" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductRules">
+      <soap:operation soapAction="http://tempuri.org/GetProductRules" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDeliveryForm">
+      <soap:operation soapAction="http://tempuri.org/GetDeliveryForm" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAddressForm">
+      <soap:operation soapAction="http://tempuri.org/GetAddressForm" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetElements">
+      <soap:operation soapAction="http://tempuri.org/GetElements" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetElementControls">
+      <soap:operation soapAction="http://tempuri.org/GetElementControls" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetControlItem">
+      <soap:operation soapAction="http://tempuri.org/GetControlItem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllocatedProductControlItems">
+      <soap:operation soapAction="http://tempuri.org/GetAllocatedProductControlItems" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalProductControlItems">
+      <soap:operation soapAction="http://tempuri.org/GetPortalProductControlItems" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPortals">
+      <soap:operation soapAction="http://tempuri.org/GetAllPortals" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllocatedElements">
+      <soap:operation soapAction="http://tempuri.org/GetAllocatedElements" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateControl">
+      <soap:operation soapAction="http://tempuri.org/UpdateControl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveAllItemsFromControl">
+      <soap:operation soapAction="http://tempuri.org/RemoveAllItemsFromControl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddControlItemToControl">
+      <soap:operation soapAction="http://tempuri.org/AddControlItemToControl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddControl">
+      <soap:operation soapAction="http://tempuri.org/AddControl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateElementControl">
+      <soap:operation soapAction="http://tempuri.org/UpdateElementControl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveAllElementsFromElementControl">
+      <soap:operation soapAction="http://tempuri.org/RemoveAllElementsFromElementControl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddElementToControl">
+      <soap:operation soapAction="http://tempuri.org/AddElementToControl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddElementControl">
+      <soap:operation soapAction="http://tempuri.org/AddElementControl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAddressForms">
+      <soap:operation soapAction="http://tempuri.org/GetAllAddressForms" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllDeliveryForms">
+      <soap:operation soapAction="http://tempuri.org/GetAllDeliveryForms" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentsInUserLibrary">
+      <soap:operation soapAction="http://tempuri.org/GetDocumentsInUserLibrary" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HideDocumentInLibrary">
+      <soap:operation soapAction="http://tempuri.org/HideDocumentInLibrary" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SkylineWebServiceSoap12" type="tns:SkylineWebServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetVersionNumber">
+      <soap12:operation soapAction="http://tempuri.org/GetVersionNumber" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFontList">
+      <soap12:operation soapAction="http://tempuri.org/GetFontList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTableOfTestValues2">
+      <soap12:operation soapAction="http://tempuri.org/GetTableOfTestValues2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteElementAndAllRelatedControlItemsAndPrices">
+      <soap12:operation soapAction="http://tempuri.org/DeleteElementAndAllRelatedControlItemsAndPrices" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateElement">
+      <soap12:operation soapAction="http://tempuri.org/UpdateElement" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadFile">
+      <soap12:operation soapAction="http://tempuri.org/UploadFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTempUploadedFile">
+      <soap12:operation soapAction="http://tempuri.org/DeleteTempUploadedFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalIdForUser">
+      <soap12:operation soapAction="http://tempuri.org/GetPortalIdForUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalIdForUrl">
+      <soap12:operation soapAction="http://tempuri.org/GetPortalIdForUrl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetConfigValue">
+      <soap12:operation soapAction="http://tempuri.org/GetConfigValue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetConfigString">
+      <soap12:operation soapAction="http://tempuri.org/GetConfigString" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DoesUserExist">
+      <soap12:operation soapAction="http://tempuri.org/DoesUserExist" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsUserActive">
+      <soap12:operation soapAction="http://tempuri.org/IsUserActive" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsUserAdminOrHost">
+      <soap12:operation soapAction="http://tempuri.org/IsUserAdminOrHost" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalUsers">
+      <soap12:operation soapAction="http://tempuri.org/GetPortalUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalName">
+      <soap12:operation soapAction="http://tempuri.org/GetPortalName" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetApplicationUsers">
+      <soap12:operation soapAction="http://tempuri.org/GetApplicationUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserLibraries">
+      <soap12:operation soapAction="http://tempuri.org/GetUserLibraries" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUserLibraries">
+      <soap12:operation soapAction="http://tempuri.org/GetAllUserLibraries" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserId">
+      <soap12:operation soapAction="http://tempuri.org/GetUserId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterNewUser">
+      <soap12:operation soapAction="http://tempuri.org/RegisterNewUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserGroups">
+      <soap12:operation soapAction="http://tempuri.org/GetUserGroups" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFirstUserGroup">
+      <soap12:operation soapAction="http://tempuri.org/GetFirstUserGroup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MoveTempDocumentsToUserLibrary">
+      <soap12:operation soapAction="http://tempuri.org/MoveTempDocumentsToUserLibrary" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MoveTempDocumentsToSpecificLibrary">
+      <soap12:operation soapAction="http://tempuri.org/MoveTempDocumentsToSpecificLibrary" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MoveTempDocumentsToHiddenLibrary">
+      <soap12:operation soapAction="http://tempuri.org/MoveTempDocumentsToHiddenLibrary" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MoveTempDocumentsToProductsPage">
+      <soap12:operation soapAction="http://tempuri.org/MoveTempDocumentsToProductsPage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetToken">
+      <soap12:operation soapAction="http://tempuri.org/GetToken" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UrlEncode">
+      <soap12:operation soapAction="http://tempuri.org/UrlEncode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthenticationType">
+      <soap12:operation soapAction="http://tempuri.org/GetAuthenticationType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckDomainName">
+      <soap12:operation soapAction="http://tempuri.org/CheckDomainName" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDriverMessage">
+      <soap12:operation soapAction="http://tempuri.org/GetDriverMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomDocumentOptionName">
+      <soap12:operation soapAction="http://tempuri.org/GetCustomDocumentOptionName" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCustomDocumentOptionName">
+      <soap12:operation soapAction="http://tempuri.org/SetCustomDocumentOptionName" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentOptionTitle">
+      <soap12:operation soapAction="http://tempuri.org/GetDocumentOptionTitle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetDocumentOptionTitle">
+      <soap12:operation soapAction="http://tempuri.org/SetDocumentOptionTitle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductImagesList">
+      <soap12:operation soapAction="http://tempuri.org/GetProductImagesList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductImage">
+      <soap12:operation soapAction="http://tempuri.org/GetProductImage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddProductImage">
+      <soap12:operation soapAction="http://tempuri.org/AddProductImage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductsUsingImage">
+      <soap12:operation soapAction="http://tempuri.org/GetProductsUsingImage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteProductImage">
+      <soap12:operation soapAction="http://tempuri.org/DeleteProductImage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllProducts">
+      <soap12:operation soapAction="http://tempuri.org/GetAllProducts" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductControls">
+      <soap12:operation soapAction="http://tempuri.org/GetProductControls" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPaperGridItems">
+      <soap12:operation soapAction="http://tempuri.org/GetPaperGridItems" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetControlItemsUsingElement">
+      <soap12:operation soapAction="http://tempuri.org/GetControlItemsUsingElement" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProduct">
+      <soap12:operation soapAction="http://tempuri.org/GetProduct" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductRules">
+      <soap12:operation soapAction="http://tempuri.org/GetProductRules" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDeliveryForm">
+      <soap12:operation soapAction="http://tempuri.org/GetDeliveryForm" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAddressForm">
+      <soap12:operation soapAction="http://tempuri.org/GetAddressForm" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetElements">
+      <soap12:operation soapAction="http://tempuri.org/GetElements" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetElementControls">
+      <soap12:operation soapAction="http://tempuri.org/GetElementControls" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetControlItem">
+      <soap12:operation soapAction="http://tempuri.org/GetControlItem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllocatedProductControlItems">
+      <soap12:operation soapAction="http://tempuri.org/GetAllocatedProductControlItems" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPortalProductControlItems">
+      <soap12:operation soapAction="http://tempuri.org/GetPortalProductControlItems" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPortals">
+      <soap12:operation soapAction="http://tempuri.org/GetAllPortals" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllocatedElements">
+      <soap12:operation soapAction="http://tempuri.org/GetAllocatedElements" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateControl">
+      <soap12:operation soapAction="http://tempuri.org/UpdateControl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveAllItemsFromControl">
+      <soap12:operation soapAction="http://tempuri.org/RemoveAllItemsFromControl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddControlItemToControl">
+      <soap12:operation soapAction="http://tempuri.org/AddControlItemToControl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddControl">
+      <soap12:operation soapAction="http://tempuri.org/AddControl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateElementControl">
+      <soap12:operation soapAction="http://tempuri.org/UpdateElementControl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveAllElementsFromElementControl">
+      <soap12:operation soapAction="http://tempuri.org/RemoveAllElementsFromElementControl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddElementToControl">
+      <soap12:operation soapAction="http://tempuri.org/AddElementToControl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddElementControl">
+      <soap12:operation soapAction="http://tempuri.org/AddElementControl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAddressForms">
+      <soap12:operation soapAction="http://tempuri.org/GetAllAddressForms" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllDeliveryForms">
+      <soap12:operation soapAction="http://tempuri.org/GetAllDeliveryForms" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentsInUserLibrary">
+      <soap12:operation soapAction="http://tempuri.org/GetDocumentsInUserLibrary" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HideDocumentInLibrary">
+      <soap12:operation soapAction="http://tempuri.org/HideDocumentInLibrary" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SkylineWebService">
+    <wsdl:port name="SkylineWebServiceSoap" binding="tns:SkylineWebServiceSoap">
+      <soap:address location="http://localhost/WebServices/SkylineWebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SkylineWebServiceSoap12" binding="tns:SkylineWebServiceSoap12">
+      <soap12:address location="http://localhost/WebServices/SkylineWebService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

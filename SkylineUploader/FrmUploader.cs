@@ -151,29 +151,37 @@ namespace SkylineUploader
                     using (UploaderDbContext context = new UploaderDbContext())
                     {
                         ServiceSettings serviceSettings = (from s in context.ServiceSettings select s).FirstOrDefault();
+                        if (serviceSettings == null)
+                        {
+                            uxLabelStatus.Text = DateTime.Now.ToString("T") +" The Skyline Uploader Service status is not set";
+                        }
+                        else
+                        {
+                            if (serviceSettings.Running && !string.IsNullOrEmpty(serviceSettings.ServiceMessage))
+                            {
+                                uxLabelStatus.Text = DateTime.Now.ToString("T") +" "+ serviceSettings.ServiceMessage;
+                            }
+
+                            if (!serviceSettings.Running )
+                            {
+                                uxLabelStatus.Text = DateTime.Now.ToString("T") +" The Skyline Uploader Service is starting up";
+                            }
+
+                            if (serviceSettings.Uploading)
+                            {
+                                uxProgressBar.Visibility = ElementVisibility.Visible;
+                                uxProgressBar.Maximum = serviceSettings.ProgressMaximum;
+                                uxProgressBar.Value1 = serviceSettings.Progress;
+                            }
+
+                            if (serviceSettings.Transferring)
+                            {
+                                UxWaitingBar.Visibility = ElementVisibility.Visible;
+                                UxWaitingBar.StartWaiting();
+                            }
+                        }
                 
-                        if (serviceSettings != null && serviceSettings.Running && !string.IsNullOrEmpty(serviceSettings.ServiceMessage))
-                        {
-                            uxLabelStatus.Text = DateTime.Now.ToString("T") +" "+ serviceSettings.ServiceMessage;
-                        }
-
-                        if (serviceSettings != null && !serviceSettings.Running )
-                        {
-                            uxLabelStatus.Text = DateTime.Now.ToString("T") +" The Skyline Uploader Service is not running";
-                        }
-
-                        if (serviceSettings.Uploading)
-                        {
-                            uxProgressBar.Visibility = ElementVisibility.Visible;
-                            uxProgressBar.Maximum = serviceSettings.ProgressMaximum;
-                            uxProgressBar.Value1 = serviceSettings.Progress;
-                        }
-
-                        if (serviceSettings.Transferring)
-                        {
-                            UxWaitingBar.Visibility = ElementVisibility.Visible;
-                            UxWaitingBar.StartWaiting();
-                        }
+                       
                     }
                     break;
                 case "Stopped":
@@ -199,7 +207,6 @@ namespace SkylineUploader
 
         private bool DoesServiceExist(string serviceName, string machineName)
         {
-            return true;
             ServiceController[] services = ServiceController.GetServices(machineName);
             var service = services.FirstOrDefault(s => s.ServiceName == serviceName);
             return service != null;
@@ -207,8 +214,7 @@ namespace SkylineUploader
 
         private string GetServiceStatus(string serviceName, string machineName)
         {
-            return "Running";
-            ServiceController sc = new ServiceController(serviceName);
+           ServiceController sc = new ServiceController(serviceName);
 
             switch (sc.Status)
             {

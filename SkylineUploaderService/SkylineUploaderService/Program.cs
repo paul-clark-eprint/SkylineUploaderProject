@@ -12,6 +12,11 @@ namespace SkylineUploaderService
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        ///
+        
+        public static SkylineUploader.PricingService.PricingService PricingService;
+        public static SkylineUploader.SkylineWebService.SkylineWebService SkylineService;
+
         static void Main()
         {
             ServiceBase[] ServicesToRun;

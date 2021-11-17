@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using SkylineUploaderDomain.DataModel.Enums;
 
 namespace SkylineUploaderDomain.DataModel.Classes
 {

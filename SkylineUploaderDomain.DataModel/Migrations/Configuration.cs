@@ -9,8 +9,7 @@
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
-            AutomaticMigrationDataLossAllowed = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(SkylineUploaderDomain.DataModel.UploaderDbContext context)

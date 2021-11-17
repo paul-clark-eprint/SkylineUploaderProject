@@ -18,7 +18,7 @@ using SkylineUploader.Classes;
 using SkylineUploader.SkylineWebService;
 using SkylineUploaderDomain.DataModel;
 using SkylineUploaderDomain.DataModel.Classes;
-using Debug = SkylineUploader.Debug;
+//using Debug = SkylineUploader.Debug;
 using ServiceSettings = SkylineUploaderDomain.DataModel.Classes.ServiceSettings;
 
 namespace ConsoleApp
