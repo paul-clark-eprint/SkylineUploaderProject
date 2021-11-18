@@ -63,7 +63,7 @@ namespace SkylineUploader
             {
                 ServiceSettings serviceSettings = (from s in context.ServiceSettings select s).FirstOrDefault() ?? new ServiceSettings();
 
-                serviceSettings.ServiceMessage = "Skyline Uploader Service not found";
+                serviceSettings.ServiceMessage = string.Empty;
                 serviceSettings.LastUpdate = DateTime.Now;
                 serviceSettings.Progress = 0;
                 serviceSettings.Running = false;
@@ -137,14 +137,14 @@ namespace SkylineUploader
 
             var pcName = Environment.MachineName;
 
-            if (!DoesServiceExist("Skyline Uploader", pcName))
+            if (!DoesServiceExist("SkylineUploaderService", pcName))
             {
                 uxLabelStatus.Image = Properties.Resources.error_warning;
-                uxLabelStatus.Text = "Skyline Uploader service not found";
+                uxLabelStatus.Text = "Skyline Uploader Service not found";
                 return;
             }
 
-            string serviceStatus = GetServiceStatus("Skyline Uploader", pcName);
+            string serviceStatus = GetServiceStatus("SkylineUploaderService", pcName);
             switch (serviceStatus)
             {
                 case "Running":
@@ -160,6 +160,11 @@ namespace SkylineUploader
                             if (serviceSettings.Running && !string.IsNullOrEmpty(serviceSettings.ServiceMessage))
                             {
                                 uxLabelStatus.Text = DateTime.Now.ToString("T") +" "+ serviceSettings.ServiceMessage;
+                            }
+
+                            if (serviceSettings.Running && string.IsNullOrEmpty(serviceSettings.ServiceMessage))
+                            {
+                                uxLabelStatus.Text = DateTime.Now.ToString("T") + " Skyline Uploader Service Running";
                             }
 
                             if (!serviceSettings.Running )

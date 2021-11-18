@@ -134,6 +134,7 @@ namespace SkylineUploader
             this.uxLabelStatus.Name = "uxLabelStatus";
             this.radStatusStrip1.SetSpring(this.uxLabelStatus, false);
             this.uxLabelStatus.Text = "Starting up";
+            this.uxLabelStatus.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.uxLabelStatus.TextWrap = true;
             // 
             // uxLabelSpacer
