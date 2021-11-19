@@ -154,22 +154,26 @@ namespace SkylineUploader
                         if (serviceSettings == null)
                         {
                             uxLabelStatus.Text = DateTime.Now.ToString("T") +" The Skyline Uploader Service status is not set";
+                            uxLabelStatus.Image = Properties.Resources.error_warning;
                         }
                         else
                         {
                             if (serviceSettings.Running && !string.IsNullOrEmpty(serviceSettings.ServiceMessage))
                             {
                                 uxLabelStatus.Text = DateTime.Now.ToString("T") +" "+ serviceSettings.ServiceMessage;
+                                uxLabelStatus.Image = Properties.Resources.clock_16;
                             }
 
                             if (serviceSettings.Running && string.IsNullOrEmpty(serviceSettings.ServiceMessage))
                             {
                                 uxLabelStatus.Text = DateTime.Now.ToString("T") + " Skyline Uploader Service Running";
+                                uxLabelStatus.Image = Properties.Resources.clock_16;
                             }
 
                             if (!serviceSettings.Running )
                             {
                                 uxLabelStatus.Text = DateTime.Now.ToString("T") +" The Skyline Uploader Service is starting up";
+                                uxLabelStatus.Image = Properties.Resources.clock_16;
                             }
 
                             if (serviceSettings.Uploading)
@@ -594,21 +598,6 @@ namespace SkylineUploader
                 timer1.Enabled = true;
                 return;
             }
-
-            //if (!GetGridData())
-            //{
-            //    MessageBox.Show("There was a problem getting the data for the grid. Closing application", "Error getting data",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    Debug.Error("Error connecting to the database. Closing application");
-            //    Environment.Exit(0);
-
-            //}
-
-            //if (selectedIndex > -1)
-            //{
-            //    uxGridViewFolders.CurrentRow = null;
-            //    uxGridViewFolders.Rows[selectedIndex].IsSelected = true;
-            //}
         }
 
         

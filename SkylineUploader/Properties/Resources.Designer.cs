@@ -63,6 +63,16 @@ namespace SkylineUploader.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap clock_16 {
+            get {
+                object obj = ResourceManager.GetObject("clock_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap cog_animated_16 {
             get {
                 object obj = ResourceManager.GetObject("cog_animated_16", resourceCulture);

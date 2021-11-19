@@ -101,6 +101,8 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web.Services" />
@@ -368,6 +370,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\clock-16.png" />
     <Content Include="SkylineUploader32.ico" />
     <None Include="Web References\SkylineService\Printstation.disco" />
     <None Include="Resources\gear-16.png" />
