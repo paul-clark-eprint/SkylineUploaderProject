@@ -24,7 +24,7 @@ using ServiceSettings = SkylineUploaderDomain.DataModel.Classes.ServiceSettings;
 namespace SkylineUploaderService
 {
     //https://docs.microsoft.com/en-us/dotnet/framework/windows-services/walkthrough-creating-a-windows-service-application-in-the-component-designer
-    
+
     public partial class SkylineUploaderService : ServiceBase
     {
         [DllImport("advapi32.dll", SetLastError = true)]
@@ -83,7 +83,7 @@ namespace SkylineUploaderService
 
         protected override void OnStart(string[] args)
         {
-            eventLog.WriteEntry("Starting Service "+ ServiceName,EventLogEntryType.Information);
+            eventLog.WriteEntry("Starting Service " + ServiceName, EventLogEntryType.Information);
 
             // Update the service state to Start Pending.
             ServiceStatus serviceStatus = new ServiceStatus();
@@ -95,7 +95,7 @@ namespace SkylineUploaderService
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
-            _connectionString =  GetConnectionString();
+            _connectionString = GetConnectionString();
             //eventLog.WriteEntry("_connectionString = "+ _connectionString);
 
             if (string.IsNullOrEmpty(_connectionString))
@@ -109,20 +109,20 @@ namespace SkylineUploaderService
                 var dataSource = builder["Data Source"].ToString();
                 if (string.IsNullOrEmpty(dataSource))
                 {
-                    eventLog.WriteEntry("The ConnectionString dataSource is empty",EventLogEntryType.Error);
+                    eventLog.WriteEntry("The ConnectionString dataSource is empty", EventLogEntryType.Error);
                     StopService();
                 }
             }
             catch (Exception ex)
             {
-                eventLog.WriteEntry("Unexpected error looking for the ConnectionString dataSource: "+ ex.Message,EventLogEntryType.Error);
+                eventLog.WriteEntry("Unexpected error looking for the ConnectionString dataSource: " + ex.Message, EventLogEntryType.Error);
                 StopService();
             }
 
-            eventLog.WriteEntry("InitialiseServiceSettings",EventLogEntryType.Information);
+            eventLog.WriteEntry("InitialiseServiceSettings", EventLogEntryType.Information);
             InitialiseServiceSettings();
 
-            eventLog.WriteEntry("Starting timer",EventLogEntryType.Information);
+            eventLog.WriteEntry("Starting timer", EventLogEntryType.Information);
 
             _timer = new System.Timers.Timer();
             _timer.Elapsed += new ElapsedEventHandler(TimerEvent);
@@ -134,38 +134,45 @@ namespace SkylineUploaderService
 
         private static void InitialiseServiceSettings()
         {
-            
-            using (UploaderDbContext context = new UploaderDbContext())
+            try
             {
-                context.Database.Connection.ConnectionString = _connectionString;
+                using (UploaderDbContext context = new UploaderDbContext())
+                {
+                    context.Database.Connection.ConnectionString = _connectionString;
 
-                var serviceSettings = (from ss in context.ServiceSettings select ss).FirstOrDefault();
-                if (serviceSettings == null)
-                {
-                    serviceSettings = new ServiceSettings();
-                    serviceSettings.ServiceMessage = string.Empty;
-                    serviceSettings.LastUpdate = DateTime.Now;
-                    serviceSettings.Running = true;
-                    context.ServiceSettings.Add(serviceSettings);
-                    context.SaveChanges();
+                    var serviceSettings = (from ss in context.ServiceSettings select ss).FirstOrDefault();
+                    if (serviceSettings == null)
+                    {
+                        serviceSettings = new ServiceSettings();
+                        serviceSettings.ServiceMessage = string.Empty;
+                        serviceSettings.LastUpdate = DateTime.Now;
+                        serviceSettings.Running = true;
+                        context.ServiceSettings.Add(serviceSettings);
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        serviceSettings.ServiceMessage = string.Empty;
+                        serviceSettings.LastUpdate = DateTime.Now;
+                        serviceSettings.Running = true;
+                        context.SaveChanges();
+                    }
                 }
-                else
-                {
-                    serviceSettings.ServiceMessage = string.Empty;
-                    serviceSettings.LastUpdate = DateTime.Now;
-                    serviceSettings.Running = true;
-                    context.SaveChanges();
-                }
+            }
+            catch (Exception ex)
+            {
+                WriteEventLog("Unexpected error in InitialiseServiceSettings:" + ex, EventLogEntryType.Error);
+                CallStopService();
             }
         }
 
         private string GetConnectionString([CallerLineNumber] int lineNumber = 0)
         {
-            string connectionString= string.Empty;
+            string connectionString = string.Empty;
             try
             {
                 string settingsPath = Global.SettingsPath;
-                eventLog.WriteEntry("settingsPath = "+ settingsPath);
+                eventLog.WriteEntry("settingsPath = " + settingsPath);
 
                 if (settingsPath.StartsWith("*error*"))
                 {
@@ -188,26 +195,26 @@ namespace SkylineUploaderService
                 }
                 else
                 {
-                    eventLog.WriteEntry("settingsPath file not found. Closing",EventLogEntryType.Error);
+                    eventLog.WriteEntry("settingsPath file not found. Closing", EventLogEntryType.Error);
                 }
 
-                eventLog.WriteEntry("ConnectionString  '"+ connectionString+"'");
-                
+                eventLog.WriteEntry("ConnectionString  '" + connectionString + "'");
+
 
                 SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connectionString);
                 var dataSource = builder["Data Source"].ToString();
                 if (string.IsNullOrEmpty(dataSource))
                 {
-                    eventLog.WriteEntry("Data Source not defined in ConnectionString. Shutting down",EventLogEntryType.Error,lineNumber);
+                    eventLog.WriteEntry("Data Source not defined in ConnectionString. Shutting down", EventLogEntryType.Error, lineNumber);
                     StopService();
                 }
-                eventLog.WriteEntry("Data Source: "+ dataSource);
+                eventLog.WriteEntry("Data Source: " + dataSource);
                 return connectionString;
             }
             catch (Exception ex)
             {
-                eventLog.WriteEntry("Unexpected error in GetConnectionStringFromRegistry(). Error = "+ex.Message,EventLogEntryType.Error,lineNumber);
-                eventLog.WriteEntry("ConnectionString = "+ connectionString,EventLogEntryType.Error,lineNumber);
+                eventLog.WriteEntry("Unexpected error in GetConnectionStringFromRegistry(). Error = " + ex.Message, EventLogEntryType.Error, lineNumber);
+                eventLog.WriteEntry("ConnectionString = " + connectionString, EventLogEntryType.Error, lineNumber);
                 StopService();
             }
 
@@ -216,18 +223,18 @@ namespace SkylineUploaderService
 
         private void StopService()
         {
-            eventLog.WriteEntry("Stopping service "+ ServiceName,EventLogEntryType.Error);
-            
-            ServiceController sc= new ServiceController(ServiceName);
+            eventLog.WriteEntry("Stopping service " + ServiceName, EventLogEntryType.Error);
+
+            ServiceController sc = new ServiceController(ServiceName);
             sc.Stop();
         }
 
         private static void CallStopService()
         {
             var serviceName = new ServiceBase().ServiceName;
-            WriteEventLog("Stopping service "+ serviceName,EventLogEntryType.Error);
-            
-            ServiceController sc= new ServiceController(serviceName);
+            WriteEventLog("Stopping service " + serviceName, EventLogEntryType.Error);
+
+            ServiceController sc = new ServiceController(serviceName);
             sc.Stop();
         }
 
@@ -251,7 +258,7 @@ namespace SkylineUploaderService
             _timer.Stop();
 
             _folderData = GetFolderData();
-            
+
 
             if (!_folderData.Any())
             {
@@ -268,7 +275,7 @@ namespace SkylineUploaderService
             {
                 if (profile.InEditMode)
                 {
-                    WriteEventLog("Profile " + profile.FolderName + " is in edit mode. Skipping it",EventLogEntryType.Warning);
+                    WriteEventLog("Profile " + profile.FolderName + " is in edit mode. Skipping it", EventLogEntryType.Warning);
                     SetFolderStatus("Edit Mode", profile.FolderId);
                     continue;
                 }
@@ -281,7 +288,7 @@ namespace SkylineUploaderService
 
                 if (!Directory.Exists(sourceFolder))
                 {
-                    WriteEventLog("profile Source Folder does not exist: '" + sourceFolder + "'. Skipping profile",EventLogEntryType.Error);
+                    WriteEventLog("profile Source Folder does not exist: '" + sourceFolder + "'. Skipping profile", EventLogEntryType.Error);
                     continue;
                 }
 
@@ -346,7 +353,7 @@ namespace SkylineUploaderService
                         {
                             if (FileLocked(file))
                             {
-                                WriteEventLog("File " + file.FullName + " is locked. Skipping this file",EventLogEntryType.Warning);
+                                WriteEventLog("File " + file.FullName + " is locked. Skipping this file", EventLogEntryType.Warning);
                                 fileIndex++;
                                 continue;
                             }
@@ -362,7 +369,7 @@ namespace SkylineUploaderService
                         }
 
                         var fileName = files[oldestIndex].Name;
-                        WriteEventLog("Uploading " + fileName,EventLogEntryType.Information,101);
+                        WriteEventLog("Uploading " + fileName, EventLogEntryType.Information, 101);
 
                         Webcalls.UploadParams uploadParams = new Webcalls.UploadParams();
                         uploadParams.UploadUrl = portalUrl;
@@ -379,19 +386,19 @@ namespace SkylineUploaderService
                         bool uploadedOk = UploadDocument(uploadParams);
                         if (uploadedOk)
                         {
-                            WriteEventLog(fileName + " uploaded OK",EventLogEntryType.Information,102);
+                            WriteEventLog(fileName + " uploaded OK", EventLogEntryType.Information, 102);
                             SetServiceMessage(fileName + " uploaded OK");
                         }
                         else
                         {
-                            WriteEventLog("There was a problem uploading " + fileName,EventLogEntryType.Error);
+                            WriteEventLog("There was a problem uploading " + fileName, EventLogEntryType.Error);
                             SetServiceMessage("There was a problem uploading " + fileName);
                         }
 
                         if (profile.DeleteAfterUpload)
                         {
                             var filePath = Path.Combine(profile.SourceFolder, fileName);
-                            WriteEventLog("DeleteAfterUpload: Deleting file " + filePath,EventLogEntryType.Information,103);
+                            WriteEventLog("DeleteAfterUpload: Deleting file " + filePath, EventLogEntryType.Information, 103);
 
                             try
                             {
@@ -401,13 +408,13 @@ namespace SkylineUploaderService
                                 }
                                 else
                                 {
-                                    WriteEventLog("DeleteAfterUpload: File not found " + filePath,EventLogEntryType.Error,103);
+                                    WriteEventLog("DeleteAfterUpload: File not found " + filePath, EventLogEntryType.Error, 103);
                                 }
                             }
                             catch (Exception exception)
                             {
-                                WriteEventLog("DeleteAfterUpload: Error deleting file " + filePath,EventLogEntryType.Error,103);
-                                WriteEventLog(exception.ToString(),EventLogEntryType.Error,103);
+                                WriteEventLog("DeleteAfterUpload: Error deleting file " + filePath, EventLogEntryType.Error, 103);
+                                WriteEventLog(exception.ToString(), EventLogEntryType.Error, 103);
 
                                 CallStopService();
                             }
@@ -416,7 +423,7 @@ namespace SkylineUploaderService
                 }
                 else
                 {
-                    WriteEventLog("Unable to log in to the portal: '" + portalUrl + "'. Skipping profile",EventLogEntryType.Error);
+                    WriteEventLog("Unable to log in to the portal: '" + portalUrl + "'. Skipping profile", EventLogEntryType.Error);
                     continue;
                 }
             }
@@ -444,39 +451,39 @@ namespace SkylineUploaderService
                     WriteEventLog(totalFiles + " files to upload");
                     _lastFileUploaded = false;
                 }
-                
+
             }
             _timer.Start();
         }
 
         private static void WriteEventLog(string message, EventLogEntryType logType)
         {
-            using (EventLog eventLog = new EventLog()) 
+            using (EventLog eventLog = new EventLog())
             {
                 eventLog.Source = "Skyline Uploader Service";
                 eventLog.Log = "Skyline Uploader Service Log";
-                eventLog.WriteEntry(message, logType); 
+                eventLog.WriteEntry(message, logType);
             }
         }
 
-        private static void WriteEventLog(string message, EventLogEntryType logType,int eventId)
+        private static void WriteEventLog(string message, EventLogEntryType logType, int eventId)
         {
-            using (EventLog eventLog = new EventLog()) 
+            using (EventLog eventLog = new EventLog())
             {
                 eventLog.Source = "Skyline Uploader Service";
-                
+
                 eventLog.Log = "Skyline Uploader Service Log";
-                eventLog.WriteEntry(message, logType,eventId); 
+                eventLog.WriteEntry(message, logType, eventId);
             }
         }
 
         private static void WriteEventLog(string message)
         {
-            using (EventLog eventLog = new EventLog()) 
+            using (EventLog eventLog = new EventLog())
             {
                 eventLog.Source = "Skyline Uploader Service";
                 eventLog.Log = "Skyline Uploader Service Log";
-                eventLog.WriteEntry(message, EventLogEntryType.Information); 
+                eventLog.WriteEntry(message, EventLogEntryType.Information);
             }
         }
 
@@ -516,7 +523,7 @@ namespace SkylineUploaderService
             }
             catch (Exception e)
             {
-                WriteEventLog("Unexpected error in GetFolderData "+e,EventLogEntryType.Error);
+                WriteEventLog("Unexpected error in GetFolderData " + e, EventLogEntryType.Error);
             }
 
             return folderData;
@@ -786,23 +793,23 @@ namespace SkylineUploaderService
             return urlValid;
         }
 
-        
+
 
 
         private static bool DoLogin(string portalUrl, string username, string password)
         {
-            
+
             if (string.IsNullOrEmpty(portalUrl) || string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                WriteEventLog("DoLogin portalUrl, username or password empty",EventLogEntryType.Error);
+                WriteEventLog("DoLogin portalUrl, username or password empty", EventLogEntryType.Error);
                 return false;
             }
 
-            
+
 
             if (Program.PricingService == null)
             {
-                Program.PricingService = new  SkylineUploader.PricingService.PricingService();
+                Program.PricingService = new SkylineUploader.PricingService.PricingService();
             }
 
             if (Program.SkylineService == null)
@@ -833,7 +840,7 @@ namespace SkylineUploaderService
                 //portalId = Program.PricingService.GetPortalGuidFromUrl(rawUrl);
                 if (portalId == Guid.Empty)
                 {
-                    WriteEventLog("Error connecting to " + rawUrl,EventLogEntryType.Error);
+                    WriteEventLog("Error connecting to " + rawUrl, EventLogEntryType.Error);
                     _portalFound = false;
                     return false;
                 }
@@ -860,7 +867,7 @@ namespace SkylineUploaderService
                 if (ex.Status == WebExceptionStatus.NameResolutionFailure)
                 {
                     _portalFound = false;
-                    WriteEventLog("NameResolutionFailure connecting to " + portalUrl,EventLogEntryType.Error);
+                    WriteEventLog("NameResolutionFailure connecting to " + portalUrl, EventLogEntryType.Error);
                     return false;
                 }
 
@@ -868,7 +875,7 @@ namespace SkylineUploaderService
             catch (Exception e)
             {
                 _portalFound = false;
-                WriteEventLog("Unexpected error connecting to " + portalUrl +" error = "+e,EventLogEntryType.Error);
+                WriteEventLog("Unexpected error connecting to " + portalUrl + " error = " + e, EventLogEntryType.Error);
                 return false;
             }
 
