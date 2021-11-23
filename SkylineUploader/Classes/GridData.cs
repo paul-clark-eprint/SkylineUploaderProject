@@ -13,7 +13,7 @@ namespace SkylineUploader.Classes
         public string LibraryUsername { get; set; }
         public string LibraryName { get; set; }
         public Guid LibraryId { get; set; }
-        public Guid UserId { get; set; }
+        public Guid LibraryUserId { get; set; }
         public int Files { get; set; }
         public string Status { get; set; }
         public bool Enabled { get; set; }

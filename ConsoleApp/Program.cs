@@ -295,7 +295,7 @@ namespace ConsoleApp
                         uploadParams.Password = password;
                         uploadParams.DocumentName = fileName;
                         uploadParams.PdfPath = profile.SourceFolder;
-                        uploadParams.UserId = _loginUserId;
+                        uploadParams.LibraryUserId = profile.LibraryUserId;
                         uploadParams.LibraryId = profile.LibraryId;
 
                         SetServiceMessage("Uploading " + fileName + " in folder " + profile.FolderName);
@@ -393,7 +393,7 @@ namespace ConsoleApp
         private static bool UploadDocument(Webcalls.UploadParams uploadParams)
         {
             string filename = uploadParams.DocumentName;
-            string uploadDir = uploadParams.UserId.ToString();
+            string uploadDir = uploadParams.LibraryUserId.ToString();
             //Upload the document          
             int Offset = 0; // starting offset.
 
@@ -404,7 +404,7 @@ namespace ConsoleApp
 
             string pdfPath = Path.Combine(uploadParams.PdfPath, filename);
             string url = uploadParams.UploadUrl;
-            Guid userId = uploadParams.UserId;
+            Guid userId = uploadParams.LibraryUserId;
             Guid libraryId = uploadParams.LibraryId;
 
 

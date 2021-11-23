@@ -399,6 +399,7 @@ namespace SkylineUploader
             if (uxGridViewFolders.Columns["DeleteAfterUpload"] != null) uxGridViewFolders.Columns["DeleteAfterUpload"].IsVisible = false;
             if (uxGridViewFolders.Columns["FileTypes"] != null) uxGridViewFolders.Columns["FileTypes"].IsVisible = false;
             if (uxGridViewFolders.Columns["UserId"] != null) uxGridViewFolders.Columns["UserId"].IsVisible = false;
+            if (uxGridViewFolders.Columns["LibraryUserId"] != null) uxGridViewFolders.Columns["LibraryUserId"].IsVisible = false;
             uxGridViewFolders.Columns["PortalUrl"].BestFit();
             uxGridViewFolders.Columns["PortalUrl"].BestFit();
             uxGridViewFolders.Columns["Files"].Width = 30;

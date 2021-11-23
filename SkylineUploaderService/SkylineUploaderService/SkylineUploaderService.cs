@@ -285,6 +285,7 @@ namespace SkylineUploaderService
                 var password = SettingsHelper.Decrypt(profile.AdminPassword);
                 var sourceFolder = profile.SourceFolder;
                 var fileTypes = profile.FileTypes;
+                var LibraryUserId = profile.LibraryUserId;
 
                 if (!Directory.Exists(sourceFolder))
                 {
@@ -377,7 +378,7 @@ namespace SkylineUploaderService
                         uploadParams.Password = password;
                         uploadParams.DocumentName = fileName;
                         uploadParams.PdfPath = profile.SourceFolder;
-                        uploadParams.UserId = _loginUserId;
+                        uploadParams.LibraryUserId = profile.LibraryUserId;
                         uploadParams.LibraryId = profile.LibraryId;
 
                         SetServiceMessage("Uploading " + fileName + " in folder " + profile.FolderName);
@@ -513,6 +514,7 @@ namespace SkylineUploaderService
                                       LibraryUsername = ul.Username,
                                       LibraryName = ul.LibraryName,
                                       LibraryId = ul.LibraryId,
+                                      LibraryUserId = ul.UserId,
                                       Enabled = f.Enabled,
                                       SourceFolder = sf.FolderPath,
                                       InEditMode = f.InEditMode,
@@ -538,7 +540,7 @@ namespace SkylineUploaderService
         private static bool UploadDocument(Webcalls.UploadParams uploadParams)
         {
             string filename = uploadParams.DocumentName;
-            string uploadDir = uploadParams.UserId.ToString();
+            string uploadDir = uploadParams.LibraryUserId.ToString();
             //Upload the document          
             int Offset = 0; // starting offset.
 
@@ -549,9 +551,8 @@ namespace SkylineUploaderService
 
             string pdfPath = Path.Combine(uploadParams.PdfPath, filename);
             string url = uploadParams.UploadUrl;
-            Guid userId = uploadParams.UserId;
+            Guid libraryUserId = uploadParams.LibraryUserId;
             Guid libraryId = uploadParams.LibraryId;
-
 
             //_bwUpload.ReportProgress(0); //Set ProgressBar to 0
 
@@ -633,7 +634,7 @@ namespace SkylineUploaderService
 
             try
             {
-                string docIdOrError = webSvc.MoveTempDocumentsToSpecificLibrary(userId, libraryId, false);
+                string docIdOrError = webSvc.MoveTempDocumentsToSpecificLibrary(libraryUserId, libraryId, false);
                 try
                 {
                     _docId = new Guid(docIdOrError);
