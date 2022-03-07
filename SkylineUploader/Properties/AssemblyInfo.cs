@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: AssemblyVersion("7.1.0")]
+[assembly: AssemblyVersion("7.1.1")]
 [assembly : AssemblyCompany("ePrint Direct Ltd")]
 [assembly : AssemblyProduct("Skyline")]
 [assembly : AssemblyCopyright("ePrint Direct Ltd 2020")]

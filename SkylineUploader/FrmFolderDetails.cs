@@ -643,7 +643,28 @@ namespace SkylineUploader
             _serverVersion = Program.PricingService.GetAssemblyVersion();
             _workStationVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-            Program.VersionOk = _serverVersion == _workStationVersion;
+            try
+            {
+                Version ver = Version.Parse(_serverVersion);
+                int major = ver.Major;
+                int minor = ver.Minor;
+                int revision = ver.Revision;
+                if (major >= 7 && minor >= 1)
+                {
+                    Program.VersionOk =  true;
+                }
+                else
+                {
+                    Program.VersionOk =  false;
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine(e);
+                Program.VersionOk =  false;
+            }
+
+            //Program.VersionOk = _serverVersion == _workStationVersion;
         }
 
         private void BwLoginProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -1308,13 +1329,17 @@ namespace SkylineUploader
 
             foreach (var extension in _extensions)
             {
+                totalFiles = 0;
                 DirectoryInfo dinfo = new DirectoryInfo(uxTextBoxSourceFolder.Text);
-                FileInfo[] Files = dinfo.GetFiles(extension);
-                totalFiles += Files.Length;
-                //foreach (FileInfo file in Files)
-                //{
-                //    //var name = file.Name;
-                //}
+                try
+                {
+                    FileInfo[] Files = dinfo.GetFiles(extension);
+                    totalFiles += Files.Length;
+                }
+                catch (Exception )
+                {
+                    
+                }
             }
 
             uxTextBoxFileCount.Text = totalFiles.ToString("N0");

@@ -739,52 +739,10 @@ namespace SkylineUploaderService
         private static FileInfo[] GetFilesToUpload(string sourceFolder)
         {
             if (!Directory.Exists(sourceFolder)) return null;
-
-            //int totalFiles = 0;
-            //var _extensions = new List<string>();
-            //DropDownCheckedItemsCollection documentTypes = uxCheckedDropDownListFileTypes.CheckedItems;
-            //foreach (var documentType in documentTypes)
-            //{
-            //    var type = documentType.Text;
-            //    switch (type)
-            //    {
-            //        case "PDF":
-            //            _extensions.Add("*.pdf");
-            //            break;
-            //        case "Word":
-            //            _extensions.Add("*.docx");
-            //            _extensions.Add("*.doc");
-            //            break;
-            //        case "Excel":
-            //            _extensions.Add("*.xlsx");
-            //            _extensions.Add("*.xls");
-            //            break;
-            //        case "PowerPoint":
-            //            _extensions.Add("*.pptx");
-            //            _extensions.Add("*.ppt");
-            //            break;
-            //        case "Image":
-            //            _extensions.Add("*.jpg");
-            //            _extensions.Add("*.jpeg");
-            //            _extensions.Add("*.png");
-            //            _extensions.Add("*.bmp");
-            //            _extensions.Add("*.gif");
-            //            //extensions.Add("*.tiff");
-            //            break;
-            //    }
-            //}
-
-
+            
             DirectoryInfo dinfo = new DirectoryInfo(sourceFolder);
             FileInfo[] files = dinfo.GetFiles("*.pdf");
-            //totalFiles += files.Length;
-            //foreach (FileInfo file in Files)
-            //{
-            //    //var name = file.Name;
-            //}
-            //}
-
-
+            
             return files;
         }
 

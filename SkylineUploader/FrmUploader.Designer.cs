@@ -47,6 +47,7 @@ namespace SkylineUploader
             this.uxButtonNew1 = new Telerik.WinControls.UI.RadButtonElement();
             this.uxButtonClose1 = new Telerik.WinControls.UI.RadButtonElement();
             this.dotsLineWaitingBarIndicatorElement1 = new Telerik.WinControls.UI.DotsLineWaitingBarIndicatorElement();
+            this.uxMenuItemSQL = new Telerik.WinControls.UI.RadMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.uxGridViewFolders)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxGridViewFolders.MasterTemplate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radMenu1)).BeginInit();
@@ -79,6 +80,7 @@ namespace SkylineUploader
             this.uxMenuItemFile.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.uxMenuItemDebug,
             this.uxMenuItemError,
+            this.uxMenuItemSQL,
             this.uxMenuItemExit});
             this.uxMenuItemFile.Name = "uxMenuItemFile";
             this.uxMenuItemFile.Text = "File";
@@ -199,6 +201,12 @@ namespace SkylineUploader
             // 
             this.dotsLineWaitingBarIndicatorElement1.Name = "dotsLineWaitingBarIndicatorElement1";
             // 
+            // uxMenuItemSQL
+            // 
+            this.uxMenuItemSQL.Name = "uxMenuItemSQL";
+            this.uxMenuItemSQL.Text = "Reset Database Connection";
+            this.uxMenuItemSQL.Click += new System.EventHandler(this.uxMenuItemSQL_Click);
+            // 
             // FrmUploader
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -241,5 +249,6 @@ namespace SkylineUploader
         private Telerik.WinControls.UI.RadButtonElement uxButtonClose1;
         private Telerik.WinControls.UI.RadWaitingBarElement UxWaitingBar;
         private Telerik.WinControls.UI.DotsLineWaitingBarIndicatorElement dotsLineWaitingBarIndicatorElement1;
+        private Telerik.WinControls.UI.RadMenuItem uxMenuItemSQL;
     }
 }

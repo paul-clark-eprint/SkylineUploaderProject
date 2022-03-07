@@ -706,5 +706,27 @@ namespace SkylineUploader
             }
             Application.Exit();
         }
+
+        private void uxMenuItemSQL_Click(object sender, EventArgs e)
+        {
+            var res = MessageBox.Show("Do you want reset the connection to the database?", "Reset Database Connection", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (res == DialogResult.OK)
+            {
+                var deletedOk = SettingsHelper.DeleteSettingsFile();
+                if (deletedOk)
+                {
+                    MessageBox.Show("Database connection reset. Please restart the Skyline Uploader App",
+                        "Database Connection Reset", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Application.Exit();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Unable to delete the configuration file " + Global.SettingsPath +
+                        "\n\nTry to delete it manually", "Error deleting the configuration file", MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+            }
+        }
     }
 }
