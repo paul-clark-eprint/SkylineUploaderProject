@@ -52,8 +52,7 @@ namespace SkylineUploader
             {
                 InitialiseServiceSettings();
             }
-            
-            
+
             timer1.Enabled = true;
         }
 
@@ -674,7 +673,15 @@ namespace SkylineUploader
                 int currentRowIndex = uxGridViewFolders.CurrentRow.Index;
                 CheckServiceStatus();
                 GetGridData();
-                uxGridViewFolders.CurrentRow = uxGridViewFolders.Rows[currentRowIndex];
+                try
+                {
+                    uxGridViewFolders.CurrentRow = uxGridViewFolders.Rows[currentRowIndex];
+                }
+                catch (Exception exception)
+                {
+                    
+                }
+                
             }
 
             timer1.Enabled = true;
@@ -727,6 +734,18 @@ namespace SkylineUploader
                         MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void uxMenuDebugOn_Click(object sender, EventArgs e)
+        {
+            SettingsHelper.UpdateDebugMode("true");
+            this.Text = "Skyline Uploader - Debug ON";
+        }
+
+        private void uxMenuDebugOff_Click(object sender, EventArgs e)
+        {
+            SettingsHelper.UpdateDebugMode("false");
+            this.Text = "Skyline Uploader";
         }
     }
 }

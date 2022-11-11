@@ -45,21 +45,12 @@
             this.labelPassword = new System.Windows.Forms.Label();
             this.uxTextBoxPortalUrl = new System.Windows.Forms.TextBox();
             this.labelPortalUrl = new System.Windows.Forms.Label();
-            this.uxListControlUsers = new Telerik.WinControls.UI.RadListControl();
-            this.uxListControlLibraries = new Telerik.WinControls.UI.RadListControl();
-            this.uxLabelUsers = new System.Windows.Forms.Label();
-            this.uxLabelUserLibraries = new System.Windows.Forms.Label();
-            this.uxTextBoxSelected = new Telerik.WinControls.UI.RadTextBoxControl();
-            this.uxLabelSelected = new System.Windows.Forms.Label();
             this.uxLabelFolder = new System.Windows.Forms.Label();
             this.uxTextBoxSourceFolder = new Telerik.WinControls.UI.RadTextBoxControl();
             this.UxButtonBrowse = new Telerik.WinControls.UI.RadButton();
-            this.uxCheckBoxGetFromXml = new System.Windows.Forms.CheckBox();
-            this.uxLabelErrorMessage = new System.Windows.Forms.Label();
             this.uxCheckedDropDownListFileTypes = new Telerik.WinControls.UI.RadCheckedDropDownList();
             this.uxLabelFileTypes = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.uxButtonSaveToXml = new Telerik.WinControls.UI.RadButton();
             this.uxCheckBoxEnabled = new System.Windows.Forms.CheckBox();
             this.uxCheckBoxSynchronize = new System.Windows.Forms.CheckBox();
             this.uxLabelFolderName = new System.Windows.Forms.Label();
@@ -78,21 +69,27 @@
             this.uxCheckBoxDeleteSource = new System.Windows.Forms.CheckBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.dotsLineWaitingBarIndicatorElement1 = new Telerik.WinControls.UI.DotsLineWaitingBarIndicatorElement();
+            this.uxListControlUsers = new Telerik.WinControls.UI.RadListControl();
+            this.uxListControlLibraries = new Telerik.WinControls.UI.RadListControl();
+            this.uxLabelUsers = new System.Windows.Forms.Label();
+            this.uxLabelUserLibraries = new System.Windows.Forms.Label();
+            this.uxTextBoxSelected = new Telerik.WinControls.UI.RadTextBoxControl();
+            this.uxLabelSelected = new System.Windows.Forms.Label();
+            this.uxLabelErrorMessage = new System.Windows.Forms.Label();
             this.groupBoxAdminLogin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxPictureBoxProxy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxButtonConnect)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxLabelConnecting)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uxListControlUsers)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uxListControlLibraries)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uxTextBoxSelected)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxTextBoxSourceFolder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UxButtonBrowse)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxCheckedDropDownListFileTypes)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uxButtonSaveToXml)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxTextBoxFolderName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxStatusStrip)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxButtonSave)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxButtonClose)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxListControlUsers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxListControlLibraries)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxTextBoxSelected)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -201,64 +198,10 @@
             this.labelPortalUrl.TabIndex = 0;
             this.labelPortalUrl.Text = "Portal URL";
             // 
-            // uxListControlUsers
-            // 
-            this.uxListControlUsers.ItemHeight = 24;
-            this.uxListControlUsers.Location = new System.Drawing.Point(18, 159);
-            this.uxListControlUsers.Name = "uxListControlUsers";
-            this.uxListControlUsers.Size = new System.Drawing.Size(175, 205);
-            this.uxListControlUsers.TabIndex = 20;
-            this.uxListControlUsers.MouseUp += new System.Windows.Forms.MouseEventHandler(this.uxListControlUsers_MouseUp);
-            // 
-            // uxListControlLibraries
-            // 
-            this.uxListControlLibraries.ItemHeight = 24;
-            this.uxListControlLibraries.Location = new System.Drawing.Point(199, 159);
-            this.uxListControlLibraries.Name = "uxListControlLibraries";
-            this.uxListControlLibraries.Size = new System.Drawing.Size(175, 205);
-            this.uxListControlLibraries.TabIndex = 23;
-            this.uxListControlLibraries.MouseUp += new System.Windows.Forms.MouseEventHandler(this.uxListControlLibraries_MouseUp);
-            // 
-            // uxLabelUsers
-            // 
-            this.uxLabelUsers.AutoSize = true;
-            this.uxLabelUsers.Location = new System.Drawing.Point(18, 139);
-            this.uxLabelUsers.Name = "uxLabelUsers";
-            this.uxLabelUsers.Size = new System.Drawing.Size(41, 17);
-            this.uxLabelUsers.TabIndex = 24;
-            this.uxLabelUsers.Text = "Users";
-            // 
-            // uxLabelUserLibraries
-            // 
-            this.uxLabelUserLibraries.AutoSize = true;
-            this.uxLabelUserLibraries.Location = new System.Drawing.Point(196, 139);
-            this.uxLabelUserLibraries.Name = "uxLabelUserLibraries";
-            this.uxLabelUserLibraries.Size = new System.Drawing.Size(89, 17);
-            this.uxLabelUserLibraries.TabIndex = 25;
-            this.uxLabelUserLibraries.Text = "User Libraries";
-            // 
-            // uxTextBoxSelected
-            // 
-            this.uxTextBoxSelected.Enabled = false;
-            this.uxTextBoxSelected.IsReadOnly = true;
-            this.uxTextBoxSelected.Location = new System.Drawing.Point(380, 159);
-            this.uxTextBoxSelected.Name = "uxTextBoxSelected";
-            this.uxTextBoxSelected.Size = new System.Drawing.Size(187, 22);
-            this.uxTextBoxSelected.TabIndex = 27;
-            // 
-            // uxLabelSelected
-            // 
-            this.uxLabelSelected.AutoSize = true;
-            this.uxLabelSelected.Location = new System.Drawing.Point(381, 139);
-            this.uxLabelSelected.Name = "uxLabelSelected";
-            this.uxLabelSelected.Size = new System.Drawing.Size(101, 17);
-            this.uxLabelSelected.TabIndex = 28;
-            this.uxLabelSelected.Text = "Selected Library";
-            // 
             // uxLabelFolder
             // 
             this.uxLabelFolder.AutoSize = true;
-            this.uxLabelFolder.Location = new System.Drawing.Point(124, 378);
+            this.uxLabelFolder.Location = new System.Drawing.Point(124, 371);
             this.uxLabelFolder.Name = "uxLabelFolder";
             this.uxLabelFolder.Size = new System.Drawing.Size(89, 17);
             this.uxLabelFolder.TabIndex = 31;
@@ -267,7 +210,7 @@
             // uxTextBoxSourceFolder
             // 
             this.uxTextBoxSourceFolder.Enabled = false;
-            this.uxTextBoxSourceFolder.Location = new System.Drawing.Point(124, 398);
+            this.uxTextBoxSourceFolder.Location = new System.Drawing.Point(124, 391);
             this.uxTextBoxSourceFolder.Name = "uxTextBoxSourceFolder";
             this.uxTextBoxSourceFolder.Size = new System.Drawing.Size(250, 22);
             this.uxTextBoxSourceFolder.TabIndex = 30;
@@ -276,30 +219,12 @@
             // UxButtonBrowse
             // 
             this.UxButtonBrowse.Enabled = false;
-            this.UxButtonBrowse.Location = new System.Drawing.Point(18, 396);
+            this.UxButtonBrowse.Location = new System.Drawing.Point(18, 389);
             this.UxButtonBrowse.Name = "UxButtonBrowse";
             this.UxButtonBrowse.Size = new System.Drawing.Size(100, 24);
             this.UxButtonBrowse.TabIndex = 29;
             this.UxButtonBrowse.Text = "Browse";
             this.UxButtonBrowse.Click += new System.EventHandler(this.UxButtonBrowse_Click);
-            // 
-            // uxCheckBoxGetFromXml
-            // 
-            this.uxCheckBoxGetFromXml.Location = new System.Drawing.Point(380, 187);
-            this.uxCheckBoxGetFromXml.Name = "uxCheckBoxGetFromXml";
-            this.uxCheckBoxGetFromXml.Size = new System.Drawing.Size(180, 44);
-            this.uxCheckBoxGetFromXml.TabIndex = 32;
-            this.uxCheckBoxGetFromXml.Text = "Get User Library from XML file in Source Folder";
-            this.uxCheckBoxGetFromXml.UseVisualStyleBackColor = true;
-            // 
-            // uxLabelErrorMessage
-            // 
-            this.uxLabelErrorMessage.ForeColor = System.Drawing.Color.DarkRed;
-            this.uxLabelErrorMessage.Location = new System.Drawing.Point(381, 264);
-            this.uxLabelErrorMessage.Name = "uxLabelErrorMessage";
-            this.uxLabelErrorMessage.Size = new System.Drawing.Size(179, 100);
-            this.uxLabelErrorMessage.TabIndex = 33;
-            this.uxLabelErrorMessage.Text = "Error Message";
             // 
             // uxCheckedDropDownListFileTypes
             // 
@@ -320,7 +245,7 @@
             this.uxCheckedDropDownListFileTypes.Items.Add(radCheckedListDataItem3);
             this.uxCheckedDropDownListFileTypes.Items.Add(radCheckedListDataItem4);
             this.uxCheckedDropDownListFileTypes.Items.Add(radCheckedListDataItem5);
-            this.uxCheckedDropDownListFileTypes.Location = new System.Drawing.Point(124, 426);
+            this.uxCheckedDropDownListFileTypes.Location = new System.Drawing.Point(124, 419);
             this.uxCheckedDropDownListFileTypes.Name = "uxCheckedDropDownListFileTypes";
             this.uxCheckedDropDownListFileTypes.Size = new System.Drawing.Size(443, 24);
             this.uxCheckedDropDownListFileTypes.TabIndex = 34;
@@ -329,27 +254,18 @@
             // uxLabelFileTypes
             // 
             this.uxLabelFileTypes.AutoSize = true;
-            this.uxLabelFileTypes.Location = new System.Drawing.Point(33, 431);
+            this.uxLabelFileTypes.Location = new System.Drawing.Point(33, 424);
             this.uxLabelFileTypes.Name = "uxLabelFileTypes";
             this.uxLabelFileTypes.Size = new System.Drawing.Size(64, 17);
             this.uxLabelFileTypes.TabIndex = 35;
             this.uxLabelFileTypes.Text = "File Types";
-            // 
-            // uxButtonSaveToXml
-            // 
-            this.uxButtonSaveToXml.Location = new System.Drawing.Point(384, 237);
-            this.uxButtonSaveToXml.Name = "uxButtonSaveToXml";
-            this.uxButtonSaveToXml.Size = new System.Drawing.Size(100, 24);
-            this.uxButtonSaveToXml.TabIndex = 37;
-            this.uxButtonSaveToXml.Text = "Save to XML";
-            this.uxButtonSaveToXml.Click += new System.EventHandler(this.uxButtonSaveToXml_Click);
             // 
             // uxCheckBoxEnabled
             // 
             this.uxCheckBoxEnabled.Checked = true;
             this.uxCheckBoxEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
             this.uxCheckBoxEnabled.Enabled = false;
-            this.uxCheckBoxEnabled.Location = new System.Drawing.Point(18, 486);
+            this.uxCheckBoxEnabled.Location = new System.Drawing.Point(18, 479);
             this.uxCheckBoxEnabled.Name = "uxCheckBoxEnabled";
             this.uxCheckBoxEnabled.Size = new System.Drawing.Size(87, 21);
             this.uxCheckBoxEnabled.TabIndex = 38;
@@ -361,7 +277,7 @@
             // 
             this.uxCheckBoxSynchronize.AutoSize = true;
             this.uxCheckBoxSynchronize.Enabled = false;
-            this.uxCheckBoxSynchronize.Location = new System.Drawing.Point(111, 486);
+            this.uxCheckBoxSynchronize.Location = new System.Drawing.Point(111, 479);
             this.uxCheckBoxSynchronize.Name = "uxCheckBoxSynchronize";
             this.uxCheckBoxSynchronize.Size = new System.Drawing.Size(123, 21);
             this.uxCheckBoxSynchronize.TabIndex = 39;
@@ -372,7 +288,7 @@
             // uxLabelFolderName
             // 
             this.uxLabelFolderName.AutoSize = true;
-            this.uxLabelFolderName.Location = new System.Drawing.Point(390, 378);
+            this.uxLabelFolderName.Location = new System.Drawing.Point(390, 371);
             this.uxLabelFolderName.Name = "uxLabelFolderName";
             this.uxLabelFolderName.Size = new System.Drawing.Size(84, 17);
             this.uxLabelFolderName.TabIndex = 41;
@@ -381,7 +297,7 @@
             // uxTextBoxFolderName
             // 
             this.uxTextBoxFolderName.Enabled = false;
-            this.uxTextBoxFolderName.Location = new System.Drawing.Point(393, 398);
+            this.uxTextBoxFolderName.Location = new System.Drawing.Point(393, 391);
             this.uxTextBoxFolderName.Name = "uxTextBoxFolderName";
             this.uxTextBoxFolderName.Size = new System.Drawing.Size(174, 22);
             this.uxTextBoxFolderName.TabIndex = 40;
@@ -389,7 +305,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(124, 458);
+            this.label1.Location = new System.Drawing.Point(124, 451);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(317, 17);
             this.label1.TabIndex = 43;
@@ -397,7 +313,7 @@
             // 
             // uxTextBoxFileCount
             // 
-            this.uxTextBoxFileCount.Location = new System.Drawing.Point(519, 456);
+            this.uxTextBoxFileCount.Location = new System.Drawing.Point(519, 449);
             this.uxTextBoxFileCount.Name = "uxTextBoxFileCount";
             this.uxTextBoxFileCount.ReadOnly = true;
             this.uxTextBoxFileCount.Size = new System.Drawing.Size(48, 20);
@@ -412,7 +328,7 @@
             this.uxLabelStatus,
             this.uxButtonCancel,
             this.uxButtonUpload});
-            this.uxStatusStrip.Location = new System.Drawing.Point(0, 550);
+            this.uxStatusStrip.Location = new System.Drawing.Point(0, 546);
             this.uxStatusStrip.Name = "uxStatusStrip";
             this.uxStatusStrip.Padding = new System.Windows.Forms.Padding(3);
             this.uxStatusStrip.Size = new System.Drawing.Size(572, 44);
@@ -500,7 +416,7 @@
             this.uxButtonSave.Enabled = false;
             this.uxButtonSave.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.uxButtonSave.Image = global::SkylineUploader.Properties.Resources.Save__2_;
-            this.uxButtonSave.Location = new System.Drawing.Point(460, 513);
+            this.uxButtonSave.Location = new System.Drawing.Point(460, 506);
             this.uxButtonSave.Name = "uxButtonSave";
             this.uxButtonSave.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.uxButtonSave.Size = new System.Drawing.Size(100, 26);
@@ -513,7 +429,7 @@
             // 
             this.uxButtonClose.DisplayStyle = Telerik.WinControls.DisplayStyle.Text;
             this.uxButtonClose.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.uxButtonClose.Location = new System.Drawing.Point(354, 513);
+            this.uxButtonClose.Location = new System.Drawing.Point(354, 506);
             this.uxButtonClose.Name = "uxButtonClose";
             this.uxButtonClose.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.uxButtonClose.Size = new System.Drawing.Size(100, 26);
@@ -526,7 +442,7 @@
             // 
             this.uxCheckBoxRemoveDocOnOrder.AutoSize = true;
             this.uxCheckBoxRemoveDocOnOrder.Enabled = false;
-            this.uxCheckBoxRemoveDocOnOrder.Location = new System.Drawing.Point(18, 513);
+            this.uxCheckBoxRemoveDocOnOrder.Location = new System.Drawing.Point(18, 506);
             this.uxCheckBoxRemoveDocOnOrder.Name = "uxCheckBoxRemoveDocOnOrder";
             this.uxCheckBoxRemoveDocOnOrder.Size = new System.Drawing.Size(298, 21);
             this.uxCheckBoxRemoveDocOnOrder.TabIndex = 49;
@@ -539,7 +455,7 @@
             this.uxCheckBoxDeleteSource.Checked = true;
             this.uxCheckBoxDeleteSource.CheckState = System.Windows.Forms.CheckState.Checked;
             this.uxCheckBoxDeleteSource.Enabled = false;
-            this.uxCheckBoxDeleteSource.Location = new System.Drawing.Point(240, 486);
+            this.uxCheckBoxDeleteSource.Location = new System.Drawing.Point(240, 479);
             this.uxCheckBoxDeleteSource.Name = "uxCheckBoxDeleteSource";
             this.uxCheckBoxDeleteSource.Size = new System.Drawing.Size(246, 21);
             this.uxCheckBoxDeleteSource.TabIndex = 50;
@@ -555,11 +471,74 @@
             // 
             this.dotsLineWaitingBarIndicatorElement1.Name = "dotsLineWaitingBarIndicatorElement1";
             // 
+            // uxListControlUsers
+            // 
+            this.uxListControlUsers.ItemHeight = 24;
+            this.uxListControlUsers.Location = new System.Drawing.Point(10, 152);
+            this.uxListControlUsers.Name = "uxListControlUsers";
+            this.uxListControlUsers.Size = new System.Drawing.Size(175, 205);
+            this.uxListControlUsers.TabIndex = 20;
+            this.uxListControlUsers.MouseUp += new System.Windows.Forms.MouseEventHandler(this.uxListControlUsers_MouseUp);
+            // 
+            // uxListControlLibraries
+            // 
+            this.uxListControlLibraries.ItemHeight = 24;
+            this.uxListControlLibraries.Location = new System.Drawing.Point(191, 152);
+            this.uxListControlLibraries.Name = "uxListControlLibraries";
+            this.uxListControlLibraries.Size = new System.Drawing.Size(175, 205);
+            this.uxListControlLibraries.TabIndex = 23;
+            this.uxListControlLibraries.MouseUp += new System.Windows.Forms.MouseEventHandler(this.uxListControlLibraries_MouseUp);
+            // 
+            // uxLabelUsers
+            // 
+            this.uxLabelUsers.AutoSize = true;
+            this.uxLabelUsers.Location = new System.Drawing.Point(18, 132);
+            this.uxLabelUsers.Name = "uxLabelUsers";
+            this.uxLabelUsers.Size = new System.Drawing.Size(41, 17);
+            this.uxLabelUsers.TabIndex = 24;
+            this.uxLabelUsers.Text = "Users";
+            // 
+            // uxLabelUserLibraries
+            // 
+            this.uxLabelUserLibraries.AutoSize = true;
+            this.uxLabelUserLibraries.Location = new System.Drawing.Point(196, 132);
+            this.uxLabelUserLibraries.Name = "uxLabelUserLibraries";
+            this.uxLabelUserLibraries.Size = new System.Drawing.Size(89, 17);
+            this.uxLabelUserLibraries.TabIndex = 25;
+            this.uxLabelUserLibraries.Text = "User Libraries";
+            // 
+            // uxTextBoxSelected
+            // 
+            this.uxTextBoxSelected.Enabled = false;
+            this.uxTextBoxSelected.IsReadOnly = true;
+            this.uxTextBoxSelected.Location = new System.Drawing.Point(372, 152);
+            this.uxTextBoxSelected.Name = "uxTextBoxSelected";
+            this.uxTextBoxSelected.Size = new System.Drawing.Size(187, 22);
+            this.uxTextBoxSelected.TabIndex = 27;
+            // 
+            // uxLabelSelected
+            // 
+            this.uxLabelSelected.AutoSize = true;
+            this.uxLabelSelected.Location = new System.Drawing.Point(381, 132);
+            this.uxLabelSelected.Name = "uxLabelSelected";
+            this.uxLabelSelected.Size = new System.Drawing.Size(101, 17);
+            this.uxLabelSelected.TabIndex = 28;
+            this.uxLabelSelected.Text = "Selected Library";
+            // 
+            // uxLabelErrorMessage
+            // 
+            this.uxLabelErrorMessage.ForeColor = System.Drawing.Color.DarkRed;
+            this.uxLabelErrorMessage.Location = new System.Drawing.Point(373, 185);
+            this.uxLabelErrorMessage.Name = "uxLabelErrorMessage";
+            this.uxLabelErrorMessage.Size = new System.Drawing.Size(179, 172);
+            this.uxLabelErrorMessage.TabIndex = 33;
+            this.uxLabelErrorMessage.Text = "Error Message";
+            // 
             // FrmFolderDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(572, 594);
+            this.ClientSize = new System.Drawing.Size(572, 590);
             this.Controls.Add(this.uxCheckBoxDeleteSource);
             this.Controls.Add(this.uxCheckBoxRemoveDocOnOrder);
             this.Controls.Add(this.uxButtonClose);
@@ -571,11 +550,9 @@
             this.Controls.Add(this.uxTextBoxFolderName);
             this.Controls.Add(this.uxCheckBoxSynchronize);
             this.Controls.Add(this.uxCheckBoxEnabled);
-            this.Controls.Add(this.uxButtonSaveToXml);
             this.Controls.Add(this.uxLabelFileTypes);
             this.Controls.Add(this.uxCheckedDropDownListFileTypes);
             this.Controls.Add(this.uxLabelErrorMessage);
-            this.Controls.Add(this.uxCheckBoxGetFromXml);
             this.Controls.Add(this.uxLabelFolder);
             this.Controls.Add(this.uxTextBoxSourceFolder);
             this.Controls.Add(this.UxButtonBrowse);
@@ -604,17 +581,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.uxPictureBoxProxy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxButtonConnect)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxLabelConnecting)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uxListControlUsers)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uxListControlLibraries)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uxTextBoxSelected)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxTextBoxSourceFolder)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.UxButtonBrowse)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxCheckedDropDownListFileTypes)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uxButtonSaveToXml)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxTextBoxFolderName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxStatusStrip)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxButtonSave)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxButtonClose)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxListControlUsers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxListControlLibraries)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxTextBoxSelected)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -633,21 +609,12 @@
         private Telerik.WinControls.UI.RadLabel uxLabelConnecting;
         private Telerik.WinControls.UI.RadButton uxButtonConnect;
         private System.Windows.Forms.PictureBox uxPictureBoxProxy;
-        private Telerik.WinControls.UI.RadListControl uxListControlUsers;
-        private Telerik.WinControls.UI.RadListControl uxListControlLibraries;
-        private System.Windows.Forms.Label uxLabelUsers;
-        private System.Windows.Forms.Label uxLabelUserLibraries;
-        private Telerik.WinControls.UI.RadTextBoxControl uxTextBoxSelected;
-        private System.Windows.Forms.Label uxLabelSelected;
         private System.Windows.Forms.Label uxLabelFolder;
         private Telerik.WinControls.UI.RadTextBoxControl uxTextBoxSourceFolder;
         private Telerik.WinControls.UI.RadButton UxButtonBrowse;
-        private System.Windows.Forms.CheckBox uxCheckBoxGetFromXml;
-        private System.Windows.Forms.Label uxLabelErrorMessage;
         private Telerik.WinControls.UI.RadCheckedDropDownList uxCheckedDropDownListFileTypes;
         private System.Windows.Forms.Label uxLabelFileTypes;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private Telerik.WinControls.UI.RadButton uxButtonSaveToXml;
         private System.Windows.Forms.CheckBox uxCheckBoxEnabled;
         private System.Windows.Forms.CheckBox uxCheckBoxSynchronize;
         private System.Windows.Forms.Label uxLabelFolderName;
@@ -666,5 +633,12 @@
         private System.Windows.Forms.CheckBox uxCheckBoxDeleteSource;
         private System.Windows.Forms.Timer timer1;
         private Telerik.WinControls.UI.DotsLineWaitingBarIndicatorElement dotsLineWaitingBarIndicatorElement1;
+        private Telerik.WinControls.UI.RadListControl uxListControlUsers;
+        private Telerik.WinControls.UI.RadListControl uxListControlLibraries;
+        private System.Windows.Forms.Label uxLabelUsers;
+        private System.Windows.Forms.Label uxLabelUserLibraries;
+        private Telerik.WinControls.UI.RadTextBoxControl uxTextBoxSelected;
+        private System.Windows.Forms.Label uxLabelSelected;
+        private System.Windows.Forms.Label uxLabelErrorMessage;
     }
 }

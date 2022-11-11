@@ -46,8 +46,8 @@ namespace SkylineUploader.Classes
         {
             XDocument doc = new XDocument(
                 new XElement("SkylineUploader",
-                    new XElement("ConnectionString", string.Empty)
-                    //new XElement("Username", string.Empty),
+                    new XElement("ConnectionString", string.Empty),
+                    new XElement("DebugMode", "true")
                     //new XElement("Password", string.Empty),
                     //new XElement("PortalUrl", string.Empty),
                     //new XElement("UseHttps", string.Empty),
@@ -92,20 +92,25 @@ namespace SkylineUploader.Classes
             return true;
         }
         /// <summary>
-        /// Updates the ConnectionString in the settings file
+        /// Updates the DebugMode node in the settings file
         /// </summary>
         /// <returns>bool</returns>
-        public static bool UpdateConnectionString(string connectionString)
+        public static bool UpdateDebugMode(string debugMode)
         {
+            if (!File.Exists(Global.SettingsPath))
+            {
+                CreateBlankSettingsFile();
+            }
+            
             if (File.Exists(Global.SettingsPath))
             {
                 XDocument doc = XDocument.Load(Global.SettingsPath);
                 if (doc.Root != null)
                 {
-                    XElement xElement = doc.Root.Element("ConnectionString");
+                    XElement xElement = doc.Root.Element("DebugMode");
                     if (xElement != null)
                     {
-                        xElement.Value = Encrypt(connectionString);
+                        xElement.Value = debugMode;
                     }
                 }
                 try

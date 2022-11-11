@@ -166,6 +166,8 @@ namespace SkylineUploaderService.SkylineWebService {
         
         private System.Threading.SendOrPostCallback HideDocumentInLibraryOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetUserDefaultLibraryIdsOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -407,6 +409,9 @@ namespace SkylineUploaderService.SkylineWebService {
         
         /// <remarks/>
         public event HideDocumentInLibraryCompletedEventHandler HideDocumentInLibraryCompleted;
+        
+        /// <remarks/>
+        public event GetUserDefaultLibraryIdsCompletedEventHandler GetUserDefaultLibraryIdsCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetVersionNumber", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -2472,6 +2477,37 @@ namespace SkylineUploaderService.SkylineWebService {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetUserDefaultLibraryIds", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public UserLibraryIds GetUserDefaultLibraryIds([System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<System.Guid> portalId, string emailAddress) {
+            object[] results = this.Invoke("GetUserDefaultLibraryIds", new object[] {
+                        portalId,
+                        emailAddress});
+            return ((UserLibraryIds)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetUserDefaultLibraryIdsAsync(System.Nullable<System.Guid> portalId, string emailAddress) {
+            this.GetUserDefaultLibraryIdsAsync(portalId, emailAddress, null);
+        }
+        
+        /// <remarks/>
+        public void GetUserDefaultLibraryIdsAsync(System.Nullable<System.Guid> portalId, string emailAddress, object userState) {
+            if ((this.GetUserDefaultLibraryIdsOperationCompleted == null)) {
+                this.GetUserDefaultLibraryIdsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetUserDefaultLibraryIdsOperationCompleted);
+            }
+            this.InvokeAsync("GetUserDefaultLibraryIds", new object[] {
+                        portalId,
+                        emailAddress}, this.GetUserDefaultLibraryIdsOperationCompleted, userState);
+        }
+        
+        private void OnGetUserDefaultLibraryIdsOperationCompleted(object arg) {
+            if ((this.GetUserDefaultLibraryIdsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetUserDefaultLibraryIdsCompleted(this, new GetUserDefaultLibraryIdsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -2617,6 +2653,39 @@ namespace SkylineUploaderService.SkylineWebService {
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://Eprint.Skyline/xml/serialization")]
     public partial class EntityCollection {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class UserLibraryIds {
+        
+        private System.Guid userIdField;
+        
+        private System.Guid userDefaultLibraryIdField;
+        
+        /// <remarks/>
+        public System.Guid UserId {
+            get {
+                return this.userIdField;
+            }
+            set {
+                this.userIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public System.Guid UserDefaultLibraryId {
+            get {
+                return this.userDefaultLibraryIdField;
+            }
+            set {
+                this.userDefaultLibraryIdField = value;
+            }
+        }
     }
     
     /// <remarks/>
@@ -5932,6 +6001,32 @@ namespace SkylineUploaderService.SkylineWebService {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void GetUserDefaultLibraryIdsCompletedEventHandler(object sender, GetUserDefaultLibraryIdsCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetUserDefaultLibraryIdsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetUserDefaultLibraryIdsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public UserLibraryIds Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((UserLibraryIds)(this.results[0]));
             }
         }
     }

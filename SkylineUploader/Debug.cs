@@ -197,5 +197,10 @@ namespace SkylineUploader
             }
             
         }
+
+        public static void OpenLogDirectory()
+        {
+            Process.Start("explorer.exe",LogDir);
+        }
     }
 }

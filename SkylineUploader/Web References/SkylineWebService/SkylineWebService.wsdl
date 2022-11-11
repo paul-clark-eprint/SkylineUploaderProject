@@ -4,210 +4,6 @@
     <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
       <s:import namespace="http://microsoft.com/wsdl/types/" />
       <s:import namespace="http://Eprint.Skyline/xml/serialization" />
-      <s:element name="AddElementControl">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="caption" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="controlType" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="elementType" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
-            <s:element minOccurs="0" maxOccurs="1" name="controlXML" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="AddElementControlResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="AddElementControlResult" type="s1:guid" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetAllAddressForms">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetAllAddressFormsResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetAllAddressFormsResult" type="tns:ArrayOfDeliveryTemplate" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="ArrayOfDeliveryTemplate">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="DeliveryTemplate" nillable="true" type="tns:DeliveryTemplate" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="DeliveryTemplate">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="ProductXml" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="PortalId" nillable="true" type="s1:guid" />
-          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="DeliveryTemplateId" type="s1:guid" />
-          <s:element minOccurs="1" maxOccurs="1" name="Default" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="Portal" type="tns:Portal" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="Portal">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="PortalName" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="PortalId" type="s1:guid" />
-          <s:element minOccurs="0" maxOccurs="1" name="MembershipProviderName" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="HTTPS" nillable="true" type="s:boolean" />
-          <s:element minOccurs="1" maxOccurs="1" name="ExpiryDate" nillable="true" type="s:dateTime" />
-          <s:element minOccurs="1" maxOccurs="1" name="Default" nillable="true" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="Culture" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="AwaitingUpdate" type="s:boolean" />
-          <s:element minOccurs="1" maxOccurs="1" name="AutoDeleteDate" nillable="true" type="s:dateTime" />
-        </s:sequence>
-      </s:complexType>
-      <s:element name="GetAllDeliveryForms">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetAllDeliveryFormsResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetAllDeliveryFormsResult" type="tns:ArrayOfDeliveryType" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="ArrayOfDeliveryType">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="DeliveryType" nillable="true" type="tns:DeliveryType" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="DeliveryType">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="ProductXml" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="PortalId" nillable="true" type="s1:guid" />
-          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="DeliveryTypeId" type="s1:guid" />
-          <s:element minOccurs="1" maxOccurs="1" name="Default" type="s:boolean" />
-        </s:sequence>
-      </s:complexType>
-      <s:element name="GetDocumentsInUserLibrary">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="libraryId" type="s1:guid" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetDocumentsInUserLibraryResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetDocumentsInUserLibraryResult" type="tns:ArrayOfDocument" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="ArrayOfDocument">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="Document" nillable="true" type="tns:Document" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="Document">
-        <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="UploadedBy" type="s1:guid" />
-          <s:element minOccurs="1" maxOccurs="1" name="UpdateDate" type="s:dateTime" />
-          <s:element minOccurs="1" maxOccurs="1" name="ThumbnailsCreated" nillable="true" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="StatusId" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="ProductXml" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="ProductId" nillable="true" type="s1:guid" />
-          <s:element minOccurs="0" maxOccurs="1" name="OriginalExtension" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="NumberOfPages" nillable="true" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="MissingFonts" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="LibraryId" nillable="true" type="s1:guid" />
-          <s:element minOccurs="1" maxOccurs="1" name="LastOrderedDate" nillable="true" type="s:dateTime" />
-          <s:element minOccurs="0" maxOccurs="1" name="FinalExtension" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="FileTypeId" type="s:int" />
-          <s:element minOccurs="1" maxOccurs="1" name="FileSize" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="DocumentId" type="s1:guid" />
-          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="CreatedDate" type="s:dateTime" />
-          <s:element minOccurs="1" maxOccurs="1" name="Previewed" nillable="true" type="s:boolean" />
-          <s:element minOccurs="1" maxOccurs="1" name="Hidden" nillable="true" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="User" type="tns:User" />
-          <s:element minOccurs="0" maxOccurs="1" name="Product" type="tns:Product" />
-          <s:element minOccurs="0" maxOccurs="1" name="Library" type="tns:Library" />
-          <s:element minOccurs="0" maxOccurs="1" name="FileType" type="tns:FileType" />
-          <s:element minOccurs="0" maxOccurs="1" name="DocumentStatus" type="tns:DocumentStatus" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="User">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s1:guid" />
-          <s:element minOccurs="1" maxOccurs="1" name="Inactive" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="DeliveryXml" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="DeliveryTemplateId" nillable="true" type="s1:guid" />
-          <s:element minOccurs="0" maxOccurs="1" name="ApplicationName" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="ApprovalLevel" nillable="true" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="DeliveryTemplate" type="tns:DeliveryTemplate" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="Product">
-        <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="TemplateProduct" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="ProductXml" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s1:guid" />
-          <s:element minOccurs="1" maxOccurs="1" name="PortalId" nillable="true" type="s1:guid" />
-          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Image" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="EquitracProduct" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="Deleted" type="s:boolean" />
-          <s:element minOccurs="1" maxOccurs="1" name="ProductCategoryId" nillable="true" type="s1:guid" />
-          <s:element minOccurs="0" maxOccurs="1" name="Portal" type="tns:Portal" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="Library">
-        <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="OwnerId" type="s1:guid" />
-          <s:element minOccurs="1" maxOccurs="1" name="OrderColumn" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="LibraryId" type="s1:guid" />
-          <s:element minOccurs="1" maxOccurs="1" name="AllUsersHaveFullControl" type="s:boolean" />
-          <s:element minOccurs="1" maxOccurs="1" name="ParentId" nillable="true" type="s1:guid" />
-          <s:element minOccurs="0" maxOccurs="1" name="User" type="tns:User" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="FileType">
-        <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="FileTypeId" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="Extension" type="s:string" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="DocumentStatus">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="StatusName" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="StatusId" type="s:string" />
-        </s:sequence>
-      </s:complexType>
-      <s:element name="HideDocumentInLibrary">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="documentId" type="s1:guid" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="HideDocumentInLibraryResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="HideDocumentInLibraryResult" type="s:boolean" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
       <s:element name="GetVersionNumber">
         <s:complexType />
       </s:element>
@@ -950,6 +746,34 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:complexType name="Product">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="TemplateProduct" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductXml" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="PortalId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Image" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="EquitracProduct" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Deleted" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="ProductCategoryId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Portal" type="tns:Portal" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Portal">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="PortalName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PortalId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="MembershipProviderName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="HTTPS" nillable="true" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExpiryDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="Default" nillable="true" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Culture" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="AwaitingUpdate" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="AutoDeleteDate" nillable="true" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="GetProductResponse">
         <s:complexType>
           <s:sequence>
@@ -992,6 +816,16 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:complexType name="DeliveryType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ProductXml" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PortalId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DeliveryTypeId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="Default" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="GetDeliveryFormResponse">
         <s:complexType>
           <s:sequence>
@@ -1006,6 +840,17 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:complexType name="DeliveryTemplate">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ProductXml" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PortalId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DeliveryTemplateId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="Default" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Portal" type="tns:Portal" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="GetAddressFormResponse">
         <s:complexType>
           <s:sequence>
@@ -1249,6 +1094,182 @@
       <s:element name="AddElementToControlResponse">
         <s:complexType />
       </s:element>
+      <s:element name="AddElementControl">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="caption" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="controlType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="elementType" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="controlXML" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddElementControlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddElementControlResult" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllAddressForms">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDeliveryTemplate">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DeliveryTemplate" nillable="true" type="tns:DeliveryTemplate" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAllAddressFormsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllAddressFormsResult" type="tns:ArrayOfDeliveryTemplate" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllDeliveryForms">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDeliveryType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DeliveryType" nillable="true" type="tns:DeliveryType" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAllDeliveryFormsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllDeliveryFormsResult" type="tns:ArrayOfDeliveryType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDocumentsInUserLibrary">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="libraryId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Document">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="UploadedBy" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="UpdateDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="ThumbnailsCreated" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="StatusId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductXml" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ProductId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="OriginalExtension" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="NumberOfPages" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="MissingFonts" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LibraryId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastOrderedDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="FinalExtension" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="FileTypeId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="FileSize" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DocumentId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreatedDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="Previewed" nillable="true" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Hidden" nillable="true" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="User" type="tns:User" />
+          <s:element minOccurs="0" maxOccurs="1" name="Product" type="tns:Product" />
+          <s:element minOccurs="0" maxOccurs="1" name="Library" type="tns:Library" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileType" type="tns:FileType" />
+          <s:element minOccurs="0" maxOccurs="1" name="DocumentStatus" type="tns:DocumentStatus" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="User">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="Inactive" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeliveryXml" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DeliveryTemplateId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="ApplicationName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ApprovalLevel" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeliveryTemplate" type="tns:DeliveryTemplate" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Library">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="OwnerId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="OrderColumn" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LibraryId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="AllUsersHaveFullControl" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="ParentId" nillable="true" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="User" type="tns:User" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="FileType">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="FileTypeId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Extension" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DocumentStatus">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="StatusName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StatusId" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDocument">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Document" nillable="true" type="tns:Document" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetDocumentsInUserLibraryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDocumentsInUserLibraryResult" type="tns:ArrayOfDocument" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="HideDocumentInLibrary">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="documentId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="HideDocumentInLibraryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="HideDocumentInLibraryResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserDefaultLibraryIds">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="emailAddress" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="UserLibraryIds">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserDefaultLibraryId" type="s1:guid" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetUserDefaultLibraryIdsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserDefaultLibraryIdsResult" type="tns:UserLibraryIds" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
     <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
       <s:simpleType name="guid">
@@ -1261,36 +1282,6 @@
       <xs:complexType name="EntityCollection" />
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name="AddElementControlSoapIn">
-    <wsdl:part name="parameters" element="tns:AddElementControl" />
-  </wsdl:message>
-  <wsdl:message name="AddElementControlSoapOut">
-    <wsdl:part name="parameters" element="tns:AddElementControlResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetAllAddressFormsSoapIn">
-    <wsdl:part name="parameters" element="tns:GetAllAddressForms" />
-  </wsdl:message>
-  <wsdl:message name="GetAllAddressFormsSoapOut">
-    <wsdl:part name="parameters" element="tns:GetAllAddressFormsResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetAllDeliveryFormsSoapIn">
-    <wsdl:part name="parameters" element="tns:GetAllDeliveryForms" />
-  </wsdl:message>
-  <wsdl:message name="GetAllDeliveryFormsSoapOut">
-    <wsdl:part name="parameters" element="tns:GetAllDeliveryFormsResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetDocumentsInUserLibrarySoapIn">
-    <wsdl:part name="parameters" element="tns:GetDocumentsInUserLibrary" />
-  </wsdl:message>
-  <wsdl:message name="GetDocumentsInUserLibrarySoapOut">
-    <wsdl:part name="parameters" element="tns:GetDocumentsInUserLibraryResponse" />
-  </wsdl:message>
-  <wsdl:message name="HideDocumentInLibrarySoapIn">
-    <wsdl:part name="parameters" element="tns:HideDocumentInLibrary" />
-  </wsdl:message>
-  <wsdl:message name="HideDocumentInLibrarySoapOut">
-    <wsdl:part name="parameters" element="tns:HideDocumentInLibraryResponse" />
-  </wsdl:message>
   <wsdl:message name="GetVersionNumberSoapIn">
     <wsdl:part name="parameters" element="tns:GetVersionNumber" />
   </wsdl:message>
@@ -1669,27 +1660,43 @@
   <wsdl:message name="AddElementToControlSoapOut">
     <wsdl:part name="parameters" element="tns:AddElementToControlResponse" />
   </wsdl:message>
+  <wsdl:message name="AddElementControlSoapIn">
+    <wsdl:part name="parameters" element="tns:AddElementControl" />
+  </wsdl:message>
+  <wsdl:message name="AddElementControlSoapOut">
+    <wsdl:part name="parameters" element="tns:AddElementControlResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllAddressFormsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllAddressForms" />
+  </wsdl:message>
+  <wsdl:message name="GetAllAddressFormsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllAddressFormsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllDeliveryFormsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllDeliveryForms" />
+  </wsdl:message>
+  <wsdl:message name="GetAllDeliveryFormsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllDeliveryFormsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDocumentsInUserLibrarySoapIn">
+    <wsdl:part name="parameters" element="tns:GetDocumentsInUserLibrary" />
+  </wsdl:message>
+  <wsdl:message name="GetDocumentsInUserLibrarySoapOut">
+    <wsdl:part name="parameters" element="tns:GetDocumentsInUserLibraryResponse" />
+  </wsdl:message>
+  <wsdl:message name="HideDocumentInLibrarySoapIn">
+    <wsdl:part name="parameters" element="tns:HideDocumentInLibrary" />
+  </wsdl:message>
+  <wsdl:message name="HideDocumentInLibrarySoapOut">
+    <wsdl:part name="parameters" element="tns:HideDocumentInLibraryResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserDefaultLibraryIdsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserDefaultLibraryIds" />
+  </wsdl:message>
+  <wsdl:message name="GetUserDefaultLibraryIdsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserDefaultLibraryIdsResponse" />
+  </wsdl:message>
   <wsdl:portType name="SkylineWebServiceSoap">
-    <wsdl:operation name="AddElementControl">
-      <wsdl:input message="tns:AddElementControlSoapIn" />
-      <wsdl:output message="tns:AddElementControlSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetAllAddressForms">
-      <wsdl:input message="tns:GetAllAddressFormsSoapIn" />
-      <wsdl:output message="tns:GetAllAddressFormsSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetAllDeliveryForms">
-      <wsdl:input message="tns:GetAllDeliveryFormsSoapIn" />
-      <wsdl:output message="tns:GetAllDeliveryFormsSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetDocumentsInUserLibrary">
-      <wsdl:input message="tns:GetDocumentsInUserLibrarySoapIn" />
-      <wsdl:output message="tns:GetDocumentsInUserLibrarySoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="HideDocumentInLibrary">
-      <wsdl:input message="tns:HideDocumentInLibrarySoapIn" />
-      <wsdl:output message="tns:HideDocumentInLibrarySoapOut" />
-    </wsdl:operation>
     <wsdl:operation name="GetVersionNumber">
       <wsdl:input message="tns:GetVersionNumberSoapIn" />
       <wsdl:output message="tns:GetVersionNumberSoapOut" />
@@ -1942,54 +1949,33 @@
       <wsdl:input message="tns:AddElementToControlSoapIn" />
       <wsdl:output message="tns:AddElementToControlSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="AddElementControl">
+      <wsdl:input message="tns:AddElementControlSoapIn" />
+      <wsdl:output message="tns:AddElementControlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAddressForms">
+      <wsdl:input message="tns:GetAllAddressFormsSoapIn" />
+      <wsdl:output message="tns:GetAllAddressFormsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllDeliveryForms">
+      <wsdl:input message="tns:GetAllDeliveryFormsSoapIn" />
+      <wsdl:output message="tns:GetAllDeliveryFormsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentsInUserLibrary">
+      <wsdl:input message="tns:GetDocumentsInUserLibrarySoapIn" />
+      <wsdl:output message="tns:GetDocumentsInUserLibrarySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="HideDocumentInLibrary">
+      <wsdl:input message="tns:HideDocumentInLibrarySoapIn" />
+      <wsdl:output message="tns:HideDocumentInLibrarySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserDefaultLibraryIds">
+      <wsdl:input message="tns:GetUserDefaultLibraryIdsSoapIn" />
+      <wsdl:output message="tns:GetUserDefaultLibraryIdsSoapOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="SkylineWebServiceSoap" type="tns:SkylineWebServiceSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="AddElementControl">
-      <soap:operation soapAction="http://tempuri.org/AddElementControl" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetAllAddressForms">
-      <soap:operation soapAction="http://tempuri.org/GetAllAddressForms" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetAllDeliveryForms">
-      <soap:operation soapAction="http://tempuri.org/GetAllDeliveryForms" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetDocumentsInUserLibrary">
-      <soap:operation soapAction="http://tempuri.org/GetDocumentsInUserLibrary" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="HideDocumentInLibrary">
-      <soap:operation soapAction="http://tempuri.org/HideDocumentInLibrary" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetVersionNumber">
       <soap:operation soapAction="http://tempuri.org/GetVersionNumber" style="document" />
       <wsdl:input>
@@ -2557,54 +2543,63 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-  </wsdl:binding>
-  <wsdl:binding name="SkylineWebServiceSoap12" type="tns:SkylineWebServiceSoap">
-    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="AddElementControl">
-      <soap12:operation soapAction="http://tempuri.org/AddElementControl" style="document" />
+      <soap:operation soapAction="http://tempuri.org/AddElementControl" style="document" />
       <wsdl:input>
-        <soap12:body use="literal" />
+        <soap:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="literal" />
+        <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetAllAddressForms">
-      <soap12:operation soapAction="http://tempuri.org/GetAllAddressForms" style="document" />
+      <soap:operation soapAction="http://tempuri.org/GetAllAddressForms" style="document" />
       <wsdl:input>
-        <soap12:body use="literal" />
+        <soap:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="literal" />
+        <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetAllDeliveryForms">
-      <soap12:operation soapAction="http://tempuri.org/GetAllDeliveryForms" style="document" />
+      <soap:operation soapAction="http://tempuri.org/GetAllDeliveryForms" style="document" />
       <wsdl:input>
-        <soap12:body use="literal" />
+        <soap:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="literal" />
+        <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetDocumentsInUserLibrary">
-      <soap12:operation soapAction="http://tempuri.org/GetDocumentsInUserLibrary" style="document" />
+      <soap:operation soapAction="http://tempuri.org/GetDocumentsInUserLibrary" style="document" />
       <wsdl:input>
-        <soap12:body use="literal" />
+        <soap:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="literal" />
+        <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="HideDocumentInLibrary">
-      <soap12:operation soapAction="http://tempuri.org/HideDocumentInLibrary" style="document" />
+      <soap:operation soapAction="http://tempuri.org/HideDocumentInLibrary" style="document" />
       <wsdl:input>
-        <soap12:body use="literal" />
+        <soap:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="literal" />
+        <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetUserDefaultLibraryIds">
+      <soap:operation soapAction="http://tempuri.org/GetUserDefaultLibraryIds" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SkylineWebServiceSoap12" type="tns:SkylineWebServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="GetVersionNumber">
       <soap12:operation soapAction="http://tempuri.org/GetVersionNumber" style="document" />
       <wsdl:input>
@@ -3165,6 +3160,60 @@
     </wsdl:operation>
     <wsdl:operation name="AddElementToControl">
       <soap12:operation soapAction="http://tempuri.org/AddElementToControl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddElementControl">
+      <soap12:operation soapAction="http://tempuri.org/AddElementControl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAddressForms">
+      <soap12:operation soapAction="http://tempuri.org/GetAllAddressForms" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllDeliveryForms">
+      <soap12:operation soapAction="http://tempuri.org/GetAllDeliveryForms" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentsInUserLibrary">
+      <soap12:operation soapAction="http://tempuri.org/GetDocumentsInUserLibrary" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HideDocumentInLibrary">
+      <soap12:operation soapAction="http://tempuri.org/HideDocumentInLibrary" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserDefaultLibraryIds">
+      <soap12:operation soapAction="http://tempuri.org/GetUserDefaultLibraryIds" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

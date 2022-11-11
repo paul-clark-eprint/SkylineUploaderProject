@@ -8,6 +8,8 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Linq;
 using HelperClasses;
 using SkylineUploader.Classes;
 using Telerik.WinControls.UI;
@@ -15,6 +17,7 @@ using SkylineUploader.SkylineWebService;
 using SkylineUploaderDomain.DataModel;
 using SkylineUploaderDomain.DataModel.Classes;
 using Telerik.WinControls;
+using UserLibraryIds = SkylineUploader.SkylineWebService.UserLibraryIds;
 
 namespace SkylineUploader
 {
@@ -37,6 +40,8 @@ namespace SkylineUploader
         private static Guid _docId = Guid.Empty;
         private static string _errorMessage = string.Empty;
         private static int _totalFiles = 0;
+        private static bool _alertUser = false;
+
         public Guid FolderId { get; set; }
 
         private static List<string> _extensions;
@@ -150,6 +155,7 @@ namespace SkylineUploader
 
         private void BwCheckUrl_DoWork(object sender, DoWorkEventArgs e)
         {
+            _alertUser = false;
             string url = e.Argument.ToString();
             _bwCheckUrl.ReportProgress(1);
             _urlValid = Webcalls.CheckUrl(url);
@@ -203,8 +209,10 @@ namespace SkylineUploader
             uploadParams.username = _username;
             uploadParams.Password = _password;
             uploadParams.LibraryUserId = _userLibraryUserId;
+            uploadParams.LibraryId = _userLibraryLibraryId;
             uploadParams.UploadUrl = _portalUrl;
             uploadParams.PdfPath = uxTextBoxSourceFolder.Text;
+            uploadParams.PortalId = _portalId;
 
             uxLabelStatus.Text = "Connected";
 
@@ -259,6 +267,7 @@ namespace SkylineUploader
                     if (FileLocked(file))
                     {
                         Debug.Log("File " + file.FullName + " is locked. Skipping this file");
+                        _alertUser = true;
                         continue;
                     }
 
@@ -286,8 +295,12 @@ namespace SkylineUploader
                     byte[] Buffer = new byte[ChunkSize];
 
                     string pdfPath = Path.Combine(uploadParams.PdfPath, filename);
+                    
+                    
                     string url = uploadParams.UploadUrl;
                     Guid libraryUserId = uploadParams.LibraryUserId;
+                    var libraryId = uploadParams.LibraryId;
+                    var portalId = uploadParams.PortalId;
 
                     string uploadDir = _userLibraryUserId.ToString();
 
@@ -307,6 +320,48 @@ namespace SkylineUploader
                         webSvc.Proxy = proxy;
                     }
 
+
+                    //look for XML file if the same name
+                    var xmlName = Path.GetFileNameWithoutExtension(pdfPath) + ".xml";
+                    var xmlPath = Path.Combine(uploadParams.PdfPath, xmlName);
+                    if (File.Exists(xmlPath))
+                    {
+                        XmlDocument doc = new XmlDocument();
+                        doc.Load(xmlPath);
+                        var node = doc.SelectSingleNode("/Skyline/Email");
+                        if (node != null)
+                        {
+                            var email = node.InnerText;
+                            if (!string.IsNullOrEmpty(email))
+                            {
+                                UserLibraryIds userLibraryIds = webSvc.GetUserDefaultLibraryIds(portalId, email);
+                                if (userLibraryIds != null)
+                                {
+                                    Guid userId = userLibraryIds.UserId;
+                                    bool userActive = webSvc.IsUserActive(userId);
+                                    if (userActive)
+                                    {
+                                        uploadDir =userLibraryIds.UserId.ToString();
+                                        libraryUserId = userLibraryIds.UserId;
+                                        libraryId = userLibraryIds.UserDefaultLibraryId;
+                                    }
+                                    else
+                                    {
+                                        Debug.Log("The user with the email address "+ email + " is not activated. The document will be uploaded to the default library "+ uxTextBoxSelected.Text);
+                                        _alertUser = true;
+                                    }
+                                    
+                                }
+                                else
+                                {
+                                    Debug.Log("Unable to get the default library for the email address "+ email + ". The document will be uploaded to the default library "+ uxTextBoxSelected.Text);
+                                    _alertUser = true;
+                                }
+                            }
+                        }
+                    }
+
+                    
 
                     try
                     {
@@ -360,6 +415,7 @@ namespace SkylineUploader
                         _errorMessage = "Error uploading the document:\n\n" + ex.Message;
                         _uploadOK = false;
                         timer1.Enabled = true;
+                        _alertUser = true;
                         return;
                     }
                     finally
@@ -385,7 +441,7 @@ namespace SkylineUploader
                     _bwUpload.ReportProgress(-2, "\"" + filenameTruncated + "\"");
                     try
                     {
-                        string docIdOrError = webSvc.MoveTempDocumentsToSpecificLibrary(libraryUserId, _userLibraryLibraryId,false);
+                        string docIdOrError = webSvc.MoveTempDocumentsToSpecificLibrary(libraryUserId, libraryId,false);
                         try
                         {
                             _docId = new Guid(docIdOrError);
@@ -400,6 +456,7 @@ namespace SkylineUploader
                             _uploadOK = false;
                             _errorMessage = docIdOrError;
                             Debug.Error(docIdOrError);
+                            _alertUser = true;
                         }
                         else
                         {
@@ -412,17 +469,68 @@ namespace SkylineUploader
                         Debug.Error("Error calling MoveTempDocumentsToUserLibrary", ex);
                         _errorMessage = "Error copying your document to your online library:\n\n" + ex.Message;
                         _uploadOK = false;
+                        _alertUser = true;
                     }
 
                     if (_uploadOK && uxCheckBoxDeleteSource.Checked)
                     {
-                        File.Delete(pdfPath);
-                    }
+                        Debug.Log("File uploaded OK. Deleting source file "+ pdfPath);
+                        try
+                        {
+                            File.Delete(pdfPath);
+                        }
+                        catch (Exception exception)
+                        {
+                            Debug.Error("Error deleting file "+ pdfPath,exception);
+                            _uploadOK = false;
+                        }
+                        
+                        if (File.Exists(pdfPath))
+                        {
+                            _uploadOK = false;
+                            Debug.Error("Unable to deleted file " + pdfPath);
+                        }
 
+                        if (File.Exists(xmlPath))
+                        {
+                            Debug.Log("Deleting associated XML file "+ xmlPath);
+                            try
+                            {
+                                File.Delete(xmlPath);
+                            }
+                            catch (Exception exception)
+                            {
+                                Debug.Error("Error deleting file "+ xmlPath,exception);
+                                _uploadOK = false;
+                            }
+
+                            if (File.Exists(xmlPath))
+                            {
+                                _uploadOK = false;
+                                Debug.Error("Unable to deleted file " + pdfPath);
+                            }
+                        }
+
+
+                        Debug.Log("Deleting Temp upload forlder " + uploadDir);
+                        webSvc.DeleteTempUploadedFile(uploadDir);
+
+                        if (!_uploadOK)
+                        {
+                            Debug.Error("Error during the upload. Skipping further uploads");
+                            break;
+                        }
+                    }
                 }
 
-                _bwUpload.ReportProgress(-5);
-
+                if (_uploadOK)
+                {
+                    _bwUpload.ReportProgress(-5);
+                }
+                else
+                {
+                    _bwUpload.ReportProgress(-3);
+                }
             }
         }
 
@@ -518,9 +626,19 @@ namespace SkylineUploader
                 if (_errorMessage != string.Empty)
                 {
                     Debug.Error(_errorMessage);
-                    MessageBox.Show(_errorMessage, "Error Uploading", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _alertUser = true;
                 }
             }
+
+            if (_alertUser)
+            {
+                DialogResult res = MessageBox.Show("There were some problems during this upload. Do you want to see the log file?", "Problems Uploading", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                if (res == DialogResult.Yes)
+                {
+                    Debug.OpenLogDirectory();
+                }
+            }
+            
             _uploadCancelled = false;
             timer1.Enabled = true;
         }
@@ -569,7 +687,7 @@ namespace SkylineUploader
 
                 try
                 {
-                    Program.PricingService.Url = "https://" + rawUrl + "/webservices/PricingService.asmx";
+                    Program.PricingService.Url = portalUrl + "/webservices/PricingService.asmx";
                     _bwLogin.ReportProgress(0, "Looking for https://" + rawUrl);
                     portalId = Program.PricingService.GetPortalGuidFromUrl(rawUrl);
                 }
@@ -586,7 +704,6 @@ namespace SkylineUploader
                     portalId = Program.PricingService.GetPortalGuidFromUrl(rawUrl);
                 }
 
-                //portalId = Program.PricingService.GetPortalGuidFromUrl(rawUrl);
                 if (portalId == Guid.Empty)
                 {
                     _bwLogin.ReportProgress(0, "Error connecting to " + rawUrl);
@@ -736,7 +853,6 @@ namespace SkylineUploader
                 uxTextBoxFolderName.Enabled = true;
                 uxTextBoxPortalUrl.Text = _portalUrl;
 
-                //Guid _folderId = new Guid("0193dba1-4ec9-45bc-96bd-b4325a86112e");
                 GetDocumentFolderDetails(FolderId);
 
                 if(!RequiredSettingsMissing()) uxButtonUpload.Enabled = true;
@@ -850,7 +966,12 @@ namespace SkylineUploader
 
         private void GetUserLibaries(Guid userGuid)
         {
-            _userLibraryUserName = uxListControlUsers.SelectedItem.Text;
+            if (uxListControlUsers.SelectedItem != null)
+            {
+                _userLibraryUserName = uxListControlUsers.SelectedItem.Text;
+            }
+            
+            
             _userLibraryUserId = userGuid;
 
             List<LibraryDetails> userLibraries = Program.SkylineService.GetAllUserLibraries(userGuid).ToList();
@@ -953,14 +1074,7 @@ namespace SkylineUploader
         }
 
 
-        private void uxButtonSaveToXml_Click(object sender, EventArgs e)
-        {
-            if (RequiredSettingsMissing())
-            {
-                return;
-            }
-        }
-
+        
         private bool RequiredSettingsMissing()
         {
             if (uxTextBoxSourceFolder.Text == string.Empty)
@@ -1007,6 +1121,13 @@ namespace SkylineUploader
         private void uxButtonSave_Click(object sender, EventArgs e)
         {
             if (RequiredSettingsMissing())
+            {
+                MessageBox.Show(uxLabelErrorMessage.Text);
+                return;
+            }
+
+            string folderPath = uxTextBoxSourceFolder.Text;
+            if (!CheckFolderPermissiongs(folderPath))
             {
                 MessageBox.Show(uxLabelErrorMessage.Text);
                 return;
@@ -1081,7 +1202,7 @@ namespace SkylineUploader
                 }
 
                 sourceFolder.FolderId = folderId;
-                sourceFolder.FolderPath = uxTextBoxSourceFolder.Text;
+                sourceFolder.FolderPath = folderPath;
                 sourceFolder.Enabled = uxCheckBoxEnabled.Checked;
                 sourceFolder.FileCount = 0;
 
@@ -1123,6 +1244,71 @@ namespace SkylineUploader
             }
 
 
+        }
+
+        private bool CheckFolderPermissiongs(string folderPath)
+        {
+            var testFile = Path.Combine(folderPath, "__test__.txt");
+            try
+            {
+                if (File.Exists(testFile))
+                {
+                    File.Delete(testFile);
+                }
+            }
+            catch (Exception e)
+            {
+                uxLabelErrorMessage.Text = "File "+ testFile + " already found but delete permission missing from the folder " + folderPath;
+                Debug.Error("File "+ testFile + " already found but delete permission missing from the folder " + folderPath,e);
+                
+                return false;
+            }
+
+            try
+            {
+                using (FileStream fs = new FileStream(testFile, FileMode.Create))
+                {    
+                    byte[] messageByte = Encoding.ASCII.GetBytes("testing write access.");
+                    // Write the number of bytes to the file.
+                    fs.WriteByte((byte)messageByte.Length);
+
+                    // Write the bytes to the file.
+                    fs.Write(messageByte, 0, messageByte.Length);
+
+                    // Close the stream.
+                    fs.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                uxLabelErrorMessage.Text = "Unable to create files in the folder " + folderPath;
+                Debug.Error("Unable to create files in the folder " + folderPath,e);
+                return false;
+            }
+
+            try
+            {
+                if (File.Exists(testFile))
+                {
+                    File.Delete(testFile);
+                }
+                else
+                {
+                    uxLabelErrorMessage.Text = "Unable to read files in the folder " + folderPath;
+                    Debug.Error("Unable to read files in the folder " + folderPath);
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                uxLabelErrorMessage.Text = "Unable to delete files in the folder " + folderPath;
+                Debug.Error("Unable to delete files in the folder " + folderPath,e);
+                return false;
+            }
+
+            uxLabelErrorMessage.Text = "Permissions check OK on folder " + folderPath;
+            Debug.Log("Permissions check OK on folder "+ folderPath);
+            return true;
         }
 
         private void uxListControlLibraries_MouseUp(object sender, MouseEventArgs e)
@@ -1185,7 +1371,7 @@ namespace SkylineUploader
                     //    "Folder Details", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-                _portalId = folder.PortalId;
+                //_portalId = folder.PortalId;
                 uxTextBoxFolderName.Text = folder.FolderName;
                 uxCheckBoxEnabled.Checked = folder.Enabled;
                 uxCheckBoxSynchronize.Checked = folder.SynchronizeFiles;

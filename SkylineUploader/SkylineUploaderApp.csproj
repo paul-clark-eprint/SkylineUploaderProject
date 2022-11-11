@@ -299,6 +299,9 @@
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\SkylineWebService\SkylineWebService.wsdl" />
+    <None Include="Web References\SkylineWebService\UserLibraryIds.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
     <None Include="Web References\SkylineWebService\UserSettings.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>

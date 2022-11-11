@@ -1249,6 +1249,27 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="GetUserDefaultLibraryIds">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="emailAddress" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="UserLibraryIds">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserDefaultLibraryId" type="s1:guid" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetUserDefaultLibraryIdsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserDefaultLibraryIdsResult" type="tns:UserLibraryIds" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
     <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
       <s:simpleType name="guid">
@@ -1669,6 +1690,12 @@
   <wsdl:message name="HideDocumentInLibrarySoapOut">
     <wsdl:part name="parameters" element="tns:HideDocumentInLibraryResponse" />
   </wsdl:message>
+  <wsdl:message name="GetUserDefaultLibraryIdsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserDefaultLibraryIds" />
+  </wsdl:message>
+  <wsdl:message name="GetUserDefaultLibraryIdsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserDefaultLibraryIdsResponse" />
+  </wsdl:message>
   <wsdl:portType name="SkylineWebServiceSoap">
     <wsdl:operation name="GetVersionNumber">
       <wsdl:input message="tns:GetVersionNumberSoapIn" />
@@ -1941,6 +1968,10 @@
     <wsdl:operation name="HideDocumentInLibrary">
       <wsdl:input message="tns:HideDocumentInLibrarySoapIn" />
       <wsdl:output message="tns:HideDocumentInLibrarySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserDefaultLibraryIds">
+      <wsdl:input message="tns:GetUserDefaultLibraryIdsSoapIn" />
+      <wsdl:output message="tns:GetUserDefaultLibraryIdsSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="SkylineWebServiceSoap" type="tns:SkylineWebServiceSoap">
@@ -2557,6 +2588,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetUserDefaultLibraryIds">
+      <soap:operation soapAction="http://tempuri.org/GetUserDefaultLibraryIds" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="SkylineWebServiceSoap12" type="tns:SkylineWebServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -3165,6 +3205,15 @@
     </wsdl:operation>
     <wsdl:operation name="HideDocumentInLibrary">
       <soap12:operation soapAction="http://tempuri.org/HideDocumentInLibrary" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserDefaultLibraryIds">
+      <soap12:operation soapAction="http://tempuri.org/GetUserDefaultLibraryIds" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

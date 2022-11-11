@@ -36,6 +36,7 @@ namespace SkylineUploader
             this.uxMenuItemFile = new Telerik.WinControls.UI.RadMenuItem();
             this.uxMenuItemDebug = new Telerik.WinControls.UI.RadMenuItem();
             this.uxMenuItemError = new Telerik.WinControls.UI.RadMenuItem();
+            this.uxMenuItemSQL = new Telerik.WinControls.UI.RadMenuItem();
             this.uxMenuItemExit = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenu1 = new Telerik.WinControls.UI.RadMenu();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -47,7 +48,10 @@ namespace SkylineUploader
             this.uxButtonNew1 = new Telerik.WinControls.UI.RadButtonElement();
             this.uxButtonClose1 = new Telerik.WinControls.UI.RadButtonElement();
             this.dotsLineWaitingBarIndicatorElement1 = new Telerik.WinControls.UI.DotsLineWaitingBarIndicatorElement();
-            this.uxMenuItemSQL = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuSeparatorItem1 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
+            this.uxMenuDebugOn = new Telerik.WinControls.UI.RadMenuItem();
+            this.uxMenuDebugOff = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuSeparatorItem2 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             ((System.ComponentModel.ISupportInitialize)(this.uxGridViewFolders)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxGridViewFolders.MasterTemplate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radMenu1)).BeginInit();
@@ -81,6 +85,10 @@ namespace SkylineUploader
             this.uxMenuItemDebug,
             this.uxMenuItemError,
             this.uxMenuItemSQL,
+            this.radMenuSeparatorItem1,
+            this.uxMenuDebugOn,
+            this.uxMenuDebugOff,
+            this.radMenuSeparatorItem2,
             this.uxMenuItemExit});
             this.uxMenuItemFile.Name = "uxMenuItemFile";
             this.uxMenuItemFile.Text = "File";
@@ -96,6 +104,12 @@ namespace SkylineUploader
             this.uxMenuItemError.Name = "uxMenuItemError";
             this.uxMenuItemError.Text = "Open Error Log";
             this.uxMenuItemError.Click += new System.EventHandler(this.uxMenuItemError_Click);
+            // 
+            // uxMenuItemSQL
+            // 
+            this.uxMenuItemSQL.Name = "uxMenuItemSQL";
+            this.uxMenuItemSQL.Text = "Reset Database Connection";
+            this.uxMenuItemSQL.Click += new System.EventHandler(this.uxMenuItemSQL_Click);
             // 
             // uxMenuItemExit
             // 
@@ -201,11 +215,29 @@ namespace SkylineUploader
             // 
             this.dotsLineWaitingBarIndicatorElement1.Name = "dotsLineWaitingBarIndicatorElement1";
             // 
-            // uxMenuItemSQL
+            // radMenuSeparatorItem1
             // 
-            this.uxMenuItemSQL.Name = "uxMenuItemSQL";
-            this.uxMenuItemSQL.Text = "Reset Database Connection";
-            this.uxMenuItemSQL.Click += new System.EventHandler(this.uxMenuItemSQL_Click);
+            this.radMenuSeparatorItem1.Name = "radMenuSeparatorItem1";
+            this.radMenuSeparatorItem1.Text = "radMenuSeparatorItem1";
+            this.radMenuSeparatorItem1.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // uxMenuDebugOn
+            // 
+            this.uxMenuDebugOn.Name = "uxMenuDebugOn";
+            this.uxMenuDebugOn.Text = "Skyline Uploader Service - Debug ON";
+            this.uxMenuDebugOn.Click += new System.EventHandler(this.uxMenuDebugOn_Click);
+            // 
+            // uxMenuDebugOff
+            // 
+            this.uxMenuDebugOff.Name = "uxMenuDebugOff";
+            this.uxMenuDebugOff.Text = "Skyline Uploader Service - Debug OFF";
+            this.uxMenuDebugOff.Click += new System.EventHandler(this.uxMenuDebugOff_Click);
+            // 
+            // radMenuSeparatorItem2
+            // 
+            this.radMenuSeparatorItem2.Name = "radMenuSeparatorItem2";
+            this.radMenuSeparatorItem2.Text = "radMenuSeparatorItem2";
+            this.radMenuSeparatorItem2.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // FrmUploader
             // 
@@ -250,5 +282,9 @@ namespace SkylineUploader
         private Telerik.WinControls.UI.RadWaitingBarElement UxWaitingBar;
         private Telerik.WinControls.UI.DotsLineWaitingBarIndicatorElement dotsLineWaitingBarIndicatorElement1;
         private Telerik.WinControls.UI.RadMenuItem uxMenuItemSQL;
+        private Telerik.WinControls.UI.RadMenuSeparatorItem radMenuSeparatorItem1;
+        private Telerik.WinControls.UI.RadMenuItem uxMenuDebugOn;
+        private Telerik.WinControls.UI.RadMenuItem uxMenuDebugOff;
+        private Telerik.WinControls.UI.RadMenuSeparatorItem radMenuSeparatorItem2;
     }
 }
