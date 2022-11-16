@@ -168,6 +168,8 @@ namespace SkylineUploader.SkylineWebService {
         
         private System.Threading.SendOrPostCallback GetUserDefaultLibraryIdsOperationCompleted;
         
+        private System.Threading.SendOrPostCallback SaveLogMessageOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -412,6 +414,9 @@ namespace SkylineUploader.SkylineWebService {
         
         /// <remarks/>
         public event GetUserDefaultLibraryIdsCompletedEventHandler GetUserDefaultLibraryIdsCompleted;
+        
+        /// <remarks/>
+        public event SaveLogMessageCompletedEventHandler SaveLogMessageCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetVersionNumber", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -2504,6 +2509,44 @@ namespace SkylineUploader.SkylineWebService {
             if ((this.GetUserDefaultLibraryIdsCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.GetUserDefaultLibraryIdsCompleted(this, new GetUserDefaultLibraryIdsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/SaveLogMessage", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void SaveLogMessage([System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<System.Guid> portalId, string source, string computer, int messageLevel, int eventId, string message) {
+            this.Invoke("SaveLogMessage", new object[] {
+                        portalId,
+                        source,
+                        computer,
+                        messageLevel,
+                        eventId,
+                        message});
+        }
+        
+        /// <remarks/>
+        public void SaveLogMessageAsync(System.Nullable<System.Guid> portalId, string source, string computer, int messageLevel, int eventId, string message) {
+            this.SaveLogMessageAsync(portalId, source, computer, messageLevel, eventId, message, null);
+        }
+        
+        /// <remarks/>
+        public void SaveLogMessageAsync(System.Nullable<System.Guid> portalId, string source, string computer, int messageLevel, int eventId, string message, object userState) {
+            if ((this.SaveLogMessageOperationCompleted == null)) {
+                this.SaveLogMessageOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSaveLogMessageOperationCompleted);
+            }
+            this.InvokeAsync("SaveLogMessage", new object[] {
+                        portalId,
+                        source,
+                        computer,
+                        messageLevel,
+                        eventId,
+                        message}, this.SaveLogMessageOperationCompleted, userState);
+        }
+        
+        private void OnSaveLogMessageOperationCompleted(object arg) {
+            if ((this.SaveLogMessageCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SaveLogMessageCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -6030,6 +6073,10 @@ namespace SkylineUploader.SkylineWebService {
             }
         }
     }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void SaveLogMessageCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
 }
 
 #pragma warning restore 1591

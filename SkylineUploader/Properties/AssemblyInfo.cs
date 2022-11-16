@@ -11,9 +11,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: AssemblyVersion("7.1.1")]
+[assembly: AssemblyVersion("7.3.0")]
 [assembly : AssemblyCompany("ePrint Direct Ltd")]
-[assembly : AssemblyProduct("Skyline")]
+[assembly : AssemblyProduct("SkylineUploader App")]
 [assembly : AssemblyCopyright("ePrint Direct Ltd 2020")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

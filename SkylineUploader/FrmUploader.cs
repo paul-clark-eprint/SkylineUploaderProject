@@ -29,7 +29,7 @@ namespace SkylineUploader
         private bool _sqlFound = false;
         private bool _dataSourceSet = false;
         private string _dataSource = string.Empty;
-        
+
 
         public FrmUploader()
         {
@@ -116,7 +116,7 @@ namespace SkylineUploader
                     if (timerInterval > 500 && timerInterval < 60000)
                     {
                         timer1.Interval = timerInterval;
-                    } 
+                    }
                 }
             }
             else
@@ -127,12 +127,12 @@ namespace SkylineUploader
 
         private void CheckServiceStatus()
         {
-            
-            uxLabelStatus.Visibility=ElementVisibility.Visible;
+
+            uxLabelStatus.Visibility = ElementVisibility.Visible;
             uxProgressBar.Visibility = ElementVisibility.Collapsed;
-            UxWaitingBar.Visibility= ElementVisibility.Collapsed;
+            UxWaitingBar.Visibility = ElementVisibility.Collapsed;
             UxWaitingBar.StopWaiting();
-            
+
 
             var pcName = Environment.MachineName;
 
@@ -152,14 +152,14 @@ namespace SkylineUploader
                         ServiceSettings serviceSettings = (from s in context.ServiceSettings select s).FirstOrDefault();
                         if (serviceSettings == null)
                         {
-                            uxLabelStatus.Text = DateTime.Now.ToString("T") +" The Skyline Uploader Service status is not set";
+                            uxLabelStatus.Text = DateTime.Now.ToString("T") + " The Skyline Uploader Service status is not set";
                             uxLabelStatus.Image = Properties.Resources.error_warning;
                         }
                         else
                         {
                             if (serviceSettings.Running && !string.IsNullOrEmpty(serviceSettings.ServiceMessage))
                             {
-                                uxLabelStatus.Text = DateTime.Now.ToString("T") +" "+ serviceSettings.ServiceMessage;
+                                uxLabelStatus.Text = DateTime.Now.ToString("T") + " " + serviceSettings.ServiceMessage;
                                 uxLabelStatus.Image = Properties.Resources.clock_16;
                             }
 
@@ -169,9 +169,9 @@ namespace SkylineUploader
                                 uxLabelStatus.Image = Properties.Resources.clock_16;
                             }
 
-                            if (!serviceSettings.Running )
+                            if (!serviceSettings.Running)
                             {
-                                uxLabelStatus.Text = DateTime.Now.ToString("T") +" The Skyline Uploader Service is starting up";
+                                uxLabelStatus.Text = DateTime.Now.ToString("T") + " The Skyline Uploader Service is starting up";
                                 uxLabelStatus.Image = Properties.Resources.clock_16;
                             }
 
@@ -188,8 +188,8 @@ namespace SkylineUploader
                                 UxWaitingBar.StartWaiting();
                             }
                         }
-                
-                       
+
+
                     }
                     break;
                 case "Stopped":
@@ -210,7 +210,7 @@ namespace SkylineUploader
                     return;
             }
 
-            
+
         }
 
         private bool DoesServiceExist(string serviceName, string machineName)
@@ -222,7 +222,7 @@ namespace SkylineUploader
 
         private string GetServiceStatus(string serviceName, string machineName)
         {
-           ServiceController sc = new ServiceController(serviceName);
+            ServiceController sc = new ServiceController(serviceName);
 
             switch (sc.Status)
             {
@@ -303,7 +303,7 @@ namespace SkylineUploader
             {
                 Debug.Log("Deleting ProgramData folder");
                 FileHelper.DeleteProgramDataFolder();
-                
+
                 Debug.Log("sqlInstances.Count = " + _sqlInstances.Count);
                 if (_sqlInstances.Count > 0)
                 {
@@ -331,7 +331,7 @@ namespace SkylineUploader
             {
                 uxLabelStatus.Text = "Configuration complete";
                 uxButtonNew1.Enabled = false;
-                
+
                 //MessageBox.Show("Configuration complete. Skyline Uploader starting up", "Configuration complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 //Application.Restart();
                 //Environment.Exit(0);
@@ -349,7 +349,7 @@ namespace SkylineUploader
 
         }
 
-        
+
         private bool InitialiseFoldersGrid()
         {
             //Debug.Log("InitialiseFoldersGrid");
@@ -367,17 +367,17 @@ namespace SkylineUploader
 
                     SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connectionString);
                     var dataSource = builder["Data Source"].ToString();
-                    Debug.Log("DataSource = "+ dataSource);
+                    Debug.Log("DataSource = " + dataSource);
 
                     bool dbCreated = context.Database.CreateIfNotExists();
-                    if(dbCreated) Debug.Log("Database created");
+                    if (dbCreated) Debug.Log("Database created");
                 }
 
             }
             catch (Exception e)
             {
                 Debug.Error("Unexpected Error trying to create the Database: " + e.Message);
-                Debug.Error("ConnectionString = "+ connectionString);
+                Debug.Error("ConnectionString = " + connectionString);
                 MessageBox.Show("Unexpected Error trying to create the Database\n\n" + e.Message, "Unexpected Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Environment.Exit(0);
@@ -404,14 +404,14 @@ namespace SkylineUploader
             uxGridViewFolders.Columns["Files"].Width = 30;
             uxGridViewFolders.Columns["Files"].TextAlignment = ContentAlignment.MiddleCenter;
 
-            uxGridViewFolders.Columns["PortalUrl"].HeaderText="Portal URL";
-            uxGridViewFolders.Columns["FolderName"].HeaderText="Folder Name";
-            uxGridViewFolders.Columns["LibraryUsername"].HeaderText="Library Username";
-            uxGridViewFolders.Columns["LibraryName"].HeaderText="Library Name";
-            uxGridViewFolders.Columns["SourceFolder"].HeaderText="Source Folder";
-            uxGridViewFolders.Columns["InEditMode"].HeaderText="In Edit Mode";
-            uxGridViewFolders.Columns["DeleteAfterUpload"].HeaderText="Delete After Upload";
-            uxGridViewFolders.Columns["Status"].HeaderText="Status";
+            uxGridViewFolders.Columns["PortalUrl"].HeaderText = "Portal URL";
+            uxGridViewFolders.Columns["FolderName"].HeaderText = "Folder Name";
+            uxGridViewFolders.Columns["LibraryUsername"].HeaderText = "Library Username";
+            uxGridViewFolders.Columns["LibraryName"].HeaderText = "Library Name";
+            uxGridViewFolders.Columns["SourceFolder"].HeaderText = "Source Folder";
+            uxGridViewFolders.Columns["InEditMode"].HeaderText = "In Edit Mode";
+            uxGridViewFolders.Columns["DeleteAfterUpload"].HeaderText = "Delete After Upload";
+            uxGridViewFolders.Columns["Status"].HeaderText = "Status";
             uxGridViewFolders.Columns["Status"].TextAlignment = ContentAlignment.MiddleCenter;
 
             GridViewCommandColumn editColumn = new GridViewCommandColumn();
@@ -475,7 +475,7 @@ namespace SkylineUploader
                                        FolderName = f.FolderName,
                                        LibraryUsername = ul.Username,
                                        LibraryName = ul.LibraryName,
-                                       Status= f.Status,
+                                       Status = f.Status,
                                        Files = f.Files,
                                        Enabled = f.Enabled,
                                        SourceFolder = sf.FolderPath
@@ -559,7 +559,7 @@ namespace SkylineUploader
             var commandName = e.Column.Name;
             if (commandName == "Edit")
             {
-                
+
                 //selectedIndex = uxGridViewFolders.Rows.IndexOf(this.uxGridViewFolders.CurrentRow);
                 using (var frmFolderDetails = new FrmFolderDetails())
                 {
@@ -592,7 +592,7 @@ namespace SkylineUploader
                     if (login != null) context.Login.Remove(login);
                     if (userLibrary != null) context.UserLibraries.Remove(userLibrary);
                     if (sourceFolder != null) context.SourceFolders.Remove(sourceFolder);
-                   
+
                     context.SaveChanges();
                 }
                 timer1.Enabled = true;
@@ -600,7 +600,7 @@ namespace SkylineUploader
             }
         }
 
-        
+
         //https://stackoverflow.com/questions/34748589/how-to-create-a-database-user-in-entity-framework
         private void AddDbUser(UploaderDbContext myDB)
         {
@@ -645,21 +645,21 @@ namespace SkylineUploader
 
         private void uxGridViewFolders_CellFormatting(object sender, CellFormattingEventArgs e)
         {
-            
-            
-            if (e.Column.Name != "Files" && e.Column.Name != "Status" && e.Column.Name != "Enabled" && e.Column.Name != "Edit" && e.Column.Name != "Delete" && e.CellElement.Value != null) 
-            { 
-                e.CellElement.ToolTipText = e.CellElement.Value.ToString(); 
-            } 
+
+
+            if (e.Column.Name != "Files" && e.Column.Name != "Status" && e.Column.Name != "Enabled" && e.Column.Name != "Edit" && e.Column.Name != "Delete" && e.CellElement.Value != null)
+            {
+                e.CellElement.ToolTipText = e.CellElement.Value.ToString();
+            }
 
             if (e.Column.Name == "Edit")
             {
-                e.CellElement.ToolTipText = "Edit profile"; 
+                e.CellElement.ToolTipText = "Edit profile";
             }
 
             if (e.Column.Name == "Delete")
             {
-                e.CellElement.ToolTipText = "Delete profile"; 
+                e.CellElement.ToolTipText = "Delete profile";
             }
         }
 
@@ -667,7 +667,7 @@ namespace SkylineUploader
         {
             timer1.Enabled = false;
 
-            
+
             if (uxGridViewFolders.CurrentRow != null)
             {
                 int currentRowIndex = uxGridViewFolders.CurrentRow.Index;
@@ -679,9 +679,9 @@ namespace SkylineUploader
                 }
                 catch (Exception exception)
                 {
-                    
+
                 }
-                
+
             }
 
             timer1.Enabled = true;
@@ -719,6 +719,18 @@ namespace SkylineUploader
             var res = MessageBox.Show("Do you want reset the connection to the database?", "Reset Database Connection", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             if (res == DialogResult.OK)
             {
+                //reset the app.config ConnectionString back to blank Data Source
+                SqlConnectionStringBuilder sqlConBuilder = new SqlConnectionStringBuilder();
+                sqlConBuilder.ConnectionString = "Data Source=NotSet;Initial Catalog=SkylineUploader;Integrated Security=SSPI;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+
+                string errorMessage = SqlHelper.ModifyConnectionString("UploaderDbContext", sqlConBuilder.ConnectionString);
+                if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    Debug.Error("Error resetting the ConnectionString. Error: " + errorMessage);
+                    MessageBox.Show("Error resetting the ConnectionString. Error: \n\n" + errorMessage, "Unexpected Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+
                 var deletedOk = SettingsHelper.DeleteSettingsFile();
                 if (deletedOk)
                 {
@@ -738,14 +750,51 @@ namespace SkylineUploader
 
         private void uxMenuDebugOn_Click(object sender, EventArgs e)
         {
-            SettingsHelper.UpdateDebugMode("true");
-            this.Text = "Skyline Uploader - Debug ON";
+            if (SettingsHelper.UpdateDebugMode("true"))
+            { 
+                var debugMode = SettingsHelper.GetDebugMode();
+                if (debugMode)
+                {
+                    MessageBox.Show("Debug mode turned ON. Please restart the Skyline Uploader Service", "Restart Service", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("There was a problem turning Debug mode ON.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                
+                
+            }
+            else
+            {
+                MessageBox.Show("There was a problem turning on debug mode", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
 
         private void uxMenuDebugOff_Click(object sender, EventArgs e)
         {
-            SettingsHelper.UpdateDebugMode("false");
-            this.Text = "Skyline Uploader";
+            if (SettingsHelper.UpdateDebugMode("false"))
+            {
+                var debugMode = SettingsHelper.GetDebugMode();
+                if (!debugMode)
+                {
+                    MessageBox.Show("Debug mode turned OFF. Please restart the Skyline Uploader Service", "Restart Service", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("There was a problem turning Debug mode OFF.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                
+            }
+            else
+            {
+                MessageBox.Show("There was a problem turning off debug mode", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void uxMenuItemLogging_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

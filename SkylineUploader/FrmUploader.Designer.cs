@@ -34,11 +34,14 @@ namespace SkylineUploader
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmUploader));
             this.uxGridViewFolders = new Telerik.WinControls.UI.RadGridView();
             this.uxMenuItemFile = new Telerik.WinControls.UI.RadMenuItem();
-            this.uxMenuItemDebug = new Telerik.WinControls.UI.RadMenuItem();
-            this.uxMenuItemError = new Telerik.WinControls.UI.RadMenuItem();
+            this.uxMenuItemLogging = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuItem2 = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuItem3 = new Telerik.WinControls.UI.RadMenuItem();
+            this.uxMenuItemDebugOn = new Telerik.WinControls.UI.RadMenuItem();
+            this.uxMenuItemDebugOff = new Telerik.WinControls.UI.RadMenuItem();
             this.uxMenuItemSQL = new Telerik.WinControls.UI.RadMenuItem();
             this.uxMenuItemExit = new Telerik.WinControls.UI.RadMenuItem();
-            this.radMenu1 = new Telerik.WinControls.UI.RadMenu();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
             this.uxLabelStatus = new Telerik.WinControls.UI.RadLabelElement();
@@ -48,14 +51,11 @@ namespace SkylineUploader
             this.uxButtonNew1 = new Telerik.WinControls.UI.RadButtonElement();
             this.uxButtonClose1 = new Telerik.WinControls.UI.RadButtonElement();
             this.dotsLineWaitingBarIndicatorElement1 = new Telerik.WinControls.UI.DotsLineWaitingBarIndicatorElement();
-            this.radMenuSeparatorItem1 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
-            this.uxMenuDebugOn = new Telerik.WinControls.UI.RadMenuItem();
-            this.uxMenuDebugOff = new Telerik.WinControls.UI.RadMenuItem();
-            this.radMenuSeparatorItem2 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
+            this.radMenu1 = new Telerik.WinControls.UI.RadMenu();
             ((System.ComponentModel.ISupportInitialize)(this.uxGridViewFolders)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxGridViewFolders.MasterTemplate)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radMenu1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radMenu1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -82,28 +82,52 @@ namespace SkylineUploader
             // uxMenuItemFile
             // 
             this.uxMenuItemFile.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.uxMenuItemDebug,
-            this.uxMenuItemError,
+            this.uxMenuItemLogging,
             this.uxMenuItemSQL,
-            this.radMenuSeparatorItem1,
-            this.uxMenuDebugOn,
-            this.uxMenuDebugOff,
-            this.radMenuSeparatorItem2,
             this.uxMenuItemExit});
             this.uxMenuItemFile.Name = "uxMenuItemFile";
             this.uxMenuItemFile.Text = "File";
             // 
-            // uxMenuItemDebug
+            // uxMenuItemLogging
             // 
-            this.uxMenuItemDebug.Name = "uxMenuItemDebug";
-            this.uxMenuItemDebug.Text = "Open Debug Log";
-            this.uxMenuItemDebug.Click += new System.EventHandler(this.uxMenuItemDebug_Click);
+            this.uxMenuItemLogging.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radMenuItem1,
+            this.radMenuItem2,
+            this.radMenuItem3});
+            this.uxMenuItemLogging.Name = "uxMenuItemLogging";
+            this.uxMenuItemLogging.Text = "Logging";
             // 
-            // uxMenuItemError
+            // radMenuItem1
             // 
-            this.uxMenuItemError.Name = "uxMenuItemError";
-            this.uxMenuItemError.Text = "Open Error Log";
-            this.uxMenuItemError.Click += new System.EventHandler(this.uxMenuItemError_Click);
+            this.radMenuItem1.Name = "radMenuItem1";
+            this.radMenuItem1.Text = "Open Debug Log";
+            this.radMenuItem1.Click += new System.EventHandler(this.uxMenuItemDebug_Click);
+            // 
+            // radMenuItem2
+            // 
+            this.radMenuItem2.Name = "radMenuItem2";
+            this.radMenuItem2.Text = "Open Error Log";
+            this.radMenuItem2.Click += new System.EventHandler(this.uxMenuItemError_Click);
+            // 
+            // radMenuItem3
+            // 
+            this.radMenuItem3.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.uxMenuItemDebugOn,
+            this.uxMenuItemDebugOff});
+            this.radMenuItem3.Name = "radMenuItem3";
+            this.radMenuItem3.Text = "Skyline Uploader Service";
+            // 
+            // uxMenuItemDebugOn
+            // 
+            this.uxMenuItemDebugOn.Name = "uxMenuItemDebugOn";
+            this.uxMenuItemDebugOn.Text = "Turn Debug ON";
+            this.uxMenuItemDebugOn.Click += new System.EventHandler(this.uxMenuDebugOn_Click);
+            // 
+            // uxMenuItemDebugOff
+            // 
+            this.uxMenuItemDebugOff.Name = "uxMenuItemDebugOff";
+            this.uxMenuItemDebugOff.Text = "Turn Debug OFF";
+            this.uxMenuItemDebugOff.Click += new System.EventHandler(this.uxMenuDebugOff_Click);
             // 
             // uxMenuItemSQL
             // 
@@ -116,15 +140,6 @@ namespace SkylineUploader
             this.uxMenuItemExit.Name = "uxMenuItemExit";
             this.uxMenuItemExit.Text = "Exit";
             this.uxMenuItemExit.Click += new System.EventHandler(this.uxMenuItemExit_Click);
-            // 
-            // radMenu1
-            // 
-            this.radMenu1.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.uxMenuItemFile});
-            this.radMenu1.Location = new System.Drawing.Point(0, 0);
-            this.radMenu1.Name = "radMenu1";
-            this.radMenu1.Size = new System.Drawing.Size(874, 25);
-            this.radMenu1.TabIndex = 52;
             // 
             // timer1
             // 
@@ -215,29 +230,14 @@ namespace SkylineUploader
             // 
             this.dotsLineWaitingBarIndicatorElement1.Name = "dotsLineWaitingBarIndicatorElement1";
             // 
-            // radMenuSeparatorItem1
+            // radMenu1
             // 
-            this.radMenuSeparatorItem1.Name = "radMenuSeparatorItem1";
-            this.radMenuSeparatorItem1.Text = "radMenuSeparatorItem1";
-            this.radMenuSeparatorItem1.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // uxMenuDebugOn
-            // 
-            this.uxMenuDebugOn.Name = "uxMenuDebugOn";
-            this.uxMenuDebugOn.Text = "Skyline Uploader Service - Debug ON";
-            this.uxMenuDebugOn.Click += new System.EventHandler(this.uxMenuDebugOn_Click);
-            // 
-            // uxMenuDebugOff
-            // 
-            this.uxMenuDebugOff.Name = "uxMenuDebugOff";
-            this.uxMenuDebugOff.Text = "Skyline Uploader Service - Debug OFF";
-            this.uxMenuDebugOff.Click += new System.EventHandler(this.uxMenuDebugOff_Click);
-            // 
-            // radMenuSeparatorItem2
-            // 
-            this.radMenuSeparatorItem2.Name = "radMenuSeparatorItem2";
-            this.radMenuSeparatorItem2.Text = "radMenuSeparatorItem2";
-            this.radMenuSeparatorItem2.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
+            this.radMenu1.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.uxMenuItemFile});
+            this.radMenu1.Location = new System.Drawing.Point(0, 0);
+            this.radMenu1.Name = "radMenu1";
+            this.radMenu1.Size = new System.Drawing.Size(874, 25);
+            this.radMenu1.TabIndex = 52;
             // 
             // FrmUploader
             // 
@@ -256,8 +256,8 @@ namespace SkylineUploader
             this.Text = "Skyline Uploader";
             ((System.ComponentModel.ISupportInitialize)(this.uxGridViewFolders.MasterTemplate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxGridViewFolders)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radMenu1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radMenu1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -268,10 +268,8 @@ namespace SkylineUploader
 
         private Telerik.WinControls.UI.RadGridView uxGridViewFolders;
         private Telerik.WinControls.UI.RadMenuItem uxMenuItemFile;
-        private Telerik.WinControls.UI.RadMenuItem uxMenuItemDebug;
-        private Telerik.WinControls.UI.RadMenuItem uxMenuItemError;
+        private Telerik.WinControls.UI.RadMenuItem uxMenuItemLogging;
         private Telerik.WinControls.UI.RadMenuItem uxMenuItemExit;
-        private Telerik.WinControls.UI.RadMenu radMenu1;
         private System.Windows.Forms.Timer timer1;
         private Telerik.WinControls.UI.RadStatusStrip radStatusStrip1;
         private Telerik.WinControls.UI.RadLabelElement uxLabelStatus;
@@ -282,9 +280,11 @@ namespace SkylineUploader
         private Telerik.WinControls.UI.RadWaitingBarElement UxWaitingBar;
         private Telerik.WinControls.UI.DotsLineWaitingBarIndicatorElement dotsLineWaitingBarIndicatorElement1;
         private Telerik.WinControls.UI.RadMenuItem uxMenuItemSQL;
-        private Telerik.WinControls.UI.RadMenuSeparatorItem radMenuSeparatorItem1;
-        private Telerik.WinControls.UI.RadMenuItem uxMenuDebugOn;
-        private Telerik.WinControls.UI.RadMenuItem uxMenuDebugOff;
-        private Telerik.WinControls.UI.RadMenuSeparatorItem radMenuSeparatorItem2;
+        private Telerik.WinControls.UI.RadMenuItem radMenuItem1;
+        private Telerik.WinControls.UI.RadMenuItem radMenuItem2;
+        private Telerik.WinControls.UI.RadMenuItem radMenuItem3;
+        private Telerik.WinControls.UI.RadMenuItem uxMenuItemDebugOn;
+        private Telerik.WinControls.UI.RadMenuItem uxMenuItemDebugOff;
+        private Telerik.WinControls.UI.RadMenu radMenu1;
     }
 }

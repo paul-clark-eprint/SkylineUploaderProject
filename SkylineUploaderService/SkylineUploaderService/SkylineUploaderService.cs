@@ -50,7 +50,7 @@ namespace SkylineUploaderService
         private static bool _validUser;
         private static bool _lastFileUploaded;
         private static bool _debugMode = false;
-
+        
         public SkylineUploaderService()
         {
             InitializeComponent();
@@ -86,9 +86,17 @@ namespace SkylineUploaderService
             public int dwWaitHint;
         };
 
+        public enum MessageLevel
+        {
+            Critical = 1,
+            Error = 2,
+            Warning = 3,
+            Information = 4
+        }
+
         protected override void OnStart(string[] args)
         {
-            WriteEventLog("Starting Service " + ServiceName, EventLogEntryType.Information);
+            WriteEventLogAlways("Starting Service " + ServiceName, EventLogEntryType.Information);
 
             // Update the service state to Start Pending.
             ServiceStatus serviceStatus = new ServiceStatus();
@@ -125,7 +133,7 @@ namespace SkylineUploaderService
                 CallStopService();
             }
 
-            WriteEventLog("InitialiseServiceSettings", EventLogEntryType.Information);
+            WriteEventLog("Initializing Service Settings", EventLogEntryType.Information);
             InitialiseServiceSettings();
 
             WriteEventLog("Starting timer", EventLogEntryType.Information);
@@ -172,7 +180,7 @@ namespace SkylineUploaderService
             }
         }
 
-        private string GetConnectionString([CallerLineNumber] int lineNumber = 0)
+        private string GetConnectionString()
         {
             string connectionString = string.Empty;
             try
@@ -197,6 +205,7 @@ namespace SkylineUploaderService
                         {
                             connectionString = SettingsHelper.Decrypt(xElement.Value);
                         }
+
                         xElement = doc.Root.Element("DebugMode");
                         if (xElement != null)
                         {
@@ -204,6 +213,7 @@ namespace SkylineUploaderService
                             if (!string.IsNullOrEmpty(debugMode))
                             {
                                 _debugMode = debugMode.ToLower() == "true";
+                                WriteEventLogAlways("Debug mode " + _debugMode, EventLogEntryType.Information);
                             }
                         }
 
@@ -214,23 +224,23 @@ namespace SkylineUploaderService
                     WriteEventLog("settingsPath file not found. Closing", EventLogEntryType.Error);
                 }
 
-                WriteEventLog("ConnectionString  '" + connectionString + "'");
+                WriteEventLog("ConnectionString  '" + connectionString + "'",EventLogEntryType.Information);
 
 
                 SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connectionString);
                 var dataSource = builder["Data Source"].ToString();
                 if (string.IsNullOrEmpty(dataSource))
                 {
-                    WriteEventLog("Data Source not defined in ConnectionString. Shutting down", EventLogEntryType.Error, lineNumber);
+                    WriteEventLog("Data Source not defined in ConnectionString. Shutting down", EventLogEntryType.Error);
                     CallStopService();
                 }
-                WriteEventLog("Data Source: " + dataSource);
+                WriteEventLog("Data Source: " + dataSource, EventLogEntryType.Information);
                 return connectionString;
             }
             catch (Exception ex)
             {
-                WriteEventLog("Unexpected error in GetConnectionString. Error = " + ex.Message, EventLogEntryType.Error, lineNumber);
-                WriteEventLog("ConnectionString = " + connectionString, EventLogEntryType.Error, lineNumber);
+                WriteEventLog("Unexpected error in GetConnectionString. Error = " + ex.Message, EventLogEntryType.Error);
+                WriteEventLog("ConnectionString = " + connectionString, EventLogEntryType.Error);
                 CallStopService();
             }
 
@@ -256,7 +266,7 @@ namespace SkylineUploaderService
 
         protected override void OnStop()
         {
-            eventLog.WriteEntry("Skyline Uploader Service stopping");
+            WriteEventLogAlways("Skyline Uploader Service stopping",EventLogEntryType.Information);
 
             // Update the service state to Stop Pending.
             ServiceStatus serviceStatus = new ServiceStatus();
@@ -352,8 +362,18 @@ namespace SkylineUploaderService
                 }
 
                 SetFileCount(profile.FolderId, profileFiles);
-                SetServiceMessage("Checking folder " + profile.FolderName + ". " + profileFiles + " files found");
-                WriteEventLog("Checking folder " + profile.FolderName + ". " + profileFiles + " files found");
+
+                if (profileFiles == 1)
+                {
+                    SetServiceMessage("Checking folder " + profile.FolderName + ". " + profileFiles + " file found");
+                    WriteEventLog("Checking folder " + profile.FolderName + ". " + profileFiles + " file found",EventLogEntryType.Information);
+                }
+                else
+                {
+                    SetServiceMessage("Checking folder " + profile.FolderName + ". " + profileFiles + " files found");
+                    WriteEventLog("Checking folder " + profile.FolderName + ". " + profileFiles + " files found",EventLogEntryType.Information);
+                }
+                
                 totalFiles += profileFiles;
 
 
@@ -366,7 +386,7 @@ namespace SkylineUploaderService
                     continue;
                 }
 
-                WriteEventLog("Profile URL is valid. Logging in to " + portalUrl);
+                WriteEventLog("Profile URL is valid. Logging in to " + portalUrl,EventLogEntryType.Information);
 
                 if (DoLogin(portalUrl, username, password))
                 {
@@ -405,7 +425,7 @@ namespace SkylineUploaderService
                         }
 
                         var fileName = files[oldestIndex].Name;
-                        WriteEventLog("Uploading " + fileName, EventLogEntryType.Information, 101);
+                        WriteEventLog("Uploading " + fileName, EventLogEntryType.Information);
 
                         Webcalls.UploadParams uploadParams = new Webcalls.UploadParams();
                         uploadParams.UploadUrl = portalUrl;
@@ -416,6 +436,8 @@ namespace SkylineUploaderService
                         uploadParams.LibraryUserId = profile.LibraryUserId;
                         uploadParams.LibraryId = profile.LibraryId;
                         uploadParams.PortalId = _portalId;
+                        uploadParams.LibraryName = profile.LibraryName;
+                        uploadParams.FolderName = profile.FolderName;
 
                         SetServiceMessage("Uploading " + fileName + " in folder " + profile.FolderName);
                         SetFolderStatus("Uploading", profile.FolderId);
@@ -423,13 +445,14 @@ namespace SkylineUploaderService
                         bool uploadedOk = UploadDocument(uploadParams);
                         if (uploadedOk)
                         {
-                            WriteEventLog(fileName + " uploaded OK", EventLogEntryType.Information, 102);
+                            WriteEventLog(fileName + " uploaded OK", EventLogEntryType.Information);
                             SetServiceMessage(fileName + " uploaded OK");
                         }
                         else
                         {
                             WriteEventLog("There was a problem uploading " + fileName, EventLogEntryType.Error);
                             SetServiceMessage("There was a problem uploading " + fileName);
+                            LogMessage(portalUrl, _portalId, MessageLevel.Error, 0, "There was a problem uploading " + fileName);
                         }
 
                         if (profile.DeleteAfterUpload)
@@ -439,22 +462,27 @@ namespace SkylineUploaderService
                             {
                                 if (File.Exists(filePath))
                                 {
-                                    WriteEventLog("DeleteAfterUpload: Deleting file " + filePath, EventLogEntryType.Information, 103);
+                                    WriteEventLog("DeleteAfterUpload: Deleting file " + filePath, EventLogEntryType.Information);
                                     File.Delete(filePath);
                                 }
                                 else
                                 {
-                                    WriteEventLog("DeleteAfterUpload: File not found " + filePath, EventLogEntryType.Error, 103);
+                                    WriteEventLog("DeleteAfterUpload: File not found " + filePath, EventLogEntryType.Error);
+                                    LogMessage(portalUrl, _portalId, MessageLevel.Error, 103, "DeleteAfterUpload: File not found " + filePath);
                                 }
                                 
 
                             }
                             catch (Exception exception)
                             {
-                                WriteEventLog("DeleteAfterUpload: Error deleting file " + filePath, EventLogEntryType.Error, 103);
-                                WriteEventLog(exception.ToString(), EventLogEntryType.Error, 103);
+                                WriteEventLog("DeleteAfterUpload: Error deleting file " + filePath, EventLogEntryType.Error);
+                                LogMessage(portalUrl, _portalId, MessageLevel.Error, 103, "DeleteAfterUpload: Error deleting file " + filePath);
+
+                                WriteEventLog(exception.ToString(), EventLogEntryType.Error);
+                                LogMessage(portalUrl, _portalId, MessageLevel.Error, 103, exception.ToString());
 
                                 DisableProfile(profile.FolderId);
+                                LogMessage(portalUrl, _portalId, MessageLevel.Critical, 103, "Profile has been disabled");
                             }
 
                             var xmlName = Path.GetFileNameWithoutExtension(fileName) + ".xml";
@@ -463,14 +491,15 @@ namespace SkylineUploaderService
                             {
                                 if (File.Exists(xmlPath))
                                 {
-                                    WriteEventLog("DeleteAfterUpload: Deleting file " + xmlPath, EventLogEntryType.Information, 103);
+                                    WriteEventLog("DeleteAfterUpload: Deleting file " + xmlPath, EventLogEntryType.Information);
                                     File.Delete(xmlPath);
                                 }
                             }
                             catch (Exception exception)
                             {
-                                WriteEventLog("DeleteAfterUpload: Error deleting file " + xmlPath, EventLogEntryType.Error, 103);
-                                WriteEventLog(exception.ToString(), EventLogEntryType.Error, 103);
+                                WriteEventLog("DeleteAfterUpload: Error deleting file " + xmlPath, EventLogEntryType.Error);
+
+                                WriteEventLog(exception.ToString(), EventLogEntryType.Error);
 
                                 DisableProfile(profile.FolderId);
                             }
@@ -490,7 +519,7 @@ namespace SkylineUploaderService
                 if (_lastFileUploaded)
                 {
                     _lastFileUploaded = false;
-                    WriteEventLog("No files to upload");
+                    //WriteEventLog("No files to upload");
                 }
             }
             else
@@ -498,13 +527,13 @@ namespace SkylineUploaderService
                 if (totalFiles == 1)
                 {
                     SetServiceMessage(totalFiles + " file to upload");
-                    WriteEventLog(totalFiles + " files to upload");
+                    WriteEventLog(totalFiles + " file to upload",EventLogEntryType.Information);
                     _lastFileUploaded = true;
                 }
                 else
                 {
                     SetServiceMessage(totalFiles + " files to upload");
-                    WriteEventLog(totalFiles + " files to upload");
+                    WriteEventLog(totalFiles + " files to upload",EventLogEntryType.Information);
                     _lastFileUploaded = false;
                 }
 
@@ -524,8 +553,8 @@ namespace SkylineUploaderService
             }
             catch (Exception e)
             {
-                WriteEventLog("CheckFolderPermissiongs: Error deleting file " + testFile, EventLogEntryType.Error, 103);
-                WriteEventLog(e.ToString(), EventLogEntryType.Error, 103);
+                WriteEventLog("CheckFolderPermissiongs: Error deleting file " + testFile, EventLogEntryType.Error);
+                WriteEventLog(e.ToString(), EventLogEntryType.Error);
                 return false;
             }
 
@@ -546,8 +575,8 @@ namespace SkylineUploaderService
             }
             catch (Exception e)
             {
-                WriteEventLog("CheckFolderPermissiongs: Unable to create files in the folder  " + sourceFolder, EventLogEntryType.Error, 103);
-                WriteEventLog(e.ToString(), EventLogEntryType.Error, 103);
+                WriteEventLog("CheckFolderPermissiongs: Unable to create files in the folder  " + sourceFolder, EventLogEntryType.Error);
+                WriteEventLog(e.ToString(), EventLogEntryType.Error);
                 return false;
             }
 
@@ -559,28 +588,31 @@ namespace SkylineUploaderService
                 }
                 else
                 {
-                    WriteEventLog("CheckFolderPermissiongs: Unable to read files in the folder  " + sourceFolder, EventLogEntryType.Error, 103);
+                    WriteEventLog("CheckFolderPermissiongs: Unable to read files in the folder  " + sourceFolder, EventLogEntryType.Error);
                     return false;
                 }
             }
             catch (Exception e)
             {
-                WriteEventLog("CheckFolderPermissiongs: Unable to delete files in the folder  " + sourceFolder, EventLogEntryType.Error, 103);
-                WriteEventLog(e.ToString(), EventLogEntryType.Error, 103);
+                WriteEventLog("CheckFolderPermissiongs: Unable to delete files in the folder  " + sourceFolder, EventLogEntryType.Error);
+                WriteEventLog(e.ToString(), EventLogEntryType.Error);
 
                 return false;
             }
 
-            WriteEventLog("Permissions check OK on folder " + sourceFolder, EventLogEntryType.Information, 102);
+            WriteEventLog("Permissions check OK on folder " + sourceFolder, EventLogEntryType.Information);
             return true;
         }
 
         private static void WriteEventLog(string message, EventLogEntryType logType)
         {
+            
+            
             if (logType == EventLogEntryType.Information && _debugMode == false)
             {
                 return;
             }
+
             using (EventLog eventLog = new EventLog())
             {
                 eventLog.Source = "Skyline Uploader Service";
@@ -589,34 +621,13 @@ namespace SkylineUploaderService
             }
         }
 
-        private static void WriteEventLog(string message, EventLogEntryType logType, int eventId)
+        private static void WriteEventLogAlways(string message, EventLogEntryType logType)
         {
-            if (logType == EventLogEntryType.Information && _debugMode == false)
-            {
-                return;
-            }
-            
-            using (EventLog eventLog = new EventLog())
-            {
-                eventLog.Source = "Skyline Uploader Service";
-
-                eventLog.Log = "Skyline Uploader Service Log";
-                eventLog.WriteEntry(message, logType, eventId);
-            }
-        }
-
-        private static void WriteEventLog(string message)
-        {
-            if (_debugMode == false)
-            {
-                return;
-            }
-            
             using (EventLog eventLog = new EventLog())
             {
                 eventLog.Source = "Skyline Uploader Service";
                 eventLog.Log = "Skyline Uploader Service Log";
-                eventLog.WriteEntry(message, EventLogEntryType.Information);
+                eventLog.WriteEntry(message, logType);
             }
         }
 
@@ -688,10 +699,13 @@ namespace SkylineUploaderService
                 webSvc.Proxy = proxy;
             }
 
+
+            LogMessage(webSvc, portalId, MessageLevel.Information, 0, "Uploading file " + filename);
             var xmlName = Path.GetFileNameWithoutExtension(filename) + ".xml";
             var xmlPath = Path.Combine(uploadParams.PdfPath, xmlName);
             if (File.Exists(xmlPath))
             {
+                LogMessage(webSvc, portalId, MessageLevel.Information, 0, "Found XML file " + xmlName);
                 XmlDocument doc = new XmlDocument();
                         doc.Load(xmlPath);
                         var node = doc.SelectSingleNode("/Skyline/Email");
@@ -700,9 +714,13 @@ namespace SkylineUploaderService
                             var email = node.InnerText;
                             if (!string.IsNullOrEmpty(email))
                             {
+                                LogMessage(webSvc, portalId, MessageLevel.Information, 0, "Found email address " + email);
+                                
                                 UserLibraryIds userLibraryIds = webSvc.GetUserDefaultLibraryIds(portalId, email);
                                 if (userLibraryIds != null)
                                 {
+                                    LogMessage(webSvc, portalId, MessageLevel.Information, 0, "Found user and user's default library");
+
                                     Guid userId = userLibraryIds.UserId;
                                     bool userActive = webSvc.IsUserActive(userId);
                                     if (userActive)
@@ -713,18 +731,19 @@ namespace SkylineUploaderService
                                     }
                                     else
                                     {
-                                        WriteEventLog("The user with the email address "+ email + " is not activated. The document will be uploaded to the default library ", EventLogEntryType.Warning);
+                                        WriteEventLog("The user with the email address "+ email + " is not activated. The document will be uploaded to the default library "+ uploadParams.LibraryName, EventLogEntryType.Warning);
+                                        LogMessage(webSvc, portalId, MessageLevel.Warning, 0, "The user with the email address "+ email + " is not activated. The document will be uploaded to the default library " + uploadParams.LibraryName);
                                     }
                                     
                                 }
                                 else
                                 {
-                                    WriteEventLog("Unable to get the default library for the email address "+ email + ". The document will be uploaded to the default library ",EventLogEntryType.Warning);
+                                    WriteEventLog("Unable to get the default library for the email address "+ email + ". The document will be uploaded to the default library "+ uploadParams.LibraryName,EventLogEntryType.Warning);
+                                    LogMessage(webSvc, portalId, MessageLevel.Warning, 0, "Unable to get the default library for the email address "+ email + ". The document will be uploaded to the default library " + uploadParams.LibraryName);
                                 }
                             }
                         }
             }
-
 
             //Upload the document          
             int Offset = 0; // starting offset.
@@ -735,15 +754,9 @@ namespace SkylineUploaderService
             byte[] Buffer = new byte[ChunkSize];
 
             string pdfPath = Path.Combine(uploadParams.PdfPath, filename);
-            
-
-            
-
 
             //opening the file for read.
             FileStream fs = new FileStream(pdfPath, FileMode.Open, FileAccess.Read);
-
-            
 
             try
             {
@@ -790,6 +803,8 @@ namespace SkylineUploaderService
                 fs.Close();
                 _uploadOK = false;
                 ReportProgress(0, false);
+
+                LogMessage(webSvc, portalId, MessageLevel.Error, 0, "Error uploading file " + pdfPath + " to " + url + " Error message: " + ex.Message);
                 
                 return false;
             }
@@ -799,6 +814,8 @@ namespace SkylineUploaderService
             }
             ReportProgress(0, false);
             ReportTransferring(true);
+
+            LogMessage(webSvc, portalId, MessageLevel.Information, 0, "File " + filename + " uploaded. Moving it to the user library");
 
             try
             {
@@ -816,6 +833,7 @@ namespace SkylineUploaderService
                 {
                     _uploadOK = false;
                     WriteEventLog("Error in MoveTempDocumentsToSpecificLibrary: "+ docIdOrError,EventLogEntryType.Error);
+                    LogMessage(webSvc, portalId, MessageLevel.Error, 0, "Error in MoveTempDocumentsToSpecificLibrary: "+ docIdOrError);
                     return false;
                 }
 
@@ -826,6 +844,7 @@ namespace SkylineUploaderService
             {
                 //possible timeout
                 WriteEventLog("Unexpected error calling MoveTempDocumentsToUserLibrary. Message = "+ ex.Message,EventLogEntryType.Error);
+                LogMessage(webSvc, portalId, MessageLevel.Error, 0, "Unexpected error calling MoveTempDocumentsToUserLibrary. Message = "+ ex.Message);
                 _uploadOK = false;
                 ReportTransferring(false);
                 return false;
@@ -836,9 +855,42 @@ namespace SkylineUploaderService
             if (!webSvc.DeleteTempUploadedFile(uploadDir))
             {
                 WriteEventLog("Error deleting the Temp upload directory "+ uploadDir,EventLogEntryType.Error);
+                LogMessage(webSvc, portalId, MessageLevel.Error, 0, "Error deleting the Temp upload directory "+ uploadDir);
             }
 
             return true;
+        }
+
+        private static void LogMessage(SkylineWebService.SkylineWebService webSvc, Guid portalId, MessageLevel messageLevel, int eventId, string message)
+        {
+            var computerName = Environment.MachineName;
+            if (message.Length > 2000)
+            {
+                message = message.Substring(0, 1996) + "...";
+            }
+            webSvc.SaveLogMessage(portalId,"Skyline Uploader Service",computerName,(int)messageLevel,eventId,message);
+        }
+
+        private static void LogMessage(string portalUrl, Guid portalId, MessageLevel messageLevel, int eventId, string message)
+        {
+            using (var webSvc = new SkylineWebService.SkylineWebService())
+            {
+                webSvc.Url = portalUrl + "/WebServices/SkylineWebService.asmx";
+
+                IWebProxy proxy = WebRequest.DefaultWebProxy;
+                if (proxy != null)
+                {
+                    webSvc.Proxy = proxy;
+                }
+
+                var computerName = Environment.MachineName;
+                if (message.Length > 2000)
+                {
+                    message = message.Substring(0, 1996) + "...";
+                }
+                webSvc.SaveLogMessage(portalId,"Skyline Uploader Service",computerName,(int)messageLevel,eventId,message);
+            }
+            
         }
 
         private static void ReportTransferring(bool transferring)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Net;
 
 namespace HelperClasses
@@ -47,6 +48,8 @@ namespace HelperClasses
             public string Password { get; set; }
             public string email { get; set; }
             public Guid PortalId { get; set; }
+            public string LibraryName { get; set; }
+            public string FolderName { get; set; }
         }
 
         

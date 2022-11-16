@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Linq;
 using SkylineUploaderDomain.DataModel;
 using SkylineUploaderDomain.DataModel.Classes;
@@ -63,11 +64,12 @@ namespace SkylineUploader.Classes
             try
             {
                 doc.Save(Global.SettingsPath);
+                Debug.Log("Created blank settings file: " + Global.SettingsPath);
                 return true;
             }
             catch (Exception ex)
             {
-                string error = ex.Message;
+                Debug.Error("Unexpected error in CreateBlankSettingsFile", ex);
                 return false;
             }
         }
@@ -101,34 +103,77 @@ namespace SkylineUploader.Classes
             {
                 CreateBlankSettingsFile();
             }
-            
+
             if (File.Exists(Global.SettingsPath))
             {
-                XDocument doc = XDocument.Load(Global.SettingsPath);
-                if (doc.Root != null)
+                XmlDocument doc = new XmlDocument();
+                doc.Load(Global.SettingsPath);
+
+                XmlNode node =  doc.SelectSingleNode("/SkylineUploader/DebugMode");
+
+                if (node != null)
                 {
-                    XElement xElement = doc.Root.Element("DebugMode");
-                    if (xElement != null)
-                    {
-                        xElement.Value = debugMode;
-                    }
+                    Debug.Log("UpdateDebugMode, loaded the settings file " + Global.SettingsPath);
+
+                    node.InnerText = debugMode;
                 }
+                else
+                {
+                    Debug.Error("UpdateDebugMode, unable to load the settings file " + Global.SettingsPath);
+                }
+
                 try
                 {
                     doc.Save(Global.SettingsPath);
+                    Debug.Log("UpdateDebugMode, settings file " + Global.SettingsPath + " updated");
                     return true;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Debug.Error("Unexpected error in UpdateDebugMode", ex);
                     return false;
                 }
             }
+
+            Debug.Error("UpdateDebugMode, Unable to find the settings file " + Global.SettingsPath);
+            return false;
+        }
+
+        public static bool GetDebugMode()
+        {
+            if (File.Exists(Global.SettingsPath))
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(Global.SettingsPath);
+
+                XmlNode node =  doc.SelectSingleNode("/SkylineUploader/DebugMode");
+
+                if (node != null)
+                {
+                    Debug.Log("UpdateDebugMode, loaded the settings file " + Global.SettingsPath);
+                    var debugMode = node.InnerText;
+
+                    Debug.Log("GetDebugMode, found DebugMode node, Value = " + debugMode);
+                    if (string.IsNullOrEmpty(debugMode))
+                    {
+                        Debug.Error("UpdateDebugMode, debugMode is NULL. Returning False");
+                        return false;
+                    }
+
+                    var mode = debugMode.ToLower() == "true";
+                    Debug.Log("GetDebugMode, DebugMode node = " + mode);
+                    return mode;
+                }
+
+                Debug.Error("GetDebugMode, unable to load the settings file " + Global.SettingsPath + ". Returning False");
+            }
+            Debug.Error("GetDebugMode, Unable to find the settings file " + Global.SettingsPath);
             return false;
         }
 
         public static bool SaveConnectionString(string connectionString)
         {
-            
+
             if (File.Exists(Global.SettingsPath))
             {
                 XDocument doc = XDocument.Load(Global.SettingsPath);
@@ -162,7 +207,7 @@ namespace SkylineUploader.Classes
         {
             SettingsHelper.CreateSettingsFile();
 
-                
+
             if (File.Exists(Global.SettingsPath))
             {
                 XDocument doc = XDocument.Load(Global.SettingsPath);
@@ -266,46 +311,46 @@ namespace SkylineUploader.Classes
             try
             {
                 // Get the complete stream of bytes that represent:
-            // [32 bytes of Salt] + [32 bytes of IV] + [n bytes of CipherText]
-            var cipherTextBytesWithSaltAndIv = Convert.FromBase64String(cipherText);
-            // Get the saltbytes by extracting the first 32 bytes from the supplied cipherText bytes.
-            var saltStringBytes = cipherTextBytesWithSaltAndIv.Take(Keysize / 8).ToArray();
-            // Get the IV bytes by extracting the next 32 bytes from the supplied cipherText bytes.
-            var ivStringBytes = cipherTextBytesWithSaltAndIv.Skip(Keysize / 8).Take(Keysize / 8).ToArray();
-            // Get the actual cipher text bytes by removing the first 64 bytes from the cipherText string.
-            var cipherTextBytes = cipherTextBytesWithSaltAndIv.Skip((Keysize / 8) * 2).Take(cipherTextBytesWithSaltAndIv.Length - ((Keysize / 8) * 2)).ToArray();
+                // [32 bytes of Salt] + [32 bytes of IV] + [n bytes of CipherText]
+                var cipherTextBytesWithSaltAndIv = Convert.FromBase64String(cipherText);
+                // Get the saltbytes by extracting the first 32 bytes from the supplied cipherText bytes.
+                var saltStringBytes = cipherTextBytesWithSaltAndIv.Take(Keysize / 8).ToArray();
+                // Get the IV bytes by extracting the next 32 bytes from the supplied cipherText bytes.
+                var ivStringBytes = cipherTextBytesWithSaltAndIv.Skip(Keysize / 8).Take(Keysize / 8).ToArray();
+                // Get the actual cipher text bytes by removing the first 64 bytes from the cipherText string.
+                var cipherTextBytes = cipherTextBytesWithSaltAndIv.Skip((Keysize / 8) * 2).Take(cipherTextBytesWithSaltAndIv.Length - ((Keysize / 8) * 2)).ToArray();
 
-            using (var password = new Rfc2898DeriveBytes(key, saltStringBytes, DerivationIterations))
-            {
-                var keyBytes = password.GetBytes(Keysize / 8);
-                using (var symmetricKey = new RijndaelManaged())
+                using (var password = new Rfc2898DeriveBytes(key, saltStringBytes, DerivationIterations))
                 {
-                    symmetricKey.BlockSize = 256;
-                    symmetricKey.Mode = CipherMode.CBC;
-                    symmetricKey.Padding = PaddingMode.PKCS7;
-                    using (var decryptor = symmetricKey.CreateDecryptor(keyBytes, ivStringBytes))
+                    var keyBytes = password.GetBytes(Keysize / 8);
+                    using (var symmetricKey = new RijndaelManaged())
                     {
-                        using (var memoryStream = new MemoryStream(cipherTextBytes))
+                        symmetricKey.BlockSize = 256;
+                        symmetricKey.Mode = CipherMode.CBC;
+                        symmetricKey.Padding = PaddingMode.PKCS7;
+                        using (var decryptor = symmetricKey.CreateDecryptor(keyBytes, ivStringBytes))
                         {
-                            using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+                            using (var memoryStream = new MemoryStream(cipherTextBytes))
                             {
-                                var plainTextBytes = new byte[cipherTextBytes.Length];
-                                var decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
-                                memoryStream.Close();
-                                cryptoStream.Close();
-                                return Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
+                                using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+                                {
+                                    var plainTextBytes = new byte[cipherTextBytes.Length];
+                                    var decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
+                                    memoryStream.Close();
+                                    cryptoStream.Close();
+                                    return Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
+                                }
                             }
                         }
                     }
                 }
             }
-            }
             catch (Exception e)
             {
-                Debug.Error("Unexpected Error in Decrypt ",e);
+                Debug.Error("Unexpected Error in Decrypt ", e);
                 return string.Empty;
             }
-            
+
         }
         private static byte[] Generate256BitsOfRandomEntropy()
         {
@@ -443,7 +488,7 @@ namespace SkylineUploader.Classes
             {
                 connectionString = "*error* " + e.Message;
             }
-            
+
             return connectionString;
         }
     }
