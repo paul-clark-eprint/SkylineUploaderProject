@@ -345,10 +345,52 @@ namespace SkylineUploader
                         LogMessage(webSvc, portalId, MessageLevel.Information, 0, "Found XML file " + xmlName);
                         XmlDocument doc = new XmlDocument();
                         doc.Load(xmlPath);
-                        var node = doc.SelectSingleNode("/Skyline/Email");
-                        if (node != null)
+
+                        var userIdNode = doc.SelectSingleNode("/Skyline/UserId");
+                        if (userIdNode != null)
                         {
-                            var email = node.InnerText;
+                            var userIdValue = userIdNode.InnerText;
+                            Guid userId = Guid.Empty;
+                            var userIdFound = Guid.TryParse(userIdValue, out userId);
+
+                            if (userIdFound)
+                            {
+                                var userDefaultLibraryId = webSvc.GetUserDefaultLibraryId(portalId, userId);
+                                if (userDefaultLibraryId != Guid.Empty)
+                                {
+                                    LogMessage(webSvc, portalId, MessageLevel.Information, 0, "Found user and user's default library");
+
+                                    bool userActive = webSvc.IsUserActive(userId);
+                                    if (userActive)
+                                    {
+                                        uploadDir = userId.ToString();
+                                        libraryUserId = userId;
+                                        libraryId = userDefaultLibraryId;
+                                    }
+                                    else
+                                    {
+                                        Debug.Log("The user with the user ID "+ userId + " is not activated. The document will be uploaded to the default library "+ uploadParams.LibraryName);
+                                        LogMessage(webSvc, portalId, MessageLevel.Warning, 0, "The user with the user ID "+ userId + " is not activated. The document will be uploaded to the default library " + uploadParams.LibraryName);
+                                    }
+                                    
+                                }
+                                else
+                                {
+                                    Debug.Log("Unable to get the default library for the user ID "+ userId + ". The document will be uploaded to the default library "+ uploadParams.LibraryName);
+                                    LogMessage(webSvc, portalId, MessageLevel.Warning, 0, "Unable to get the default library for the user ID "+ userId + ". The document will be uploaded to the default library " + uploadParams.LibraryName);
+                                }
+
+                            }
+                            else
+                            {
+                                userIdNode = null;
+                            }
+                        }
+
+                        var emailNode = doc.SelectSingleNode("/Skyline/Email");
+                        if (emailNode != null && userIdNode==null)
+                        {
+                            var email = emailNode.InnerText;
                             if (!string.IsNullOrEmpty(email))
                             {
                                 UserLibraryIds userLibraryIds = webSvc.GetUserDefaultLibraryIds(portalId, email);
@@ -1138,12 +1180,12 @@ namespace SkylineUploader
                 return true;
             }
 
-            if (!Directory.Exists(uxTextBoxSourceFolder.Text))
-            {
-                uxLabelErrorMessage.Text = "The Source Folder path is not correct";
-                uxLabelErrorMessage.Visible = true;
-                return true;
-            }
+            //if (!Directory.Exists(uxTextBoxSourceFolder.Text))
+            //{
+            //    uxLabelErrorMessage.Text = "The Source Folder path is not correct";
+            //    uxLabelErrorMessage.Visible = true;
+            //    return true;
+            //}
 
             if (uxTextBoxSelected.Text == string.Empty)
             {
@@ -1174,11 +1216,24 @@ namespace SkylineUploader
             }
 
             string folderPath = uxTextBoxSourceFolder.Text;
-            if (!CheckFolderPermissiongs(folderPath))
+
+            if (uxCheckBoxEnabled.Checked)
             {
-                MessageBox.Show(uxLabelErrorMessage.Text);
-                return;
+                if (!Directory.Exists(uxTextBoxSourceFolder.Text))
+                {
+                    uxLabelErrorMessage.Text = "The Source Folder path is not correct";
+                    uxLabelErrorMessage.Visible = true;
+                    return;
+                }
+
+                
+                if (!CheckFolderPermissiongs(folderPath))
+                {
+                    MessageBox.Show(uxLabelErrorMessage.Text);
+                    return;
+                }
             }
+            
 
             using (UploaderDbContext context = new UploaderDbContext())
             {

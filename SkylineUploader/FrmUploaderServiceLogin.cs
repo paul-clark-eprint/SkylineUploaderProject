@@ -133,7 +133,7 @@ namespace SkylineUploader
             catch (Exception ex)
             {
                 MessageBox.Show("Unable to connect to " + SelectedInstance + "\n\n" + ex.Message,
-                   "SQL Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                   "SQl Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -210,16 +210,7 @@ namespace SkylineUploader
                 Debug.Error("Unexpected error connecting to the database.", ex);
             }
 
-            if (!string.IsNullOrEmpty(SqlPassword))
-            {
-                string hidePassword = sqlConBuilder.ConnectionString.Replace(SqlPassword, "*******");
-                Debug.Log("Setting the connectionString to: '" + hidePassword + "'");
-            }
-            else
-            {
-                Debug.Log("Setting the connectionString to: '" + sqlConBuilder.ConnectionString + "'");
-            }
-            
+            Debug.Log("Setting the connectionString to: '" + sqlConBuilder.ConnectionString + "'");
             string errorMessage = SqlHelper.ModifyConnectionString("UploaderDbContext", sqlConBuilder.ConnectionString);
             if (!string.IsNullOrEmpty(errorMessage))
             {

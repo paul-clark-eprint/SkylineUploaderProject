@@ -116,18 +116,18 @@ namespace SkylineUploader
             // uxTextBoxUsername
             // 
             this.uxTextBoxUsername.Enabled = false;
-            this.uxTextBoxUsername.Location = new System.Drawing.Point(137, 114);
+            this.uxTextBoxUsername.Location = new System.Drawing.Point(118, 114);
             this.uxTextBoxUsername.Name = "uxTextBoxUsername";
-            this.uxTextBoxUsername.Size = new System.Drawing.Size(185, 22);
+            this.uxTextBoxUsername.Size = new System.Drawing.Size(125, 22);
             this.uxTextBoxUsername.TabIndex = 7;
             this.uxTextBoxUsername.Leave += new System.EventHandler(this.uxTextBoxUsername_Leave);
             // 
             // uxTextBoxPassword
             // 
             this.uxTextBoxPassword.Enabled = false;
-            this.uxTextBoxPassword.Location = new System.Drawing.Point(137, 142);
+            this.uxTextBoxPassword.Location = new System.Drawing.Point(118, 142);
             this.uxTextBoxPassword.Name = "uxTextBoxPassword";
-            this.uxTextBoxPassword.Size = new System.Drawing.Size(185, 22);
+            this.uxTextBoxPassword.Size = new System.Drawing.Size(125, 22);
             this.uxTextBoxPassword.TabIndex = 8;
             this.uxTextBoxPassword.UseSystemPasswordChar = true;
             this.uxTextBoxPassword.Leave += new System.EventHandler(this.uxTextBoxPassword_Leave);
@@ -135,7 +135,7 @@ namespace SkylineUploader
             // uxLabelUsername
             // 
             this.uxLabelUsername.Enabled = false;
-            this.uxLabelUsername.Location = new System.Drawing.Point(31, 114);
+            this.uxLabelUsername.Location = new System.Drawing.Point(12, 114);
             this.uxLabelUsername.Name = "uxLabelUsername";
             this.uxLabelUsername.Size = new System.Drawing.Size(64, 18);
             this.uxLabelUsername.TabIndex = 9;
@@ -167,7 +167,7 @@ namespace SkylineUploader
             // uxLabelPassword
             // 
             this.uxLabelPassword.Enabled = false;
-            this.uxLabelPassword.Location = new System.Drawing.Point(31, 142);
+            this.uxLabelPassword.Location = new System.Drawing.Point(12, 142);
             this.uxLabelPassword.Name = "uxLabelPassword";
             this.uxLabelPassword.Size = new System.Drawing.Size(53, 18);
             this.uxLabelPassword.TabIndex = 12;

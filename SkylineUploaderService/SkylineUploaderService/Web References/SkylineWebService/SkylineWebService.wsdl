@@ -1270,6 +1270,21 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="GetUserDefaultLibraryId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="portalId" nillable="true" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserDefaultLibraryIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetUserDefaultLibraryIdResult" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="SaveLogMessage">
         <s:complexType>
           <s:sequence>
@@ -1284,6 +1299,31 @@
       </s:element>
       <s:element name="SaveLogMessageResponse">
         <s:complexType />
+      </s:element>
+      <s:element name="SavePresetQty">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="presetQty" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="productId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SavePresetQtyResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetPresetQty">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="productId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPresetQtyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPresetQtyResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
     </s:schema>
     <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
@@ -1711,11 +1751,29 @@
   <wsdl:message name="GetUserDefaultLibraryIdsSoapOut">
     <wsdl:part name="parameters" element="tns:GetUserDefaultLibraryIdsResponse" />
   </wsdl:message>
+  <wsdl:message name="GetUserDefaultLibraryIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserDefaultLibraryId" />
+  </wsdl:message>
+  <wsdl:message name="GetUserDefaultLibraryIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserDefaultLibraryIdResponse" />
+  </wsdl:message>
   <wsdl:message name="SaveLogMessageSoapIn">
     <wsdl:part name="parameters" element="tns:SaveLogMessage" />
   </wsdl:message>
   <wsdl:message name="SaveLogMessageSoapOut">
     <wsdl:part name="parameters" element="tns:SaveLogMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="SavePresetQtySoapIn">
+    <wsdl:part name="parameters" element="tns:SavePresetQty" />
+  </wsdl:message>
+  <wsdl:message name="SavePresetQtySoapOut">
+    <wsdl:part name="parameters" element="tns:SavePresetQtyResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPresetQtySoapIn">
+    <wsdl:part name="parameters" element="tns:GetPresetQty" />
+  </wsdl:message>
+  <wsdl:message name="GetPresetQtySoapOut">
+    <wsdl:part name="parameters" element="tns:GetPresetQtyResponse" />
   </wsdl:message>
   <wsdl:portType name="SkylineWebServiceSoap">
     <wsdl:operation name="GetVersionNumber">
@@ -1994,9 +2052,21 @@
       <wsdl:input message="tns:GetUserDefaultLibraryIdsSoapIn" />
       <wsdl:output message="tns:GetUserDefaultLibraryIdsSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="GetUserDefaultLibraryId">
+      <wsdl:input message="tns:GetUserDefaultLibraryIdSoapIn" />
+      <wsdl:output message="tns:GetUserDefaultLibraryIdSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="SaveLogMessage">
       <wsdl:input message="tns:SaveLogMessageSoapIn" />
       <wsdl:output message="tns:SaveLogMessageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SavePresetQty">
+      <wsdl:input message="tns:SavePresetQtySoapIn" />
+      <wsdl:output message="tns:SavePresetQtySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPresetQty">
+      <wsdl:input message="tns:GetPresetQtySoapIn" />
+      <wsdl:output message="tns:GetPresetQtySoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="SkylineWebServiceSoap" type="tns:SkylineWebServiceSoap">
@@ -2622,8 +2692,35 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetUserDefaultLibraryId">
+      <soap:operation soapAction="http://tempuri.org/GetUserDefaultLibraryId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="SaveLogMessage">
       <soap:operation soapAction="http://tempuri.org/SaveLogMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SavePresetQty">
+      <soap:operation soapAction="http://tempuri.org/SavePresetQty" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPresetQty">
+      <soap:operation soapAction="http://tempuri.org/GetPresetQty" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -3255,8 +3352,35 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetUserDefaultLibraryId">
+      <soap12:operation soapAction="http://tempuri.org/GetUserDefaultLibraryId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="SaveLogMessage">
       <soap12:operation soapAction="http://tempuri.org/SaveLogMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SavePresetQty">
+      <soap12:operation soapAction="http://tempuri.org/SavePresetQty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPresetQty">
+      <soap12:operation soapAction="http://tempuri.org/GetPresetQty" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

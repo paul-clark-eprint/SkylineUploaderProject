@@ -40,7 +40,7 @@ namespace SkylineUploader
             this.radMenuItem3 = new Telerik.WinControls.UI.RadMenuItem();
             this.uxMenuItemDebugOn = new Telerik.WinControls.UI.RadMenuItem();
             this.uxMenuItemDebugOff = new Telerik.WinControls.UI.RadMenuItem();
-            this.uxMenuItemSQL = new Telerik.WinControls.UI.RadMenuItem();
+            this.uxMenuSetServiceLogin = new Telerik.WinControls.UI.RadMenuItem();
             this.uxMenuItemExit = new Telerik.WinControls.UI.RadMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
@@ -83,7 +83,7 @@ namespace SkylineUploader
             // 
             this.uxMenuItemFile.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.uxMenuItemLogging,
-            this.uxMenuItemSQL,
+            this.uxMenuSetServiceLogin,
             this.uxMenuItemExit});
             this.uxMenuItemFile.Name = "uxMenuItemFile";
             this.uxMenuItemFile.Text = "File";
@@ -129,11 +129,11 @@ namespace SkylineUploader
             this.uxMenuItemDebugOff.Text = "Turn Debug OFF";
             this.uxMenuItemDebugOff.Click += new System.EventHandler(this.uxMenuDebugOff_Click);
             // 
-            // uxMenuItemSQL
+            // uxMenuSetServiceLogin
             // 
-            this.uxMenuItemSQL.Name = "uxMenuItemSQL";
-            this.uxMenuItemSQL.Text = "Reset Database Connection";
-            this.uxMenuItemSQL.Click += new System.EventHandler(this.uxMenuItemSQL_Click);
+            this.uxMenuSetServiceLogin.Name = "uxMenuSetServiceLogin";
+            this.uxMenuSetServiceLogin.Text = "Set Database Login";
+            this.uxMenuSetServiceLogin.Click += new System.EventHandler(this.uxMenuSetServiceLogin_Click);
             // 
             // uxMenuItemExit
             // 
@@ -249,11 +249,8 @@ namespace SkylineUploader
             this.Controls.Add(this.uxGridViewFolders);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmUploader";
-            // 
-            // 
-            // 
-            this.RootElement.ApplyShapeToControl = true;
             this.Text = "Skyline Uploader";
+            this.Load += new System.EventHandler(this.FrmUploader_Load);
             ((System.ComponentModel.ISupportInitialize)(this.uxGridViewFolders.MasterTemplate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxGridViewFolders)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).EndInit();
@@ -279,12 +276,12 @@ namespace SkylineUploader
         private Telerik.WinControls.UI.RadButtonElement uxButtonClose1;
         private Telerik.WinControls.UI.RadWaitingBarElement UxWaitingBar;
         private Telerik.WinControls.UI.DotsLineWaitingBarIndicatorElement dotsLineWaitingBarIndicatorElement1;
-        private Telerik.WinControls.UI.RadMenuItem uxMenuItemSQL;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem1;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem2;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem3;
         private Telerik.WinControls.UI.RadMenuItem uxMenuItemDebugOn;
         private Telerik.WinControls.UI.RadMenuItem uxMenuItemDebugOff;
+        private Telerik.WinControls.UI.RadMenuItem uxMenuSetServiceLogin;
         private Telerik.WinControls.UI.RadMenu radMenu1;
     }
 }

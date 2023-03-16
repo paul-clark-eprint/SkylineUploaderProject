@@ -62,6 +62,7 @@
       <DependentUpon>202111161713358_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\SharedAssemblyInfo.cs" />
     <Compile Include="UploaderContext.cs" />
     <Compile Include="Classes\Folders.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

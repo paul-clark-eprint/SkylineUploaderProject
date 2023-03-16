@@ -168,7 +168,13 @@ namespace SkylineUploader.SkylineWebService {
         
         private System.Threading.SendOrPostCallback GetUserDefaultLibraryIdsOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetUserDefaultLibraryIdOperationCompleted;
+        
         private System.Threading.SendOrPostCallback SaveLogMessageOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback SavePresetQtyOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GetPresetQtyOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
         
@@ -416,7 +422,16 @@ namespace SkylineUploader.SkylineWebService {
         public event GetUserDefaultLibraryIdsCompletedEventHandler GetUserDefaultLibraryIdsCompleted;
         
         /// <remarks/>
+        public event GetUserDefaultLibraryIdCompletedEventHandler GetUserDefaultLibraryIdCompleted;
+        
+        /// <remarks/>
         public event SaveLogMessageCompletedEventHandler SaveLogMessageCompleted;
+        
+        /// <remarks/>
+        public event SavePresetQtyCompletedEventHandler SavePresetQtyCompleted;
+        
+        /// <remarks/>
+        public event GetPresetQtyCompletedEventHandler GetPresetQtyCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetVersionNumber", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -2513,6 +2528,37 @@ namespace SkylineUploader.SkylineWebService {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetUserDefaultLibraryId", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public System.Guid GetUserDefaultLibraryId([System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<System.Guid> portalId, System.Guid userId) {
+            object[] results = this.Invoke("GetUserDefaultLibraryId", new object[] {
+                        portalId,
+                        userId});
+            return ((System.Guid)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetUserDefaultLibraryIdAsync(System.Nullable<System.Guid> portalId, System.Guid userId) {
+            this.GetUserDefaultLibraryIdAsync(portalId, userId, null);
+        }
+        
+        /// <remarks/>
+        public void GetUserDefaultLibraryIdAsync(System.Nullable<System.Guid> portalId, System.Guid userId, object userState) {
+            if ((this.GetUserDefaultLibraryIdOperationCompleted == null)) {
+                this.GetUserDefaultLibraryIdOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetUserDefaultLibraryIdOperationCompleted);
+            }
+            this.InvokeAsync("GetUserDefaultLibraryId", new object[] {
+                        portalId,
+                        userId}, this.GetUserDefaultLibraryIdOperationCompleted, userState);
+        }
+        
+        private void OnGetUserDefaultLibraryIdOperationCompleted(object arg) {
+            if ((this.GetUserDefaultLibraryIdCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetUserDefaultLibraryIdCompleted(this, new GetUserDefaultLibraryIdCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/SaveLogMessage", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public void SaveLogMessage([System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<System.Guid> portalId, string source, string computer, int messageLevel, int eventId, string message) {
             this.Invoke("SaveLogMessage", new object[] {
@@ -2547,6 +2593,65 @@ namespace SkylineUploader.SkylineWebService {
             if ((this.SaveLogMessageCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.SaveLogMessageCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/SavePresetQty", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void SavePresetQty(string presetQty, System.Guid productId) {
+            this.Invoke("SavePresetQty", new object[] {
+                        presetQty,
+                        productId});
+        }
+        
+        /// <remarks/>
+        public void SavePresetQtyAsync(string presetQty, System.Guid productId) {
+            this.SavePresetQtyAsync(presetQty, productId, null);
+        }
+        
+        /// <remarks/>
+        public void SavePresetQtyAsync(string presetQty, System.Guid productId, object userState) {
+            if ((this.SavePresetQtyOperationCompleted == null)) {
+                this.SavePresetQtyOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSavePresetQtyOperationCompleted);
+            }
+            this.InvokeAsync("SavePresetQty", new object[] {
+                        presetQty,
+                        productId}, this.SavePresetQtyOperationCompleted, userState);
+        }
+        
+        private void OnSavePresetQtyOperationCompleted(object arg) {
+            if ((this.SavePresetQtyCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SavePresetQtyCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetPresetQty", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string GetPresetQty(System.Guid productId) {
+            object[] results = this.Invoke("GetPresetQty", new object[] {
+                        productId});
+            return ((string)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetPresetQtyAsync(System.Guid productId) {
+            this.GetPresetQtyAsync(productId, null);
+        }
+        
+        /// <remarks/>
+        public void GetPresetQtyAsync(System.Guid productId, object userState) {
+            if ((this.GetPresetQtyOperationCompleted == null)) {
+                this.GetPresetQtyOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetPresetQtyOperationCompleted);
+            }
+            this.InvokeAsync("GetPresetQty", new object[] {
+                        productId}, this.GetPresetQtyOperationCompleted, userState);
+        }
+        
+        private void OnGetPresetQtyOperationCompleted(object arg) {
+            if ((this.GetPresetQtyCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetPresetQtyCompleted(this, new GetPresetQtyCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -6076,7 +6181,63 @@ namespace SkylineUploader.SkylineWebService {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void GetUserDefaultLibraryIdCompletedEventHandler(object sender, GetUserDefaultLibraryIdCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetUserDefaultLibraryIdCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetUserDefaultLibraryIdCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public System.Guid Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((System.Guid)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void SaveLogMessageCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void SavePresetQtyCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void GetPresetQtyCompletedEventHandler(object sender, GetPresetQtyCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetPresetQtyCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetPresetQtyCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
 }
 
 #pragma warning restore 1591

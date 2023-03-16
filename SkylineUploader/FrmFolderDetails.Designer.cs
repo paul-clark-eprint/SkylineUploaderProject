@@ -264,7 +264,6 @@
             // 
             this.uxCheckBoxEnabled.Checked = true;
             this.uxCheckBoxEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.uxCheckBoxEnabled.Enabled = false;
             this.uxCheckBoxEnabled.Location = new System.Drawing.Point(18, 479);
             this.uxCheckBoxEnabled.Name = "uxCheckBoxEnabled";
             this.uxCheckBoxEnabled.Size = new System.Drawing.Size(87, 21);
@@ -568,10 +567,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmFolderDetails";
-            // 
-            // 
-            // 
-            this.RootElement.ApplyShapeToControl = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Profile Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmFolderDetails_FormClosing);

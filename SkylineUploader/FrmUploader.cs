@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using HelperClasses;
 using Microsoft.Win32;
@@ -677,7 +678,7 @@ namespace SkylineUploader
                 {
                     uxGridViewFolders.CurrentRow = uxGridViewFolders.Rows[currentRowIndex];
                 }
-                catch (Exception exception)
+                catch (Exception )
                 {
 
                 }
@@ -716,36 +717,35 @@ namespace SkylineUploader
 
         private void uxMenuItemSQL_Click(object sender, EventArgs e)
         {
-            var res = MessageBox.Show("Do you want reset the connection to the database?", "Reset Database Connection", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-            if (res == DialogResult.OK)
-            {
-                //reset the app.config ConnectionString back to blank Data Source
-                SqlConnectionStringBuilder sqlConBuilder = new SqlConnectionStringBuilder();
-                sqlConBuilder.ConnectionString = "Data Source=NotSet;Initial Catalog=SkylineUploader;Integrated Security=SSPI;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            //var res = MessageBox.Show("Do you want reset the connection to the database?", "Reset Database Connection", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            //if (res == DialogResult.OK)
+            //{
+            //    SqlConnectionStringBuilder sqlConBuilder = new SqlConnectionStringBuilder();
+            //    sqlConBuilder.ConnectionString = "Data Source=NotSet;Initial Catalog=SkylineUploader;Integrated Security=SSPI;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-                string errorMessage = SqlHelper.ModifyConnectionString("UploaderDbContext", sqlConBuilder.ConnectionString);
-                if (!string.IsNullOrEmpty(errorMessage))
-                {
-                    Debug.Error("Error resetting the ConnectionString. Error: " + errorMessage);
-                    MessageBox.Show("Error resetting the ConnectionString. Error: \n\n" + errorMessage, "Unexpected Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+            //    string errorMessage = SqlHelper.ModifyConnectionString("UploaderDbContext", sqlConBuilder.ConnectionString);
+            //    if (!string.IsNullOrEmpty(errorMessage))
+            //    {
+            //        Debug.Error("Error resetting the ConnectionString. Error: " + errorMessage);
+            //        MessageBox.Show("Error resetting the ConnectionString. Error: \n\n" + errorMessage, "Unexpected Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    }
 
 
-                var deletedOk = SettingsHelper.DeleteSettingsFile();
-                if (deletedOk)
-                {
-                    MessageBox.Show("Database connection reset. Please restart the Skyline Uploader App",
-                        "Database Connection Reset", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Application.Exit();
-                }
-                else
-                {
-                    MessageBox.Show(
-                        "Unable to delete the configuration file " + Global.SettingsPath +
-                        "\n\nTry to delete it manually", "Error deleting the configuration file", MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
-            }
+            //    var deletedOk = SettingsHelper.DeleteSettingsFile();
+            //    if (deletedOk)
+            //    {
+            //        MessageBox.Show("Database connection reset. Please restart the Skyline Uploader App",
+            //            "Database Connection Reset", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //        Application.Exit();
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show(
+            //            "Unable to delete the configuration file " + Global.SettingsPath +
+            //            "\n\nTry to delete it manually", "Error deleting the configuration file", MessageBoxButtons.OK,
+            //            MessageBoxIcon.Error);
+            //    }
+            //}
         }
 
         private void uxMenuDebugOn_Click(object sender, EventArgs e)
@@ -795,6 +795,20 @@ namespace SkylineUploader
         private void uxMenuItemLogging_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void uxMenuSetServiceLogin_Click(object sender, EventArgs e)
+        {
+            using ( var frmServiceLogin = new FrmServiceLogin())
+            {
+                frmServiceLogin.ShowDialog();
+            }
+        }
+
+        private void FrmUploader_Load(object sender, EventArgs e)
+        {
+            Version version = Assembly.GetExecutingAssembly().GetName().Version;
+            this.Text = "Skyline Uploader version "+ version.Major +"." + version.Minor +"." + version.Build;
         }
     }
 }
