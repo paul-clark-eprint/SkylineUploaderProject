@@ -50,7 +50,8 @@ namespace SkylineUploader
         /// <returns></returns>
         public static string GetLogDir()
         {
-            string logDir = Path.Combine(GetUserDataPath() + @"\Log");
+            string settingsDir = Path.GetDirectoryName(Global.GetSettingsPath());
+            string logDir = Path.Combine(settingsDir + @"\Log");
 
             if (!Directory.Exists(logDir))
             {

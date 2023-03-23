@@ -94,7 +94,7 @@ namespace SkylineUploader
                 string errorMessage = SqlHelper.ModifyConnectionString("UploaderDbContext", sqlConBuilder.ConnectionString);
                 if (!string.IsNullOrEmpty(errorMessage))
                 {
-                    Debug.Error("Error resetting the ConnectionString. Error: " + errorMessage);
+                    Debug.Error("FrmServiceLogin","uxButtonReset_Click", "Error resetting the ConnectionString. Error: " + errorMessage);
                     MessageBox.Show("Error resetting the ConnectionString. Error: \n\n" + errorMessage, "Unexpected Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
@@ -134,7 +134,7 @@ namespace SkylineUploader
             {
                 sqlConBuilder = new SqlConnectionStringBuilder()
                 {
-                    InitialCatalog = "Master",
+                    InitialCatalog = "SkylineUploader",
                     DataSource = selectedInstance,
                     IntegratedSecurity = true
                 };
@@ -143,7 +143,7 @@ namespace SkylineUploader
             {
                 sqlConBuilder = new SqlConnectionStringBuilder()
                 {
-                    InitialCatalog = "Master",
+                    InitialCatalog = "SkylineUploader",
                     DataSource = selectedInstance,
                     UserID = sqlUsername,
                     Password = sqlPassword
@@ -200,11 +200,11 @@ namespace SkylineUploader
 
             string hidePassword = sqlConBuilder.ConnectionString.Replace(sqlPassword, "*******");
 
-            Debug.Log("Setting the connectionString to: '" + hidePassword + "'");
+            Debug.Log("FrmServiceLogin","uxButtonSave_Click", "Setting the connectionString to: '" + hidePassword + "'");
             string errorMessage = SqlHelper.ModifyConnectionString("UploaderDbContext", sqlConBuilder.ConnectionString);
             if (!string.IsNullOrEmpty(errorMessage))
             {
-                Debug.Error(errorMessage);
+                Debug.Error("FrmServiceLogin","uxButtonSave_Click", errorMessage);
 
                 MessageBox.Show(errorMessage, "Run As Administrator", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 dataSourceSet = false;
@@ -213,22 +213,22 @@ namespace SkylineUploader
             {
                 try
                 {
-                    Debug.Log("ConnectionString string saved to app.config");
+                    Debug.Log("FrmServiceLogin","uxButtonSave_Click", "ConnectionString string saved to app.config");
 
                     if (!SettingsHelper.CreateSettingsFile())
                     {
-                        Debug.Error("Unable to create the settings file");
+                        Debug.Error("FrmServiceLogin","uxButtonSave_Click", "Unable to create the settings file");
                         dataSourceSet = false;
                         return;
                     }
-                    Debug.Log("Settings file found. Saving ConnectionString");
+                    Debug.Log("FrmServiceLogin","uxButtonSave_Click", "Settings file found. Saving ConnectionString");
 
                     dataSourceSet = SettingsHelper.SaveConnectionString(sqlConBuilder.ConnectionString);
                     
                 }
                 catch (Exception ex)
                 {
-                    Debug.Error(ex.Message, ex);
+                    Debug.Error("FrmServiceLogin","uxButtonSave_Click", ex.Message, ex);
                     MessageBox.Show("Unexptected error saving the ConnectionString setting\n\n" + ex.Message,
                         "Unexpected Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     dataSourceSet = false;
@@ -242,6 +242,11 @@ namespace SkylineUploader
                 Application.Exit();
 
             }
+        }
+
+        private void uxButtonClose_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 

@@ -50,6 +50,8 @@ namespace HelperClasses
             public Guid PortalId { get; set; }
             public string LibraryName { get; set; }
             public string FolderName { get; set; }
+            public bool WaitForXml { get; set; }
+            public bool EmailUser { get; set; }
         }
 
         

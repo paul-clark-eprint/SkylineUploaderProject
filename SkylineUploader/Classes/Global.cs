@@ -25,7 +25,7 @@ namespace SkylineUploader.Classes
 
         public static string DocumentOptionTitle;
 
-        private static string GetSettingsPath()
+        public static string GetSettingsPath()
         {
             var programData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
             var programDataSkylineUploader = Path.Combine(programData, "SkylineUploader");

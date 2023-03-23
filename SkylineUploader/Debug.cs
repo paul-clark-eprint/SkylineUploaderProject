@@ -14,13 +14,13 @@ namespace SkylineUploader
             set { LogDir = value; }
         }
 
-        public static void Log(string info)
+        public static void Log(string module, string procedure, string info)
         {
             if (LogDir == null) return;
             string timeStamp = DateTime.Now.ToString("F");
             try
             {
-                File.AppendAllText(Path.Combine(LogDir, "Debug.txt"), timeStamp + ":\t" + info + Environment.NewLine);
+                File.AppendAllText(Path.Combine(LogDir, "Debug.txt"), timeStamp + ":\t" + module + "\t" + procedure + "\t" + info + Environment.NewLine);
             }
             catch (Exception)
             {
@@ -33,18 +33,18 @@ namespace SkylineUploader
         /// </summary>
         /// <param name="error">Error message</param>
         /// <param name="e">Exception</param>
-        public static void Error(string error, Exception e)
+        public static void Error(string module, string procedure, string error, Exception e)
         {
             if (LogDir == null) return;
 
-            StackTrace stackTrace = new StackTrace();
+            //StackTrace stackTrace = new StackTrace();
             //string callingProcedure = stackTrace.GetFrame(1).GetMethod().Name;
 
             string timeStamp = DateTime.Now.ToString("F");
             try
             {
-                File.AppendAllText(Path.Combine(LogDir, "Error.txt"), timeStamp + ":\t" + stackTrace + Environment.NewLine);
-                File.AppendAllText(Path.Combine(LogDir, "Error.txt"), timeStamp + ":\t" + error + Environment.NewLine);
+                //File.AppendAllText(Path.Combine(LogDir, "Error.txt"), timeStamp + ":\t" + stackTrace + Environment.NewLine);
+                File.AppendAllText(Path.Combine(LogDir, "Error.txt"), timeStamp + ":\t" + module + "\t" + procedure + "\t" + error + Environment.NewLine);
                 File.AppendAllText(Path.Combine(LogDir, "Error.txt"), timeStamp + ":\t" + "Error source: " + e.Source + Environment.NewLine);
                 File.AppendAllText(Path.Combine(LogDir, "Error.txt"), e.Message + Environment.NewLine);
                 File.AppendAllText(Path.Combine(LogDir, "Error.txt"), Environment.NewLine);
@@ -55,19 +55,19 @@ namespace SkylineUploader
             }
         }
 
-        public static void Error(string error)
+        public static void Error(string module, string procedure, string error)
         {
             if (LogDir == null) return;
 
             StackTrace stackTrace = new StackTrace();
-            string callingProcedure = stackTrace.GetFrame(1).GetMethod().Name;
+            //string callingProcedure = stackTrace.GetFrame(1).GetMethod().Name;
 
             string timeStamp = DateTime.Now.ToString("F");
             try
             {
-                File.AppendAllText(Path.Combine(LogDir, "Error.txt"), timeStamp + ":\tCallingProcedure: " + callingProcedure + Environment.NewLine);
-                File.AppendAllText(Path.Combine(LogDir, "Error.txt"), timeStamp + ":\tStackTrace: " + stackTrace + Environment.NewLine);
-                File.AppendAllText(Path.Combine(LogDir, "Error.txt"), timeStamp + ":\t" + error + Environment.NewLine);
+                //File.AppendAllText(Path.Combine(LogDir, "Error.txt"), timeStamp + ":\tProcedure: " + procedure + Environment.NewLine);
+                //File.AppendAllText(Path.Combine(LogDir, "Error.txt"), timeStamp + ":\tStackTrace: " + stackTrace + Environment.NewLine);
+                File.AppendAllText(Path.Combine(LogDir, "Error.txt"), timeStamp + ":\t" + module + "\t" + procedure + "\t" + error + Environment.NewLine);
                 File.AppendAllText(Path.Combine(LogDir, "Error.txt"), Environment.NewLine);
             }
             catch (Exception)
@@ -116,7 +116,7 @@ namespace SkylineUploader
             {
                 //
             }
-            
+
 
         }
 
@@ -146,7 +146,7 @@ namespace SkylineUploader
         {
             if (LogDir == null) return;
 
-            string debugLog = Path.Combine(LogDir, "Debug.txt") ;
+            string debugLog = Path.Combine(LogDir, "Debug.txt");
             if (File.Exists(debugLog))
             {
                 FileInfo file = new FileInfo(debugLog);
@@ -160,7 +160,7 @@ namespace SkylineUploader
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteEventLogError("Error copying  the directory '" + debugLog + "' to " + oldFile +" : " + ex.Message);                        
+                        Debug.WriteEventLogError("Error copying  the directory '" + debugLog + "' to " + oldFile + " : " + ex.Message);
                     }
                 }
             }
@@ -195,12 +195,12 @@ namespace SkylineUploader
             {
                 MessageBox.Show(message, "Critical Error. Unable to continue", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+
         }
 
         public static void OpenLogDirectory()
         {
-            Process.Start("explorer.exe",LogDir);
+            Process.Start("explorer.exe", LogDir);
         }
     }
 }

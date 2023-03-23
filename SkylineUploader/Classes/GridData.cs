@@ -21,6 +21,8 @@ namespace SkylineUploader.Classes
         public bool InEditMode { get; set; }
         public bool DeleteAfterUpload { get; set; }
         public string FileTypes { get; set; }
+        public bool WaitForXml { get; set; }
+        public bool EmailUser { get; set; }
     }
 
     public class ServiceSettings

@@ -25,6 +25,21 @@ namespace SkylineUploader.Classes
         {
             if (!File.Exists(Global.SettingsPath))
             {
+                string directory = Path.GetDirectoryName(Global.SettingsPath);
+                try
+                {
+                    if (!Directory.Exists(directory))
+                    {
+                        Directory.CreateDirectory(directory);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.Error("SettingsHelper","CreateSettingsFile","Unable to create directory "+ directory);
+                    return false;
+                }
+                
+                
                 if (!CreateBlankSettingsFile())
                 {
                     return false;
@@ -64,12 +79,12 @@ namespace SkylineUploader.Classes
             try
             {
                 doc.Save(Global.SettingsPath);
-                Debug.Log("Created blank settings file: " + Global.SettingsPath);
+                Debug.Log("SettingsHelper","CreateBlankSettingsFile","Created blank settings file: " + Global.SettingsPath);
                 return true;
             }
             catch (Exception ex)
             {
-                Debug.Error("Unexpected error in CreateBlankSettingsFile", ex);
+                Debug.Error("SettingsHelper","CreateBlankSettingsFile","Unexpected error in CreateBlankSettingsFile", ex);
                 return false;
             }
         }
@@ -113,29 +128,29 @@ namespace SkylineUploader.Classes
 
                 if (node != null)
                 {
-                    Debug.Log("UpdateDebugMode, loaded the settings file " + Global.SettingsPath);
+                    Debug.Log("SettingsHelper","UpdateDebugMode","UpdateDebugMode, loaded the settings file " + Global.SettingsPath);
 
                     node.InnerText = debugMode;
                 }
                 else
                 {
-                    Debug.Error("UpdateDebugMode, unable to load the settings file " + Global.SettingsPath);
+                    Debug.Error("SettingsHelper","UpdateDebugMode","UpdateDebugMode, unable to load the settings file " + Global.SettingsPath);
                 }
 
                 try
                 {
                     doc.Save(Global.SettingsPath);
-                    Debug.Log("UpdateDebugMode, settings file " + Global.SettingsPath + " updated");
+                    Debug.Log("SettingsHelper","UpdateDebugMode","UpdateDebugMode, settings file " + Global.SettingsPath + " updated");
                     return true;
                 }
                 catch (Exception ex)
                 {
-                    Debug.Error("Unexpected error in UpdateDebugMode", ex);
+                    Debug.Error("SettingsHelper","UpdateDebugMode","Unexpected error in UpdateDebugMode", ex);
                     return false;
                 }
             }
 
-            Debug.Error("UpdateDebugMode, Unable to find the settings file " + Global.SettingsPath);
+            Debug.Error("SettingsHelper","UpdateDebugMode","UpdateDebugMode, Unable to find the settings file " + Global.SettingsPath);
             return false;
         }
 
@@ -150,24 +165,24 @@ namespace SkylineUploader.Classes
 
                 if (node != null)
                 {
-                    Debug.Log("UpdateDebugMode, loaded the settings file " + Global.SettingsPath);
+                    Debug.Log("SettingsHelper","GetDebugMode","loaded the settings file " + Global.SettingsPath);
                     var debugMode = node.InnerText;
 
-                    Debug.Log("GetDebugMode, found DebugMode node, Value = " + debugMode);
+                    Debug.Log("SettingsHelper","GetDebugMode","found DebugMode node, Value = " + debugMode);
                     if (string.IsNullOrEmpty(debugMode))
                     {
-                        Debug.Error("UpdateDebugMode, debugMode is NULL. Returning False");
+                        Debug.Error("SettingsHelper","GetDebugMode","debugMode is NULL. Returning False");
                         return false;
                     }
 
                     var mode = debugMode.ToLower() == "true";
-                    Debug.Log("GetDebugMode, DebugMode node = " + mode);
+                    Debug.Log("SettingsHelper","GetDebugMode","DebugMode node = " + mode);
                     return mode;
                 }
 
-                Debug.Error("GetDebugMode, unable to load the settings file " + Global.SettingsPath + ". Returning False");
+                Debug.Error("SettingsHelper","GetDebugMode","Unable to load the settings file " + Global.SettingsPath + ". Returning False");
             }
-            Debug.Error("GetDebugMode, Unable to find the settings file " + Global.SettingsPath);
+            Debug.Error("SettingsHelper","GetDebugMode","Unable to find the settings file " + Global.SettingsPath);
             return false;
         }
 
@@ -347,7 +362,7 @@ namespace SkylineUploader.Classes
             }
             catch (Exception e)
             {
-                Debug.Error("Unexpected Error in Decrypt ", e);
+                Debug.Error("SettingsHelper","Decrypt","Unexpected Error in Decrypt ", e);
                 return string.Empty;
             }
 

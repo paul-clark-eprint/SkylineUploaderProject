@@ -76,6 +76,7 @@
             this.uxTextBoxSelected = new Telerik.WinControls.UI.RadTextBoxControl();
             this.uxLabelSelected = new System.Windows.Forms.Label();
             this.uxLabelErrorMessage = new System.Windows.Forms.Label();
+            this.uxCheckBoxWaitForXml = new System.Windows.Forms.CheckBox();
             this.groupBoxAdminLogin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxPictureBoxProxy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxButtonConnect)).BeginInit();
@@ -262,8 +263,7 @@
             // 
             // uxCheckBoxEnabled
             // 
-            this.uxCheckBoxEnabled.Checked = true;
-            this.uxCheckBoxEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.uxCheckBoxEnabled.Enabled = false;
             this.uxCheckBoxEnabled.Location = new System.Drawing.Point(18, 479);
             this.uxCheckBoxEnabled.Name = "uxCheckBoxEnabled";
             this.uxCheckBoxEnabled.Size = new System.Drawing.Size(87, 21);
@@ -327,7 +327,7 @@
             this.uxLabelStatus,
             this.uxButtonCancel,
             this.uxButtonUpload});
-            this.uxStatusStrip.Location = new System.Drawing.Point(0, 546);
+            this.uxStatusStrip.Location = new System.Drawing.Point(0, 569);
             this.uxStatusStrip.Name = "uxStatusStrip";
             this.uxStatusStrip.Padding = new System.Windows.Forms.Padding(3);
             this.uxStatusStrip.Size = new System.Drawing.Size(572, 44);
@@ -415,7 +415,7 @@
             this.uxButtonSave.Enabled = false;
             this.uxButtonSave.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.uxButtonSave.Image = global::SkylineUploader.Properties.Resources.Save__2_;
-            this.uxButtonSave.Location = new System.Drawing.Point(460, 506);
+            this.uxButtonSave.Location = new System.Drawing.Point(467, 530);
             this.uxButtonSave.Name = "uxButtonSave";
             this.uxButtonSave.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.uxButtonSave.Size = new System.Drawing.Size(100, 26);
@@ -428,7 +428,7 @@
             // 
             this.uxButtonClose.DisplayStyle = Telerik.WinControls.DisplayStyle.Text;
             this.uxButtonClose.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.uxButtonClose.Location = new System.Drawing.Point(354, 506);
+            this.uxButtonClose.Location = new System.Drawing.Point(361, 530);
             this.uxButtonClose.Name = "uxButtonClose";
             this.uxButtonClose.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.uxButtonClose.Size = new System.Drawing.Size(100, 26);
@@ -533,11 +533,23 @@
             this.uxLabelErrorMessage.TabIndex = 33;
             this.uxLabelErrorMessage.Text = "Error Message";
             // 
+            // uxCheckBoxWaitForXml
+            // 
+            this.uxCheckBoxWaitForXml.AutoSize = true;
+            this.uxCheckBoxWaitForXml.Enabled = false;
+            this.uxCheckBoxWaitForXml.Location = new System.Drawing.Point(18, 533);
+            this.uxCheckBoxWaitForXml.Name = "uxCheckBoxWaitForXml";
+            this.uxCheckBoxWaitForXml.Size = new System.Drawing.Size(126, 21);
+            this.uxCheckBoxWaitForXml.TabIndex = 51;
+            this.uxCheckBoxWaitForXml.Text = "Wait for XML File";
+            this.uxCheckBoxWaitForXml.UseVisualStyleBackColor = true;
+            // 
             // FrmFolderDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(572, 590);
+            this.ClientSize = new System.Drawing.Size(572, 613);
+            this.Controls.Add(this.uxCheckBoxWaitForXml);
             this.Controls.Add(this.uxCheckBoxDeleteSource);
             this.Controls.Add(this.uxCheckBoxRemoveDocOnOrder);
             this.Controls.Add(this.uxButtonClose);
@@ -635,5 +647,6 @@
         private Telerik.WinControls.UI.RadTextBoxControl uxTextBoxSelected;
         private System.Windows.Forms.Label uxLabelSelected;
         private System.Windows.Forms.Label uxLabelErrorMessage;
+        private System.Windows.Forms.CheckBox uxCheckBoxWaitForXml;
     }
 }

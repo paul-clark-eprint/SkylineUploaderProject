@@ -57,12 +57,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\202111161713358_Initial.cs" />
-    <Compile Include="Migrations\202111161713358_Initial.designer.cs">
-      <DependentUpon>202111161713358_Initial.cs</DependentUpon>
+    <Compile Include="..\SkylineUploader\Properties\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Migrations\202303211517489_InitialCreate.cs" />
+    <Compile Include="Migrations\202303211517489_InitialCreate.designer.cs">
+      <DependentUpon>202303211517489_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303211524558_AddWaitForXML.cs" />
+    <Compile Include="Migrations\202303211524558_AddWaitForXML.designer.cs">
+      <DependentUpon>202303211524558_AddWaitForXML.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Properties\SharedAssemblyInfo.cs" />
     <Compile Include="UploaderContext.cs" />
     <Compile Include="Classes\Folders.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,8 +78,11 @@
     <None Include="Skyline.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202111161713358_Initial.resx">
-      <DependentUpon>202111161713358_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202303211517489_InitialCreate.resx">
+      <DependentUpon>202303211517489_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303211524558_AddWaitForXML.resx">
+      <DependentUpon>202303211524558_AddWaitForXML.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

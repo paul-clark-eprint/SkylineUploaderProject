@@ -40,6 +40,7 @@ namespace SkylineUploader
             this.uxButtonReset = new Telerik.WinControls.UI.RadButton();
             this.uxLabelServerName = new Telerik.WinControls.UI.RadLabel();
             this.uxTextBoxServerName = new Telerik.WinControls.UI.RadTextBox();
+            this.uxButtonClose = new Telerik.WinControls.UI.RadButton();
             ((System.ComponentModel.ISupportInitialize)(this.uxCheckBoxWindowsAuthentication)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxLabelTitle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxButtonSave)).BeginInit();
@@ -50,6 +51,7 @@ namespace SkylineUploader
             ((System.ComponentModel.ISupportInitialize)(this.uxButtonReset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxLabelServerName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxTextBoxServerName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxButtonClose)).BeginInit();
             this.SuspendLayout();
             // 
             // uxCheckBoxWindowsAuthentication
@@ -73,9 +75,9 @@ namespace SkylineUploader
             // 
             // uxButtonSave
             // 
-            this.uxButtonSave.Location = new System.Drawing.Point(236, 180);
+            this.uxButtonSave.Location = new System.Drawing.Point(167, 180);
             this.uxButtonSave.Name = "uxButtonSave";
-            this.uxButtonSave.Size = new System.Drawing.Size(86, 24);
+            this.uxButtonSave.Size = new System.Drawing.Size(78, 24);
             this.uxButtonSave.TabIndex = 2;
             this.uxButtonSave.Text = "Save";
             this.uxButtonSave.Click += new System.EventHandler(this.uxButtonSave_Click);
@@ -137,12 +139,22 @@ namespace SkylineUploader
             this.uxTextBoxServerName.Size = new System.Drawing.Size(197, 24);
             this.uxTextBoxServerName.TabIndex = 9;
             // 
+            // uxButtonClose
+            // 
+            this.uxButtonClose.Location = new System.Drawing.Point(251, 180);
+            this.uxButtonClose.Name = "uxButtonClose";
+            this.uxButtonClose.Size = new System.Drawing.Size(78, 24);
+            this.uxButtonClose.TabIndex = 3;
+            this.uxButtonClose.Text = "Close";
+            this.uxButtonClose.Click += new System.EventHandler(this.uxButtonClose_Click);
+            // 
             // FrmServiceLogin
             // 
             this.AcceptButton = this.uxButtonSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(334, 219);
+            this.Controls.Add(this.uxButtonClose);
             this.Controls.Add(this.uxTextBoxServerName);
             this.Controls.Add(this.uxLabelServerName);
             this.Controls.Add(this.uxButtonReset);
@@ -170,6 +182,7 @@ namespace SkylineUploader
             ((System.ComponentModel.ISupportInitialize)(this.uxButtonReset)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxLabelServerName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxTextBoxServerName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxButtonClose)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -187,5 +200,6 @@ namespace SkylineUploader
         private Telerik.WinControls.UI.RadButton uxButtonReset;
         private Telerik.WinControls.UI.RadLabel uxLabelServerName;
         private Telerik.WinControls.UI.RadTextBox uxTextBoxServerName;
+        private Telerik.WinControls.UI.RadButton uxButtonClose;
     }
 }

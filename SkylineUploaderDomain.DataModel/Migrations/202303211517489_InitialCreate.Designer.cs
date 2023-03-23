@@ -7,13 +7,13 @@ namespace SkylineUploaderDomain.DataModel.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class Initial : IMigrationMetadata
+    public sealed partial class InitialCreate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
         
         string IMigrationMetadata.Id
         {
-            get { return "202111161713358_Initial"; }
+            get { return "202303211517489_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

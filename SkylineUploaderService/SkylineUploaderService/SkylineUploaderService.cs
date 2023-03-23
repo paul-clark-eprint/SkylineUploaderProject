@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
@@ -55,6 +56,7 @@ namespace SkylineUploaderService
         public SkylineUploaderService()
         {
             InitializeComponent();
+
             eventLog = new EventLog();
             if (!EventLog.SourceExists("Skyline Uploader Service"))
             {
@@ -111,9 +113,6 @@ namespace SkylineUploaderService
 
             _connectionString = GetConnectionString();
 
-
-
-
             if (string.IsNullOrEmpty(_connectionString))
             {
                 WriteEventLog("The ConnectionString is empty", EventLogEntryType.Error);
@@ -130,7 +129,7 @@ namespace SkylineUploaderService
                     CallStopService();
                 }
 
-                string password = builder["User ID"].ToString();
+                string password = builder["password"].ToString();
                 if (!string.IsNullOrEmpty(password))
                 {
                     string hidePassword = _connectionString.Replace(password, "*******");
@@ -161,14 +160,29 @@ namespace SkylineUploaderService
 
         }
 
+        public class ServiceDbContext : DbContext
+        {
+            public DbSet<Folder> Folders { get; set; }
+            public DbSet<Login> Login { get; set; }
+            public DbSet<Proxy> Proxy { get; set; }
+            public DbSet<UserLibrary> UserLibraries { get; set; }
+            public DbSet<SourceFolder> SourceFolders { get; set; }
+            public DbSet<SynchronizedFile> SynchronizedFiles { get; set; }
+            public DbSet<ServiceSettings> ServiceSettings { get; set; }
+
+            public ServiceDbContext() : base(_connectionString)
+            {
+            }
+        }
+
+
         private static void InitialiseServiceSettings()
         {
             try
             {
-                using (UploaderDbContext context = new UploaderDbContext())
+                using (ServiceDbContext context = new ServiceDbContext())
                 {
-                    context.Database.Connection.ConnectionString = _connectionString;
-
+                    //context.Database.Connection.ConnectionString = _connectionString;
                     var serviceSettings = (from ss in context.ServiceSettings select ss).FirstOrDefault();
                     if (serviceSettings == null)
                     {
@@ -195,7 +209,7 @@ namespace SkylineUploaderService
             }
         }
 
-        private string GetConnectionString()
+        private static string GetConnectionString()
         {
             string connectionString = string.Empty;
             try
@@ -239,7 +253,7 @@ namespace SkylineUploaderService
                     WriteEventLog("settingsPath file not found. Closing", EventLogEntryType.Error);
                 }
 
-                WriteEventLog("ConnectionString  '" + connectionString + "'", EventLogEntryType.Information);
+                //WriteEventLog("ConnectionString  '" + connectionString + "'", EventLogEntryType.Information);
 
 
                 SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connectionString);
@@ -461,6 +475,8 @@ namespace SkylineUploaderService
                         uploadParams.PortalId = _portalId;
                         uploadParams.LibraryName = profile.LibraryName;
                         uploadParams.FolderName = profile.FolderName;
+                        uploadParams.WaitForXml = profile.WaitForXml;
+                        uploadParams.EmailUser = profile.EmailUser;
 
                         SetServiceMessage("Uploading " + fileName + " in folder " + profile.FolderName);
                         SetFolderStatus("Uploading", profile.FolderId);
@@ -473,9 +489,17 @@ namespace SkylineUploaderService
                         }
                         else
                         {
-                            WriteEventLog("There was a problem uploading " + fileName, EventLogEntryType.Error);
-                            SetServiceMessage("There was a problem uploading " + fileName);
-                            LogMessage(portalUrl, _portalId, MessageLevel.Error, 0, "There was a problem uploading " + fileName);
+                            if (profile.WaitForXml)
+                            {
+                                WriteEventLog(fileName + " found but waiting for XML file", EventLogEntryType.Information);
+                                continue;
+                            }
+                            else
+                            {
+                                WriteEventLog("There was a problem uploading " + fileName, EventLogEntryType.Error);
+                                SetServiceMessage("There was a problem uploading " + fileName);
+                                LogMessage(portalUrl, _portalId, MessageLevel.Error, 0, "There was a problem uploading " + fileName);
+                            }
                         }
 
                         if (profile.DeleteAfterUpload)
@@ -566,9 +590,9 @@ namespace SkylineUploaderService
 
         private static void SaveFolderEnabled(Guid folderId, bool folderEnabled)
         {
-            using (UploaderDbContext context = new UploaderDbContext())
+            using (ServiceDbContext context = new ServiceDbContext())
             {
-                context.Database.Connection.ConnectionString = _connectionString;
+                //context.Database.Connection.ConnectionString = _connectionString;
 
                 var folder = (from f in context.Folders where f.FolderId == folderId select f).FirstOrDefault();
                 folder.Enabled = folderEnabled;
@@ -674,9 +698,9 @@ namespace SkylineUploaderService
 
             try
             {
-                using (UploaderDbContext context = new UploaderDbContext())
+                using (ServiceDbContext context = new ServiceDbContext())
                 {
-                    context.Database.Connection.ConnectionString = _connectionString;
+                    //context.Database.Connection.ConnectionString = _connectionString;
 
                     folderData = (from f in context.Folders
                                   join l in context.Login on f.FolderId equals l.FolderId
@@ -699,7 +723,9 @@ namespace SkylineUploaderService
                                       SourceFolder = sf.FolderPath,
                                       InEditMode = f.InEditMode,
                                       DeleteAfterUpload = f.DeleteAfterUpload,
-                                      FileTypes = f.FileType
+                                      FileTypes = f.FileType,
+                                      WaitForXml = f.WaitForXml,
+                                      EmailUser = f.EmailUser
                                   }).ToList();
                 }
             }
@@ -727,6 +753,7 @@ namespace SkylineUploaderService
             Guid libraryUserId = uploadParams.LibraryUserId;
             Guid libraryId = uploadParams.LibraryId;
             var portalId = uploadParams.PortalId;
+            bool waitForXml = uploadParams.WaitForXml;
 
             //creating the ServiceSoapClient which will allow to connect to the service.
             var webSvc = new SkylineWebService.SkylineWebService();
@@ -742,6 +769,11 @@ namespace SkylineUploaderService
             LogMessage(webSvc, portalId, MessageLevel.Information, 0, "Uploading file " + filename);
             var xmlName = Path.GetFileNameWithoutExtension(filename) + ".xml";
             var xmlPath = Path.Combine(uploadParams.PdfPath, xmlName);
+            if (waitForXml && !File.Exists(xmlPath))
+            {
+                return false;
+            }
+
             if (File.Exists(xmlPath))
             {
                 LogMessage(webSvc, portalId, MessageLevel.Information, 0, "Found XML file " + xmlName);
@@ -771,14 +803,14 @@ namespace SkylineUploaderService
                             }
                             else
                             {
-                                Debug.Log("The user with the user ID " + userId + " is not activated. The document will be uploaded to the default library " + uploadParams.LibraryName);
+                                Debug.Log("SkylineUploaderService", "UploadDocument", "The user with the user ID " + userId + " is not activated. The document will be uploaded to the default library " + uploadParams.LibraryName);
                                 LogMessage(webSvc, portalId, MessageLevel.Warning, 0, "The user with the user ID " + userId + " is not activated. The document will be uploaded to the default library " + uploadParams.LibraryName);
                             }
 
                         }
                         else
                         {
-                            Debug.Log("Unable to get the default library for the user ID " + userId + ". The document will be uploaded to the default library " + uploadParams.LibraryName);
+                            Debug.Log("SkylineUploaderService", "UploadDocument", "Unable to get the default library for the user ID " + userId + ". The document will be uploaded to the default library " + uploadParams.LibraryName);
                             LogMessage(webSvc, portalId, MessageLevel.Warning, 0, "Unable to get the default library for the user ID " + userId + ". The document will be uploaded to the default library " + uploadParams.LibraryName);
                         }
 
@@ -790,7 +822,7 @@ namespace SkylineUploaderService
                 }
 
                 var emailNode = doc.SelectSingleNode("/Skyline/Email");
-                if (emailNode != null && userIdNode==null)
+                if (emailNode != null && userIdNode == null)
                 {
                     var email = emailNode.InnerText;
                     if (!string.IsNullOrEmpty(email))
@@ -976,9 +1008,9 @@ namespace SkylineUploaderService
 
         private static void ReportTransferring(bool transferring)
         {
-            using (UploaderDbContext context = new UploaderDbContext())
+            using (ServiceDbContext context = new ServiceDbContext())
             {
-                context.Database.Connection.ConnectionString = _connectionString;
+                //context.Database.Connection.ConnectionString = _connectionString;
 
                 var serviceSettings = (from ss in context.ServiceSettings select ss).FirstOrDefault();
                 serviceSettings.Transferring = transferring;
@@ -989,9 +1021,9 @@ namespace SkylineUploaderService
 
         private static void ReportProgress(int offset, bool uploading)
         {
-            using (UploaderDbContext context = new UploaderDbContext())
+            using (ServiceDbContext context = new ServiceDbContext())
             {
-                context.Database.Connection.ConnectionString = _connectionString;
+                //context.Database.Connection.ConnectionString = _connectionString;
 
                 var serviceSettings = (from ss in context.ServiceSettings select ss).FirstOrDefault();
                 serviceSettings.Uploading = uploading;
@@ -1010,9 +1042,9 @@ namespace SkylineUploaderService
 
         private static void SetProgressBarMaximum(int maxValue)
         {
-            using (UploaderDbContext context = new UploaderDbContext())
+            using (ServiceDbContext context = new ServiceDbContext())
             {
-                context.Database.Connection.ConnectionString = _connectionString;
+                //context.Database.Connection.ConnectionString = _connectionString;
 
                 var serviceSettings = (from ss in context.ServiceSettings select ss).FirstOrDefault();
                 serviceSettings.ProgressMaximum = maxValue;
@@ -1171,9 +1203,9 @@ namespace SkylineUploaderService
 
         private static void SetServiceMessage(string message)
         {
-            using (UploaderDbContext context = new UploaderDbContext())
+            using (ServiceDbContext context = new ServiceDbContext())
             {
-                context.Database.Connection.ConnectionString = _connectionString;
+                //context.Database.Connection.ConnectionString = _connectionString;
 
                 var serviceSettings = (from ss in context.ServiceSettings select ss).FirstOrDefault();
 
@@ -1186,9 +1218,9 @@ namespace SkylineUploaderService
 
         private static void SetFolderStatus(string status, Guid folderId)
         {
-            using (UploaderDbContext context = new UploaderDbContext())
+            using (ServiceDbContext context = new ServiceDbContext())
             {
-                context.Database.Connection.ConnectionString = _connectionString;
+                //context.Database.Connection.ConnectionString = _connectionString;
 
                 Folder folder = (from f in context.Folders where f.FolderId == folderId select f).FirstOrDefault();
                 if (folder != null)
@@ -1201,9 +1233,9 @@ namespace SkylineUploaderService
 
         private static void DisableProfile(Guid folderId)
         {
-            using (UploaderDbContext context = new UploaderDbContext())
+            using (ServiceDbContext context = new ServiceDbContext())
             {
-                context.Database.Connection.ConnectionString = _connectionString;
+                //context.Database.Connection.ConnectionString = _connectionString;
 
                 Folder folder = (from f in context.Folders where f.FolderId == folderId select f).FirstOrDefault();
                 if (folder != null)
@@ -1216,9 +1248,9 @@ namespace SkylineUploaderService
 
         private static void SetFileCount(Guid folderId, int count)
         {
-            using (UploaderDbContext context = new UploaderDbContext())
+            using (ServiceDbContext context = new ServiceDbContext())
             {
-                context.Database.Connection.ConnectionString = _connectionString;
+                //context.Database.Connection.ConnectionString = _connectionString;
 
                 Folder folder = (from f in context.Folders where f.FolderId == folderId select f).FirstOrDefault();
                 if (folder != null)

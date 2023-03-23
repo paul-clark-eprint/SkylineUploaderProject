@@ -5,11 +5,12 @@
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<SkylineUploaderDomain.DataModel.UploaderDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<UploaderDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            ContextKey = "SkylineUploaderDomain.DataModel.UploaderDbContext";
         }
 
         protected override void Seed(SkylineUploaderDomain.DataModel.UploaderDbContext context)

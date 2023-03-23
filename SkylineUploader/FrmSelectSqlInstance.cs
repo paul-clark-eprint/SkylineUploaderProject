@@ -183,7 +183,7 @@ namespace SkylineUploader
                         MessageBox.Show("The selected user does not have sufficient rights to create a database", "Insufficient User Rights",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                        Debug.Error("The selected user does not have sufficient rights to create a database");
+                        Debug.Error("FrmSelectSQqlInstance","uxButtonSelect_Click","The selected user does not have sufficient rights to create a database");
 
                         return;
                     }
@@ -201,29 +201,29 @@ namespace SkylineUploader
                 MessageBox.Show("Error connecting to the database. \n\n" + sqlExc.Message, "Connection Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                Debug.Error("Error connecting to the database.", sqlExc);
+                Debug.Error("FrmSelectSQqlInstance","uxButtonSelect_Click","Error connecting to the database.", sqlExc);
 
                 return;
             }
             catch (Exception ex)
             {
-                Debug.Error("Unexpected error connecting to the database.", ex);
+                Debug.Error("FrmSelectSQqlInstance","uxButtonSelect_Click","Unexpected error connecting to the database.", ex);
             }
 
             if (!string.IsNullOrEmpty(SqlPassword))
             {
                 string hidePassword = sqlConBuilder.ConnectionString.Replace(SqlPassword, "*******");
-                Debug.Log("Setting the connectionString to: '" + hidePassword + "'");
+                Debug.Log("FrmSelectSQqlInstance","uxButtonSelect_Click","Setting the connectionString to: '" + hidePassword + "'");
             }
             else
             {
-                Debug.Log("Setting the connectionString to: '" + sqlConBuilder.ConnectionString + "'");
+                Debug.Log("FrmSelectSQqlInstance","uxButtonSelect_Click","Setting the connectionString to: '" + sqlConBuilder.ConnectionString + "'");
             }
             
             string errorMessage = SqlHelper.ModifyConnectionString("UploaderDbContext", sqlConBuilder.ConnectionString);
             if (!string.IsNullOrEmpty(errorMessage))
             {
-                Debug.Error(errorMessage);
+                Debug.Error("FrmSelectSQqlInstance","uxButtonSelect_Click",errorMessage);
 
                 MessageBox.Show(errorMessage, "Run As Administrator", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 DataSourceSet = false;
@@ -232,22 +232,22 @@ namespace SkylineUploader
             {
                 try
                 {
-                    Debug.Log("ConnectionString string saved to app.config");
+                    Debug.Log("FrmSelectSQqlInstance","uxButtonSelect_Click","ConnectionString string saved to app.config");
 
                     if (!SettingsHelper.CreateSettingsFile())
                     {
-                        Debug.Error("Unable to create the settings file");
+                        Debug.Error("FrmSelectSQqlInstance","uxButtonSelect_Click","Unable to create the settings file");
                         DataSourceSet = false;
                         return;
                     }
-                    Debug.Log("Settings file found. Saving ConnectionString");
+                    Debug.Log("FrmSelectSQqlInstance","uxButtonSelect_Click","Settings file found. Saving ConnectionString");
 
                     DataSourceSet = SettingsHelper.SaveConnectionString(sqlConBuilder.ConnectionString);
                     
                 }
                 catch (Exception ex)
                 {
-                    Debug.Error(ex.Message, ex);
+                    Debug.Error("FrmSelectSQqlInstance","uxButtonSelect_Click",ex.Message, ex);
                     MessageBox.Show("Unexptected error saving the ConnectionString setting\n\n" + ex.Message,
                         "Unexpected Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     DataSourceSet = false;

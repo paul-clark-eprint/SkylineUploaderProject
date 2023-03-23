@@ -39,7 +39,7 @@ namespace SkylineUploader.Classes
             }
             catch (Exception)
             {
-                return "Unable to save the database configuration. Please run the application as Administrator";
+                return "Unable to save the database configuration. Please run the application for the first time as Administrator";
             }
 
             return string.Empty;

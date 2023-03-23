@@ -29,6 +29,8 @@ namespace SkylineUploaderDomain.DataModel.Classes
         public bool HideOnOrder { get; set; }
         public bool DeleteAfterUpload { get; set; }
         public bool InEditMode { get; set; }
+        public bool WaitForXml { get; set; }
+        public bool EmailUser { get; set; }
         public DateTime DateUpdated { get; set; }
         [StringLength(1000)]
         public string FileType { get; set; }

@@ -17,6 +17,7 @@ using SkylineUploaderDomain.DataModel;
 using SkylineUploaderDomain.DataModel.Classes;
 using Telerik.WinControls.UI;
 using System.ServiceProcess;
+using System.Xml.Linq;
 using Telerik.WinControls;
 using ServiceSettings = SkylineUploaderDomain.DataModel.Classes.ServiceSettings;
 
@@ -36,7 +37,7 @@ namespace SkylineUploader
         {
             InitializeComponent();
             InitializeBackgroundWorker();
-            Database.SetInitializer<UploaderDbContext>(null);
+            //Database.SetInitializer<UploaderDbContext>(null);
 
             if (!FileHelper.CreateProgramDataFolder())
             {
@@ -46,6 +47,13 @@ namespace SkylineUploader
             }
 
             Debug.CheckLogFileSizes();
+
+            Debug.Log("","","" );
+            Debug.Log("","","" );
+            Debug.Log("***********","***********","" );
+            Debug.Log("FrmUploader","Starting up","" );
+            Debug.Log("***********","***********","" );
+            Debug.Log("","","" );
 
             CheckAppConfig();
 
@@ -91,9 +99,9 @@ namespace SkylineUploader
             var dataSource = builder["Data Source"].ToString();
             if (string.IsNullOrEmpty(dataSource) || dataSource == "NotSet")
             {
-                Debug.Log("ConnectionString = " + connectionString);
+                Debug.Log("FrmUploader","CheckAppConfig","ConnectionString = " + connectionString);
 
-                Debug.Log("Datasource not found in ConnectionString. Calling CheckSqlInstance()");
+                Debug.Log("FrmUploader","CheckAppConfig","Datasource not found in ConnectionString. Calling CheckSqlInstance()");
                 uxLabelStatus.Visibility = ElementVisibility.Visible;
                 _bwCheckSql.RunWorkerAsync();
             }
@@ -292,20 +300,20 @@ namespace SkylineUploader
             if (progress == -1)
             {
                 uxLabelStatus.Text = e.UserState.ToString();
-                Debug.Log(e.UserState.ToString());
+                Debug.Log("FrmUploader","bwCheckSQL_ProgressChanged",e.UserState.ToString());
             }
         }
 
         private void bwCheckSQL_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            Debug.Log("sqlFound = " + _sqlFound);
-            Debug.Log("dataSourceSet = " + _dataSourceSet);
+            Debug.Log("FrmUploader","bwCheckSQL_RunWorkerCompleted","sqlFound = " + _sqlFound);
+            Debug.Log("FrmUploader","bwCheckSQL_RunWorkerCompleted","dataSourceSet = " + _dataSourceSet);
             if (_sqlFound && !_dataSourceSet)
             {
-                Debug.Log("Deleting ProgramData folder");
+                Debug.Log("FrmUploader","bwCheckSQL_RunWorkerCompleted","Deleting ProgramData folder");
                 FileHelper.DeleteProgramDataFolder();
 
-                Debug.Log("sqlInstances.Count = " + _sqlInstances.Count);
+                Debug.Log("FrmUploader","bwCheckSQL_RunWorkerCompleted","sqlInstances.Count = " + _sqlInstances.Count);
                 if (_sqlInstances.Count > 0)
                 {
                     using (var frmSelectSqlInstance = new FrmSelectSqlInstance())
@@ -316,12 +324,12 @@ namespace SkylineUploader
 
                         _dataSource = frmSelectSqlInstance.SelectedInstance;
                         _dataSourceSet = frmSelectSqlInstance.DataSourceSet;
-                        Debug.Log("dataSourceSet = " + _dataSourceSet);
+                        Debug.Log("FrmUploader","bwCheckSQL_RunWorkerCompleted","dataSourceSet = " + _dataSourceSet);
 
                         if (string.IsNullOrEmpty(_dataSource))
                         {
                             MessageBox.Show("No SQL Server instance selected. Shutting down", "SQL Server not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            Debug.Error("No SQL Server instance selected. Shutting down");
+                            Debug.Error("FrmUploader","bwCheckSQL_RunWorkerCompleted","No SQL Server instance selected. Shutting down");
                             Application.Exit();
                         }
                     }
@@ -344,7 +352,7 @@ namespace SkylineUploader
             else
             {
                 MessageBox.Show("Unable to find any instance of SQL Server. Shutting down", "SQL Server not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Debug.Error("Unable to find any instance of SQL Server. Shutting down");
+                Debug.Error("FrmUploader","bwCheckSQL_RunWorkerCompleted","Unable to find any instance of SQL Server. Shutting down");
                 Application.Exit();
             }
 
@@ -353,14 +361,13 @@ namespace SkylineUploader
 
         private bool InitialiseFoldersGrid()
         {
-            //Debug.Log("InitialiseFoldersGrid");
             string connectionString = string.Empty;
             try
             {
-                //Debug.Log("using UploaderDbContext");
+                Debug.Log("FrmUploader","InitialiseFoldersGrid","Creating UploaderDbContext");
                 using (UploaderDbContext context = new UploaderDbContext())
                 {
-                    //Debug.Log("Trying to create the database if it does not exist");
+                    Debug.Log("FrmUploader","InitialiseFoldersGrid","This should create the database if it does not exist");
 
                     connectionString = SqlHelper.GetConnectionString("UploaderDbContext");
                     //context.Database.Connection.ConnectionString = connectionString;
@@ -368,17 +375,17 @@ namespace SkylineUploader
 
                     SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connectionString);
                     var dataSource = builder["Data Source"].ToString();
-                    Debug.Log("DataSource = " + dataSource);
+                    Debug.Log("FrmUploader","InitialiseFoldersGrid","DataSource = " + dataSource);
 
-                    bool dbCreated = context.Database.CreateIfNotExists();
-                    if (dbCreated) Debug.Log("Database created");
+                    //bool dbCreated = context.Database.CreateIfNotExists();
+                    //if (dbCreated) Debug.Log("FrmUploader","InitialiseFoldersGrid","Database created");
                 }
 
             }
             catch (Exception e)
             {
-                Debug.Error("Unexpected Error trying to create the Database: " + e.Message);
-                Debug.Error("ConnectionString = " + connectionString);
+                Debug.Error("FrmUploader","InitialiseFoldersGrid","Unexpected Error trying to create the Database: " + e.Message);
+                Debug.Error("FrmUploader","InitialiseFoldersGrid","ConnectionString = " + connectionString);
                 MessageBox.Show("Unexpected Error trying to create the Database\n\n" + e.Message, "Unexpected Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Environment.Exit(0);
@@ -400,6 +407,8 @@ namespace SkylineUploader
             if (uxGridViewFolders.Columns["FileTypes"] != null) uxGridViewFolders.Columns["FileTypes"].IsVisible = false;
             if (uxGridViewFolders.Columns["UserId"] != null) uxGridViewFolders.Columns["UserId"].IsVisible = false;
             if (uxGridViewFolders.Columns["LibraryUserId"] != null) uxGridViewFolders.Columns["LibraryUserId"].IsVisible = false;
+            if (uxGridViewFolders.Columns["WaitForXml"] != null) uxGridViewFolders.Columns["WaitForXml"].IsVisible = false;
+            if (uxGridViewFolders.Columns["EmailUser"] != null) uxGridViewFolders.Columns["EmailUser"].IsVisible = false;
             uxGridViewFolders.Columns["PortalUrl"].BestFit();
             uxGridViewFolders.Columns["PortalUrl"].BestFit();
             uxGridViewFolders.Columns["Files"].Width = 30;
@@ -500,8 +509,8 @@ namespace SkylineUploader
                 MessageBox.Show("ConnectionString: " + connectionString, "Diagnostic Message", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
-                Debug.Error("Error connecting to the database.", sqlExc);
-                Debug.Error("SQL Error number: " + errorNumber);
+                Debug.Error("FrmUploader","GetGridData","Error connecting to the database.", sqlExc);
+                Debug.Error("FrmUploader","GetGridData","SQL Error number: " + errorNumber);
 
                 if (errorNumber == 262)
                 {
@@ -510,8 +519,8 @@ namespace SkylineUploader
                     sqlConBuilder.ConnectionString = "Data Source=NotSet;Initial Catalog=SkylineUploader;Integrated Security=SSPI;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
                     string errorMessage = SqlHelper.ModifyConnectionString("UploaderDbContext", sqlConBuilder.ConnectionString);
-                    Debug.Error(errorMessage);
-                    MessageBox.Show(errorMessage, "Run As Administrator", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Debug.Error("FrmUploader","GetGridData",errorMessage);
+                    MessageBox.Show(errorMessage, "Run Once As Administrator", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 return false;
@@ -525,9 +534,9 @@ namespace SkylineUploader
                 MessageBox.Show("ConnectionString = " + connectionString, "Diagnostic Message", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
-                Debug.Error("ConnectionString = " + connectionString);
+                Debug.Error("FrmUploader","GetGridData","ConnectionString = " + connectionString);
 
-                Debug.Error("Error connecting to the database. Closing application", e);
+                Debug.Error("FrmUploader","GetGridData","Error connecting to the database. Closing application", e);
                 Environment.Exit(0);
             }
 
@@ -701,7 +710,7 @@ namespace SkylineUploader
             {
                 MessageBox.Show("There was a problem getting the data for the grid. closing application", "Error getting data",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Debug.Error("Error connecting to the database. Closing application");
+                Debug.Error("FrmUploader","uxButtonNew1_Click","Error connecting to the database. Closing application");
                 Environment.Exit(0);
             }
         }
@@ -769,6 +778,8 @@ namespace SkylineUploader
                 MessageBox.Show("There was a problem turning on debug mode", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+            this.Text = GetTitleText();
+
         }
 
         private void uxMenuDebugOff_Click(object sender, EventArgs e)
@@ -790,6 +801,8 @@ namespace SkylineUploader
             {
                 MessageBox.Show("There was a problem turning off debug mode", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            this.Text = GetTitleText();
         }
 
         private void uxMenuItemLogging_Click(object sender, EventArgs e)
@@ -807,8 +820,41 @@ namespace SkylineUploader
 
         private void FrmUploader_Load(object sender, EventArgs e)
         {
+            this.Text =  GetTitleText();
+            
+        }
+
+        private string GetTitleText()
+        {
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
-            this.Text = "Skyline Uploader version "+ version.Major +"." + version.Minor +"." + version.Build;
+            string titleText = "Skyline Uploader version "+ version.Major +"." + version.Minor +"." + version.Build;
+
+            string settingsPath = Global.SettingsPath;
+            bool serviceDebugMode = false;
+
+            if (File.Exists(settingsPath))
+            {
+                XDocument doc = XDocument.Load(Global.SettingsPath);
+                if (doc.Root != null)
+                {
+                    var xElement = doc.Root.Element("DebugMode");
+                    if (xElement != null)
+                    {
+                        var debugMode = xElement.Value;
+                        if (!string.IsNullOrEmpty(debugMode))
+                        {
+                            serviceDebugMode = debugMode.ToLower() == "true";
+                        }
+                    }
+                }
+            }
+
+            if (serviceDebugMode)
+            {
+                titleText += " :: Service Debug ON";
+            }
+
+            return titleText;
         }
     }
 }

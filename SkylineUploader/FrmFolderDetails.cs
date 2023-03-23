@@ -37,6 +37,7 @@ namespace SkylineUploader
         private static bool _checkUrlCancelled = false;
         private static bool _uploadCancelled = false;
         private static bool _uploadOK = false;
+        private static bool _waitingForXml = false;
         private static Guid _docId = Guid.Empty;
         private static string _errorMessage = string.Empty;
         private static int _totalFiles = 0;
@@ -187,14 +188,25 @@ namespace SkylineUploader
             }
 
             int progressValue = e.ProgressPercentage;
-            if (progressValue == 1) uxLabelStatus.Text = "Connecting to " + _portalUrl + "...";
-            if (progressValue == 2) uxLabelStatus.Text = "Logging in...";
+            if (progressValue == 1)
+            {
+                Debug.Log("FrmFolderDetails","BwCheckUrl_ProgressChanged","Connecting to " + _portalUrl + "...");
+                uxLabelStatus.Text = "Connecting to " + _portalUrl + "...";
+            }
+
+            if (progressValue == 2)
+            {
+                Debug.Log("FrmFolderDetails","BwCheckUrl_ProgressChanged","Logging in...");
+                uxLabelStatus.Text = "Logging in...";
+            }
         }
 
         private void BwCheckUrl_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            
             if (e.Cancelled || _checkUrlCancelled)
             {
+                Debug.Log("FrmFolderDetails","BwCheckUrl_RunWorkerCompleted","Cancelled");
                 StopWaitingBar();
                 StopProgressBar();
                 uxLabelStatus.Text = "Cancelled";
@@ -204,19 +216,31 @@ namespace SkylineUploader
 
             if (e.Error != null || !_urlValid)
             {
+                Debug.Error("FrmFolderDetails","BwCheckUrl_RunWorkerCompleted","_urlValid = "+ _urlValid);
+                Debug.Error("FrmFolderDetails","BwCheckUrl_RunWorkerCompleted","e.Error = "+ e.Error);
                 StopWaitingBar();
                 StopProgressBar();
-                Debug.Error("The upload page '" + _portalUrl + "' is not available");
-                Debug.Error("The upload page '" + _portalUrl + "' is not available", e.Error);
+                Debug.Error("FrmFolderDetails","BwCheckUrl_RunWorkerCompleted","The upload page '" + _portalUrl + "' is not available");
+                Debug.Error("FrmFolderDetails","BwCheckUrl_RunWorkerCompleted","The upload page '" + _portalUrl + "' is not available", e.Error);
                 MessageBox.Show(this, "The upload website '" + _portalUrl + "' is not available.", "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 uxLabelStatus.Text = "The upload website '" + _portalUrl + "' is not available.";
                 timer1.Enabled = true;
                 return;
             }
 
-            //No error and the URL has been found
+            Debug.Log("FrmFolderDetails","BwCheckUrl_RunWorkerCompleted","No error and the URL has been found");
             StopWaitingBar();
             StopProgressBar();
+
+            Debug.Log("FrmFolderDetails","BwCheckUrl_RunWorkerCompleted","username = "+_username);
+            Debug.Log("FrmFolderDetails","BwCheckUrl_RunWorkerCompleted","Password found");
+            Debug.Log("FrmFolderDetails","BwCheckUrl_RunWorkerCompleted","LibraryUserId = "+_userLibraryUserId);
+            Debug.Log("FrmFolderDetails","BwCheckUrl_RunWorkerCompleted","LibraryId = "+_userLibraryLibraryId);
+            Debug.Log("FrmFolderDetails","BwCheckUrl_RunWorkerCompleted","UploadUrl = "+_portalUrl);
+            Debug.Log("FrmFolderDetails","BwCheckUrl_RunWorkerCompleted","PdfPath = "+uxTextBoxSourceFolder.Text);
+            Debug.Log("FrmFolderDetails","BwCheckUrl_RunWorkerCompleted","PortalId = "+_portalId);
+            Debug.Log("FrmFolderDetails","BwCheckUrl_RunWorkerCompleted","WaitForXml = "+ uxCheckBoxWaitForXml.Checked);
+            Debug.Log("FrmFolderDetails","BwCheckUrl_RunWorkerCompleted","Enabled = "+ uxCheckBoxEnabled.Checked);
 
             uploadParams = new Webcalls.UploadParams();
             uploadParams.username = _username;
@@ -226,8 +250,10 @@ namespace SkylineUploader
             uploadParams.UploadUrl = _portalUrl;
             uploadParams.PdfPath = uxTextBoxSourceFolder.Text;
             uploadParams.PortalId = _portalId;
+            uploadParams.WaitForXml = uxCheckBoxWaitForXml.Checked;
 
             uxLabelStatus.Text = "Connected";
+            Debug.Log("FrmFolderDetails","BwCheckUrl_RunWorkerCompleted","Connected.");
 
             _bwUpload.RunWorkerAsync(uploadParams);
 
@@ -279,11 +305,25 @@ namespace SkylineUploader
                 {
                     if (FileLocked(file))
                     {
-                        Debug.Log("File " + file.FullName + " is locked. Skipping this file");
+                        Debug.Log("FrmFolderDetails","BwUpload_DoWork","File " + file.FullName + " is locked. Skipping this file");
                         //_alertUser = true;
                         continue;
                     }
 
+                    if (uploadParams.WaitForXml)
+                    {
+                        var xmlFileName = Path.GetFileNameWithoutExtension(file.FullName) + ".xml";
+                        var xmlFile = Path.Combine(uploadParams.PdfPath, xmlFileName);
+                        Debug.Log("FrmFolderDetails","BwUpload_DoWork","File " + file.FullName + " found, waiting for XML file "+ xmlFile);
+                        if (!File.Exists(xmlFile))
+                        {
+                            _uploadOK = false;
+                            _waitingForXml = true;
+                            continue;
+                        }
+                    }
+
+                    _waitingForXml = false;
                     fileNumber++;
                     string filename = file.Name;
                     long filesize = file.Length;
@@ -369,14 +409,14 @@ namespace SkylineUploader
                                     }
                                     else
                                     {
-                                        Debug.Log("The user with the user ID "+ userId + " is not activated. The document will be uploaded to the default library "+ uploadParams.LibraryName);
+                                        Debug.Log("FrmFolderDetails","BwUpload_DoWork","The user with the user ID "+ userId + " is not activated. The document will be uploaded to the default library "+ uploadParams.LibraryName);
                                         LogMessage(webSvc, portalId, MessageLevel.Warning, 0, "The user with the user ID "+ userId + " is not activated. The document will be uploaded to the default library " + uploadParams.LibraryName);
                                     }
                                     
                                 }
                                 else
                                 {
-                                    Debug.Log("Unable to get the default library for the user ID "+ userId + ". The document will be uploaded to the default library "+ uploadParams.LibraryName);
+                                    Debug.Log("FrmFolderDetails","BwUpload_DoWork","Unable to get the default library for the user ID "+ userId + ". The document will be uploaded to the default library "+ uploadParams.LibraryName);
                                     LogMessage(webSvc, portalId, MessageLevel.Warning, 0, "Unable to get the default library for the user ID "+ userId + ". The document will be uploaded to the default library " + uploadParams.LibraryName);
                                 }
 
@@ -408,14 +448,14 @@ namespace SkylineUploader
                                     }
                                     else
                                     {
-                                        Debug.Log("The user with the email address "+ email + " is not activated. The document will be uploaded to the default library "+ uploadParams.LibraryName);
+                                        Debug.Log("FrmFolderDetails","BwUpload_DoWork","The user with the email address "+ email + " is not activated. The document will be uploaded to the default library "+ uploadParams.LibraryName);
                                         LogMessage(webSvc, portalId, MessageLevel.Warning, 0, "The user with the email address "+ email + " is not activated. The document will be uploaded to the default library " + uploadParams.LibraryName);
                                     }
                                     
                                 }
                                 else
                                 {
-                                    Debug.Log("Unable to get the default library for the email address "+ email + ". The document will be uploaded to the default library "+ uploadParams.LibraryName);
+                                    Debug.Log("FrmFolderDetails","BwUpload_DoWork","Unable to get the default library for the email address "+ email + ". The document will be uploaded to the default library "+ uploadParams.LibraryName);
                                     LogMessage(webSvc, portalId, MessageLevel.Warning, 0, "Unable to get the default library for the email address "+ email + ". The document will be uploaded to the default library " + uploadParams.LibraryName);
                                 }
                             }
@@ -471,7 +511,7 @@ namespace SkylineUploader
                     }
                     catch (Exception ex)
                     {
-                        Debug.Error("Error uploading file " + pdfPath + " to " + url, ex);
+                        Debug.Error("FrmFolderDetails","BwUpload_DoWork","Error uploading file " + pdfPath + " to " + url, ex);
                         fs.Close();
                         _errorMessage = "Error uploading the document:\n\n" + ex.Message;
                         _uploadOK = false;
@@ -518,7 +558,7 @@ namespace SkylineUploader
                         {
                             _uploadOK = false;
                             _errorMessage = docIdOrError;
-                            Debug.Error(docIdOrError);
+                            Debug.Error("FrmFolderDetails","BwUpload_DoWork",docIdOrError);
                             LogMessage(webSvc, portalId, MessageLevel.Error, 0, "Error in MoveTempDocumentsToSpecificLibrary: "+ docIdOrError);
                         }
                         else
@@ -529,7 +569,7 @@ namespace SkylineUploader
                     catch (Exception ex)
                     {
                         //possible timeout
-                        Debug.Error("Error calling MoveTempDocumentsToUserLibrary", ex);
+                        Debug.Error("FrmFolderDetails","BwUpload_DoWork","Error calling MoveTempDocumentsToUserLibrary", ex);
                         _errorMessage = "Error copying your document to your online library:\n\n" + ex.Message;
                         _uploadOK = false;
                         LogMessage(webSvc, portalId, MessageLevel.Error, 0, "Unexpected error calling MoveTempDocumentsToUserLibrary. Message = "+ ex.Message);
@@ -537,54 +577,54 @@ namespace SkylineUploader
 
                     if (_uploadOK && uxCheckBoxDeleteSource.Checked)
                     {
-                        Debug.Log("File uploaded OK. Deleting source file "+ pdfPath);
+                        Debug.Log("FrmFolderDetails","BwUpload_DoWork","File uploaded OK. Deleting source file "+ pdfPath);
                         try
                         {
                             File.Delete(pdfPath);
                         }
                         catch (Exception exception)
                         {
-                            Debug.Error("Error deleting file "+ pdfPath,exception);
+                            Debug.Error("FrmFolderDetails","BwUpload_DoWork","Error deleting file "+ pdfPath,exception);
                             _uploadOK = false;
                         }
                         
                         if (File.Exists(pdfPath))
                         {
                             _uploadOK = false;
-                            Debug.Error("Unable to deleted file " + pdfPath);
+                            Debug.Error("FrmFolderDetails","BwUpload_DoWork","Unable to deleted file " + pdfPath);
                         }
 
                         if (File.Exists(xmlPath))
                         {
-                            Debug.Log("Deleting associated XML file "+ xmlPath);
+                            Debug.Log("FrmFolderDetails","BwUpload_DoWork","Deleting associated XML file "+ xmlPath);
                             try
                             {
                                 File.Delete(xmlPath);
                             }
                             catch (Exception exception)
                             {
-                                Debug.Error("Error deleting file "+ xmlPath,exception);
+                                Debug.Error("FrmFolderDetails","BwUpload_DoWork","Error deleting file "+ xmlPath,exception);
                                 _uploadOK = false;
                             }
 
                             if (File.Exists(xmlPath))
                             {
                                 _uploadOK = false;
-                                Debug.Error("Unable to deleted file " + pdfPath);
+                                Debug.Error("FrmFolderDetails","BwUpload_DoWork","Unable to deleted file " + pdfPath);
                             }
                         }
 
 
-                        Debug.Log("Deleting Temp upload folder " + uploadDir);
+                        Debug.Log("FrmFolderDetails","BwUpload_DoWork","Deleting Temp upload folder " + uploadDir);
                         if (!webSvc.DeleteTempUploadedFile(uploadDir))
                         {
-                            Debug.Error("Error deleting the Temp upload directory "+ uploadDir);
+                            Debug.Error("FrmFolderDetails","BwUpload_DoWork","Error deleting the Temp upload directory "+ uploadDir);
                             LogMessage(webSvc, portalId, MessageLevel.Error, 0, "Error deleting the Temp upload directory "+ uploadDir);
                         }
 
                         if (!_uploadOK)
                         {
-                            Debug.Error("Error during the upload. Skipping further uploads");
+                            Debug.Error("FrmFolderDetails","BwUpload_DoWork","Error during the upload. Skipping further uploads");
                             LogMessage(webSvc, portalId, MessageLevel.Critical, 0, "Error during the upload. Skipping further uploads from "+ uploadDir);
                             break;
                         }
@@ -597,8 +637,16 @@ namespace SkylineUploader
                 }
                 else
                 {
-                    _bwUpload.ReportProgress(-3);
+                    if (_waitingForXml)
+                    {
+                        _bwUpload.ReportProgress(-6);
+                    }
+                    else
+                    {
+                        _bwUpload.ReportProgress(-3);
+                    }
                 }
+                
             }
         }
 
@@ -662,6 +710,11 @@ namespace SkylineUploader
                 StopProgressBar();
                 uxLabelStatus.Text = "Upload Complete.";
             }
+            else if (progressValue == -6)
+            {
+                uxLabelStatus.Text = "Waiting for XML file.";
+            }
+
             else
             {
                 if (_bwUpload.CancellationPending) return;
@@ -697,13 +750,13 @@ namespace SkylineUploader
                 //Webcalls.GotoSite(siteUrl, username, password, _docId.ToString(), _numPages);
 
                 //Close();
-                Debug.Log("All files uploaded OK");
+                Debug.Log("FrmFolderDetails","BwUpload_RunWorkerCompleted","All files uploaded OK");
             }
             else if (!_uploadCancelled)
             {
                 if (_errorMessage != string.Empty)
                 {
-                    Debug.Error(_errorMessage);
+                    Debug.Error("FrmFolderDetails","BwUpload_RunWorkerCompleted",_errorMessage);
                     
                 }
             }
@@ -934,6 +987,9 @@ namespace SkylineUploader
                     uxTextBoxSelected.Enabled = true;
                     uxTextBoxFolderName.Enabled = true;
                     uxTextBoxPortalUrl.Text = _portalUrl;
+
+                    uxCheckBoxEnabled.Enabled = true;
+                    uxCheckBoxWaitForXml.Enabled = true;
                 }
                 catch (Exception)
                 {
@@ -994,7 +1050,7 @@ namespace SkylineUploader
             }
             catch (Exception ex)
             {
-                Debug.Error("Unexpected error closing the profile",ex);
+                Debug.Error("FrmFolderDetails","uxButtonClose_Click","Unexpected error closing the profile",ex);
                 MessageBox.Show("Unexpected error closing the profile\n\n" + ex.Message, "Unexpected Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Environment.Exit(0);
@@ -1086,13 +1142,15 @@ namespace SkylineUploader
 
         private void FolderDetails_Load(object sender, EventArgs e)
         {
+            Debug.Log("FrmFolderDetails","FolderDetails_Load","FolderDetails_Load");
             uxLabelErrorMessage.Text = string.Empty;
             using (UploaderDbContext context = new UploaderDbContext())
             {
-                
+               
                 var logins = from l in context.Login select l;
                 if (logins.Any())
                 {
+                    Debug.Log("FrmFolderDetails","FolderDetails_Load","logins found. Getting folder details for FolderId: "+ FolderId);
                     Login login = (from lo in logins where lo.FolderId == FolderId  select lo).FirstOrDefault();
                     if (login != null)
                     {
@@ -1103,11 +1161,16 @@ namespace SkylineUploader
                         uxTextBoxPassword.Text = _password;
                     }
                 }
+                else
+                {
+                    Debug.Log("FrmFolderDetails","FolderDetails_Load","No logins found for FolderId: "+ FolderId);
+                }
                 
 
                 var proxy = (from p in context.Proxy select p).FirstOrDefault();
                 if (proxy != null)
                 {
+                    Debug.Log("FrmFolderDetails","FolderDetails_Load","Getting Proxy settings");
                     _useProxy = proxy.UseProxy;
                     _proxyDomain = proxy.ProxyDomain;
                     _proxyUserName = proxy.ProxyUsername;
@@ -1115,13 +1178,19 @@ namespace SkylineUploader
                     _proxyAddress = proxy.ProxyAddress;
                     _proxyPort = proxy.ProxyPort;
                 }
+                else
+                {
+                    Debug.Log("FrmFolderDetails","FolderDetails_Load","No Proxy settings");
+                }
 
                 var folder = (from f in context.Folders where f.FolderId == FolderId select f).FirstOrDefault();
                 if (folder != null)
                 {
+                    Debug.Log("FrmFolderDetails","FolderDetails_Load","Setting folder to EditMode");
                     folder.InEditMode = true;
                 }
 
+                Debug.Log("FrmFolderDetails","FolderDetails_Load","context.SaveChanges");
                 context.SaveChanges();
             }
         }
@@ -1203,6 +1272,13 @@ namespace SkylineUploader
                 return true;
             }
 
+            if (!uxCheckBoxEnabled.Checked)
+            {
+                uxLabelErrorMessage.Text = "The profile is not enabled";
+                uxLabelErrorMessage.Visible = true;
+                return true;
+            }
+
             uxLabelErrorMessage.Visible = false;
             return false;
         }
@@ -1227,7 +1303,7 @@ namespace SkylineUploader
                 }
 
                 
-                if (!CheckFolderPermissiongs(folderPath))
+                if (!CheckFolderPermissions(folderPath))
                 {
                     MessageBox.Show(uxLabelErrorMessage.Text);
                     return;
@@ -1255,6 +1331,7 @@ namespace SkylineUploader
                 folder.HideOnOrder = uxCheckBoxRemoveDocOnOrder.Checked;
                 folder.DeleteAfterDays = -1;
                 folder.DeleteAfterUpload = uxCheckBoxDeleteSource.Checked;
+                folder.WaitForXml = uxCheckBoxWaitForXml.Checked;
                 folder.DateUpdated=DateTime.Now;
                 folder.Status = "Idle";
                 //folder.InEditMode = true;
@@ -1330,11 +1407,11 @@ namespace SkylineUploader
                 {
                     foreach (var eve in ex.EntityValidationErrors)
                     {
-                        Debug.Error(("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        Debug.Error("FrmFolderDetails","uxButtonSave_Click",("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
                             eve.Entry.Entity.GetType().Name, eve.Entry.State).ToString());
                         foreach (var ve in eve.ValidationErrors)
                         {
-                            Debug.Error(("- Property: \"{0}\", Error: \"{1}\"",
+                            Debug.Error("FrmFolderDetails","uxButtonSave_Click",("- Property: \"{0}\", Error: \"{1}\"",
                                 ve.PropertyName, ve.ErrorMessage).ToString());
                         }
                     }
@@ -1348,7 +1425,7 @@ namespace SkylineUploader
 
         }
 
-        private bool CheckFolderPermissiongs(string folderPath)
+        private bool CheckFolderPermissions(string folderPath)
         {
             var testFile = Path.Combine(folderPath, "__test__.txt");
             try
@@ -1361,7 +1438,7 @@ namespace SkylineUploader
             catch (Exception e)
             {
                 uxLabelErrorMessage.Text = "File "+ testFile + " already found but delete permission missing from the folder " + folderPath;
-                Debug.Error("File "+ testFile + " already found but delete permission missing from the folder " + folderPath,e);
+                Debug.Error("FrmFolderDetails","uxButtonSave_Click","File "+ testFile + " already found but delete permission missing from the folder " + folderPath,e);
                 
                 return false;
             }
@@ -1384,7 +1461,7 @@ namespace SkylineUploader
             catch (Exception e)
             {
                 uxLabelErrorMessage.Text = "Unable to create files in the folder " + folderPath;
-                Debug.Error("Unable to create files in the folder " + folderPath,e);
+                Debug.Error("FrmFolderDetails","CheckFolderPermissions","Unable to create files in the folder " + folderPath,e);
                 return false;
             }
 
@@ -1397,19 +1474,19 @@ namespace SkylineUploader
                 else
                 {
                     uxLabelErrorMessage.Text = "Unable to read files in the folder " + folderPath;
-                    Debug.Error("Unable to read files in the folder " + folderPath);
+                    Debug.Error("FrmFolderDetails","CheckFolderPermissions","Unable to read files in the folder " + folderPath);
                     return false;
                 }
             }
             catch (Exception e)
             {
                 uxLabelErrorMessage.Text = "Unable to delete files in the folder " + folderPath;
-                Debug.Error("Unable to delete files in the folder " + folderPath,e);
+                Debug.Error("FrmFolderDetails","CheckFolderPermissions","Unable to delete files in the folder " + folderPath,e);
                 return false;
             }
 
             uxLabelErrorMessage.Text = "Permissions check OK on folder " + folderPath;
-            Debug.Log("Permissions check OK on folder "+ folderPath);
+            Debug.Log("FrmFolderDetails","CheckFolderPermissions","Permissions check OK on folder "+ folderPath);
             return true;
         }
 
@@ -1479,6 +1556,7 @@ namespace SkylineUploader
                 uxCheckBoxSynchronize.Checked = folder.SynchronizeFiles;
                 uxCheckBoxRemoveDocOnOrder.Checked = folder.HideOnOrder;
                 uxCheckBoxDeleteSource.Checked = folder.DeleteAfterUpload;
+                uxCheckBoxWaitForXml.Checked = folder.WaitForXml;
                 //folder.DeleteAfterDays = -1;
 
                 var userLibrary = (from ul in context.UserLibraries where ul.FolderId == folderId select ul).FirstOrDefault();
@@ -1580,7 +1658,7 @@ namespace SkylineUploader
                 MessageBox.Show("Please select the Source Folder", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
-
+            
             int totalFiles = 0;
             _extensions = new List<string>();
             DropDownCheckedItemsCollection documentTypes = uxCheckedDropDownListFileTypes.CheckedItems;
