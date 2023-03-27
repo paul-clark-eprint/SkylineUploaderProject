@@ -300,7 +300,11 @@ namespace SkylineUploader
                 FileInfo[] Files = dinfo.GetFiles(extension);
 
                 int fileNumber = 0;
-
+                if (Files == null || Files.Length == 0)
+                {
+                    continue;
+                }
+                //var file = Files[0];
                 foreach (FileInfo file in Files)
                 {
                     if (FileLocked(file))
@@ -646,7 +650,22 @@ namespace SkylineUploader
                         _bwUpload.ReportProgress(-3);
                     }
                 }
-                
+
+            }
+            if (_uploadOK)
+            {
+                _bwUpload.ReportProgress(-5);
+            }
+            else
+            {
+                if (_waitingForXml)
+                {
+                    _bwUpload.ReportProgress(-6);
+                }
+                else
+                {
+                    _bwUpload.ReportProgress(-3);
+                }
             }
         }
 
@@ -1272,13 +1291,6 @@ namespace SkylineUploader
                 return true;
             }
 
-            if (!uxCheckBoxEnabled.Checked)
-            {
-                uxLabelErrorMessage.Text = "The profile is not enabled";
-                uxLabelErrorMessage.Visible = true;
-                return true;
-            }
-
             uxLabelErrorMessage.Visible = false;
             return false;
         }
@@ -1720,16 +1732,18 @@ namespace SkylineUploader
                 return;
             }
 
-
+            
             _checkUrlCancelled = false;
-
-            uxLabelStatus.Text = "Connecting to " + _portalUrl + "...";
 
             uxButtonUpload.Visibility = ElementVisibility.Collapsed;
             uxButtonCancel.Visibility = ElementVisibility.Visible;
 
-            timer1.Enabled = true;
+            var checkUrlBusy = _bwCheckUrl.IsBusy;
+            var uploadBury = _bwUpload.IsBusy;
 
+            
+            timer1.Enabled = true;
+            
         }
 
         private void uxButtonCancel_Click(object sender, EventArgs e)
@@ -1747,10 +1761,13 @@ namespace SkylineUploader
             }
 
             uxButtonCancel.Visibility = ElementVisibility.Hidden;
-            uxButtonUpload.Visibility = ElementVisibility.Visible;
+            //uxButtonUpload.Visibility = ElementVisibility.Visible;
             StopWaitingBar();
             StopProgressBar();
+
             timer1.Enabled = false;
+
+            uxLabelStatus.Text = "Upload cancelled";
         }
 
         private void timer1_Tick(object sender, EventArgs e)

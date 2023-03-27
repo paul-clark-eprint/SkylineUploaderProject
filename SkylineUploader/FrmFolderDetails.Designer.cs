@@ -67,7 +67,6 @@
             this.uxButtonClose = new Telerik.WinControls.UI.RadButton();
             this.uxCheckBoxRemoveDocOnOrder = new System.Windows.Forms.CheckBox();
             this.uxCheckBoxDeleteSource = new System.Windows.Forms.CheckBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.dotsLineWaitingBarIndicatorElement1 = new Telerik.WinControls.UI.DotsLineWaitingBarIndicatorElement();
             this.uxListControlUsers = new Telerik.WinControls.UI.RadListControl();
             this.uxListControlLibraries = new Telerik.WinControls.UI.RadListControl();
@@ -77,6 +76,7 @@
             this.uxLabelSelected = new System.Windows.Forms.Label();
             this.uxLabelErrorMessage = new System.Windows.Forms.Label();
             this.uxCheckBoxWaitForXml = new System.Windows.Forms.CheckBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBoxAdminLogin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxPictureBoxProxy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxButtonConnect)).BeginInit();
@@ -461,11 +461,6 @@
             this.uxCheckBoxDeleteSource.Text = "Delete Source document after upload";
             this.uxCheckBoxDeleteSource.UseVisualStyleBackColor = true;
             // 
-            // timer1
-            // 
-            this.timer1.Interval = 2000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
             // dotsLineWaitingBarIndicatorElement1
             // 
             this.dotsLineWaitingBarIndicatorElement1.Name = "dotsLineWaitingBarIndicatorElement1";
@@ -543,6 +538,11 @@
             this.uxCheckBoxWaitForXml.TabIndex = 51;
             this.uxCheckBoxWaitForXml.Text = "Wait for XML File";
             this.uxCheckBoxWaitForXml.UseVisualStyleBackColor = true;
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 2000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // FrmFolderDetails
             // 
@@ -638,7 +638,6 @@
         private Telerik.WinControls.UI.RadWaitingBarElement uxWaitingBar;
         private System.Windows.Forms.CheckBox uxCheckBoxRemoveDocOnOrder;
         private System.Windows.Forms.CheckBox uxCheckBoxDeleteSource;
-        private System.Windows.Forms.Timer timer1;
         private Telerik.WinControls.UI.DotsLineWaitingBarIndicatorElement dotsLineWaitingBarIndicatorElement1;
         private Telerik.WinControls.UI.RadListControl uxListControlUsers;
         private Telerik.WinControls.UI.RadListControl uxListControlLibraries;
@@ -648,5 +647,6 @@
         private System.Windows.Forms.Label uxLabelSelected;
         private System.Windows.Forms.Label uxLabelErrorMessage;
         private System.Windows.Forms.CheckBox uxCheckBoxWaitForXml;
+        private System.Windows.Forms.Timer timer1;
     }
 }
