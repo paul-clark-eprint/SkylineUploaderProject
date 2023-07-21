@@ -23,7 +23,7 @@ namespace SkylineUploader
 {
     public partial class FrmFolderDetails : RadForm
     {
-        //private static Guid _selectedUserId = Guid.Empty;
+        //Test of source control
         private static Guid _loginUserId = Guid.Empty;
         private static Guid _portalId;
         private static string _portalUrl;
