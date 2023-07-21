@@ -930,8 +930,7 @@ namespace SkylineUploader
                 Console.WriteLine(e);
                 Program.VersionOk =  false;
             }
-
-            //Program.VersionOk = _serverVersion == _workStationVersion;
+            
         }
 
         private void BwLoginProgressChanged(object sender, ProgressChangedEventArgs e)
