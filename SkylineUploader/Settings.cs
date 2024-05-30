@@ -32,22 +32,7 @@ namespace SkylineUploader
             }
             return userDataPath;
         }
-
-        //private static string _progDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @"ePrint Direct\Skyline\Driver");
-
-        //private static string ProgDataPath
-        //{
-        //    get { return _progDataPath; }
-        //    set { _progDataPath = value; }
-        //}
-
         
-
-        /// <summary>
-        /// Returns the debug directory C:\Users\username\.SkylineDriver\Log
-        /// or exits the application if it does not exist and cannot be created
-        /// </summary>
-        /// <returns></returns>
         public static string GetLogDir()
         {
             string settingsDir = Path.GetDirectoryName(Global.GetSettingsPath());
