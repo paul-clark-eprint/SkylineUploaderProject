@@ -380,7 +380,7 @@ namespace SkylineUploader
                     LogMessage(webSvc, portalId, MessageLevel.Information, 0, "Uploading file " + filename);
 
 
-                    //look for XML file if the same name
+                    //look for XML file of the same name
                     var xmlName = Path.GetFileNameWithoutExtension(pdfPath) + ".xml";
                     var xmlPath = Path.Combine(uploadParams.PdfPath, xmlName);
                     if (File.Exists(xmlPath))
